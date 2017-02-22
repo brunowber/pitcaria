@@ -4,4 +4,4 @@ Documento teste, editado pela Ana, editador pelo bruno.
 Documento teste, editado pela Ana.
 aaaaaaaaaaaaaaaaaaaa
 >>>>>>> 2214210325d511f77eaee70cc71b38a6da004e49
-olaaaaaaa tudo bom?
+ola tudo bom?
