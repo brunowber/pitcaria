@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from estante.views import CadastraPessoa
+from estante.views import CadastraLivro
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -23,4 +24,5 @@ urlpatterns = [
     #url(r'^$', views.index, name='index'),
 
     url(r'^cad_pessoa/', CadastraPessoa.as_view(), name='cadastro-pessoa'),
+    url(r'^cad_livro/', CadastraLivro.as_view(), name='cadastro-livro'),
 ]

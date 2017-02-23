@@ -1,31 +1,34 @@
 from estante.models import Pessoa
 from django.views.generic import View
 from django.shortcuts import render, redirect
-from estante.models.pessoa import Pessoa
+from estante.models.livro import Livro
 
-class CadastraLivro(View):
 
-    template='cad_pessoa.html'
+class CadastraLivro(View,Pessoa):
+
+    template='cad_livro.html'
 
     def get(self, request):
         return render(request, self.template, {'willian_bobao':'oi, Bruna, voce esta entendendo alguma coisa?'})
 
 
     def post(self,request):
-        nome = request.POST['nome']
-        cpf = request.POST['cpf']
-        endereco = request.POST['endereco']
-        telefone = request.POST['telefone']
-        email = request.POST['email']
+        id = request.POST['id']
+        titulo = request.POST['titulo']
+        autor = request.POST['autor']
+        editora = request.POST['editora']
+        ano = request.POST['ano']
+        dono = request.POST['dono']
 
-        pessoa = Pessoa()
+        livro = Livro()
 
-        pessoa.nome = nome
-        pessoa.cpf = cpf
-        pessoa.endereco = endereco
-        pessoa.telefone = telefone
-        pessoa.email = email
+        livro.id_livro = id
+        livro.titulo = titulo
+        livro.autor = autor
+        livro.editora = editora
+        livro.ano = ano
+        livro.dono = Pessoa.objects.get(cpf=dono)
 
-        pessoa.save()
+        livro.save()
 
-        return redirect('/cad_pessoa/')
+        return redirect('/cad_livro/')
