@@ -6,3 +6,7 @@ admin.site.register(Pessoa)
 
 from models.livro import Livro
 admin.site.register(Livro)
+
+from models.emprestimo import Emprestimo
+admin.site.register(Emprestimo)
+
