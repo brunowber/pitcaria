@@ -6,3 +6,7 @@ class Pessoa(models.Model):
     endereco = models.CharField(max_length=30)
     telefone = models.IntegerField()
     email = models.EmailField()
+
+
+    def __str__(self):
+        return self.nome

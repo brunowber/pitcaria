@@ -8,3 +8,6 @@ class Livro(models.Model):
     editora = models.CharField(max_length=30)
     ano = models.IntegerField()
     dono = models.ForeignKey(Pessoa)
+
+    def __str__(self):
+        return self.titulo
