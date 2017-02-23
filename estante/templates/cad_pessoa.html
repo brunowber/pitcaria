@@ -1,0 +1,23 @@
+<html>
+<body>
+    <form method="POST" action="{% url 'cadastro-pessoa' %}" class='ui form'>
+
+        {% csrf_token %}
+        <label>Nome</label>
+        <input type="text" name="nome"> <br/>
+
+        <label>CPF</label>
+        <input type="text" name="cpf"> <br/>
+
+        <label>Telefone</label>
+        <input type="text" name="telefone"> <br/>
+
+        <label>Email</label>
+        <input type="text" name="email"> <br/>
+        <label>Endereço</label>
+        <input type="text" name="endereco"> <br/>
+        <button type="submit" class="ui verde button">Salvar</button>
+    </form>
+
+</body>
+</html>
