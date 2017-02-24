@@ -1,6 +1,6 @@
 <html>
 <body>
-    <form method="POST" action="{% url 'cadastro-pessoa' %}" class='ui form'>
+    <form method="POST" action="{% url 'estante:cadastro-pessoa' %}" class='ui form'>
 
         {% csrf_token %}
         <label>Nome</label>

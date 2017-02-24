@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 from estante.models.pessoa import Pessoa
 
+
 class CadastraPessoa(View):
 
     template='cad_pessoa.html'
