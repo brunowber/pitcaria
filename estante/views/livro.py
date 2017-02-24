@@ -4,15 +4,13 @@ from django.shortcuts import render, redirect
 from estante.models.livro import Livro
 
 
-class CadastraLivro(View,Pessoa):
-
-    template='cad_livro.html'
+class CadastraLivro(View, Pessoa):
+    template = 'cad_livro.html'
 
     def get(self, request):
-        return render(request, self.template, {'willian_bobao':'oi, Bruna, voce esta entendendo alguma coisa?'})
+        return render(request, self.template, {'willian_bobao': 'oi, Bruna, voce esta entendendo alguma coisa?'})
 
-
-    def post(self,request):
+    def post(self, request):
         id = request.POST['id']
         titulo = request.POST['titulo']
         autor = request.POST['autor']

@@ -1,0 +1,18 @@
+<html>
+<body>
+    <form method="POST" action="{% url 'estante:index' %}" class='ui form'>
+
+        {% csrf_token %}
+        <center><label>Login</label></center>
+        <center><input type="text" name="login"> <br/></center>
+
+       <center> <label>Senha</label></center>
+       <center> <input type="text" name="senha"> <br/></center>
+
+        <center><button type="submit" class="ui verde button">Entrar</button></center>
+        <center><a href="/estante/cad_pessoa">criar</a></center>
+
+    </form>
+
+</body>
+</html>

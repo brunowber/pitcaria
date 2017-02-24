@@ -3,6 +3,13 @@
     <form method="POST" action="{% url 'estante:cadastro-pessoa' %}" class='ui form'>
 
         {% csrf_token %}
+        <div>{{ erro }}</div>
+        <label>Login</label>
+        <input type="text" name="login"> <br/>
+
+        <label>Senha</label>
+        <input type="password" name="senha"> <br/>
+
         <label>Nome</label>
         <input type="text" name="nome"> <br/>
 

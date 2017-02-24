@@ -13,7 +13,12 @@ class CadastraPessoa(View):
 
 
     def post(self,request):
+        usuario = request.POST['login']
+        if Pessoa.objects.filter(login=usuario).exists():
+            return render(request, self.template, {'erro':'Erro login ja existente'})
+
         nome = request.POST['nome']
+        senha = request.POST['senha']
         cpf = request.POST['cpf']
         endereco = request.POST['endereco']
         telefone = request.POST['telefone']
@@ -26,7 +31,9 @@ class CadastraPessoa(View):
         pessoa.endereco = endereco
         pessoa.telefone = telefone
         pessoa.email = email
+        pessoa.login = usuario
+        pessoa.senha = senha
 
         pessoa.save()
 
-        return redirect('/cad_pessoa/')
+        return redirect('/estante/cad_pessoa/')
