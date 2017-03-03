@@ -1,5 +1,4 @@
-from pessoa import CadastraPessoa
+from pessoa import CadastraPessoa, Login
 
 from livro import CadastraLivro
 
-from index import Logar
