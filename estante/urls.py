@@ -6,5 +6,6 @@ from estante.views import Logar
 urlpatterns = [
     url(r'^cad_pessoa/', CadastraPessoa.as_view(), name='cadastro-pessoa'),
     url(r'^cad_livro/', CadastraLivro.as_view(), name='cadastro-livro'),
+    url(r'^cad_livro/()', CadastraLivro.as_view(), name='cadastro-livro'),
     url(r'^logar/', Logar.as_view(), name='index'),
 ]
