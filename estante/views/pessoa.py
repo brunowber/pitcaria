@@ -63,8 +63,20 @@ class Login(View):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirect to a success page.
             return render(request, self.template, {'msg': 'Sucesso'})
         else:
-            # Return an 'invalid login' error message.
             return render(request, self.template, {'msg': 'Erro'})
+
+
+class Desativar(View):
+    template = 'index.html'
+
+    def get(self, request):
+        return render(request, self.template)
+
+    def post(self, request):
+        id = request.POST['id']
+        inativo = Pessoa.objects.get(id=id)
+        inativo.is_active = False
+        inativo.save()
+        return render(request, self.template)
