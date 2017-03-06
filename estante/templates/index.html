@@ -1,23 +1,20 @@
 <html>
 <body>
-    <form method="POST" action="{% url 'estante:index' %}" class='ui form'>
-
+    <br method="POST" action="{% url 'estante:login' %}" class='ui form'>
         {% csrf_token %}
-
         {% if msg %}
             <div>{{ msg }}</div>
         {% endif %}
 
-        <center><label>Login</label></center>
-        <center><input type="text" name="username"> <br/></center>
+        <label>Login</label>
+        <input type="text" name="username"> <br/>
 
-       <center> <label>Senha</label></center>
-       <center> <input type="password" name="password"> <br/></center>
+        <label>Senha</label>
+        <input type="password" name="password"> <br/>
 
-        <center><button type="submit" class="ui verde button">Entrar</button></center>
-        <center><a href="{% url 'estante:cadastro-pessoa' %}" >criar</a></center>
-
+        <button type="submit" class="ui verde button">Entrar</button></br>
+        <a href="{% url 'estante:cadastro-pessoa' %}" >criar</a></br>
+        <a href="{% url 'estante:ativar' %}" >Ativar usuário inativo</a></br>
     </form>
-
 </body>
 </html>

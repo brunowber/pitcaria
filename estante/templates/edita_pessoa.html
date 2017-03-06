@@ -1,0 +1,35 @@
+<html>
+    <body>
+        <h2>Edição de perfil</h2>
+        <form method="POST" action="{% url 'estante:editar_perfil' %}" class='ui form'>
+            {% csrf_token %}
+
+            {% if msg %}
+                <div>{{ msg }}</div>
+            {% endif %}
+
+            <label>Login</label>
+            <input type="text" name="username" value="{{ username }}" disabled="disabled">  <br/>
+
+            <label>Nome</label>
+            <input type="text" name="first_name" value="{{ first_name }}"> <br/>
+
+            <label>Sobrenome</label>
+            <input type="text" name="last_name" value="{{ last_name }}"> <br/>
+
+            <label>CPF</label>
+            <input type="text" name="cpf" value="{{ cpf }}"> <br/>
+
+            <label>Telefone</label>
+            <input type="text" name="telefone" value="{{ telefone }}"> <br/>
+
+            <label>Email</label>
+            <input type="text" name="email" value="{{ email }}"> <br/>
+
+            <label>Endereço</label>
+            <input type="text" name="endereco" value="{{ endereco }}"> <br/>
+
+            <button type="submit" class="ui verde button">Salvar</button>
+        </form>
+    </body>
+</html>

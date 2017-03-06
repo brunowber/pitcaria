@@ -1,0 +1,14 @@
+<html>
+    <body>
+         <form method="POST" action="{% url 'estante:ativar' %}" class='ui form'>
+             <label>Ativar usuário inativo</label>
+             {% csrf_token %}
+             <label>Login</label>
+             <input type="text" name="username"> <br/>
+
+             <label>Senha</label>
+             <input type="password" name="password"> <br/>
+             <button type="submit" class="ui verde button">Ativar</button>
+        </form>
+    </body>
+</html>

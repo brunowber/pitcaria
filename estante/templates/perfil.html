@@ -1,11 +1,12 @@
 <html>
-<body>
-    <form method="POST" action="{% url 'estante:desativar' %}" class='ui form'>
+    <body>
+        <h2>Perfil do Usuário</h2>
+        {% if msg %}
+            <p>{{ msg }}</p>
+        {% endif %}
 
-        {% csrf_token %}
-        <center><button type="submit" class="ui verde button">Desativar</button></center>
-
-    </form>
-
-</body>
+        <a href="{% url 'estante:logout' %}">Sair</a>
+        <a href="{% url 'estante:desativar' %}">Desativar</a>
+        <a href="{% url 'estante:editar_perfil' %}">Editar</a>
+    </body>
 </html>

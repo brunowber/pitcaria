@@ -1,8 +1,8 @@
 <html>
 <body>
     <form method="POST" action="{% url 'estante:cadastro-livro' %}" class='ui form'>
-
         {% csrf_token %}
+
         <label>Identifcador</label>
         <input type="text" name="id"> <br/>
 
@@ -23,6 +23,5 @@
 
         <button type="submit" class="ui verde button">Salvar</button>
     </form>
-
 </body>
 </html>
