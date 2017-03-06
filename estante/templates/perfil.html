@@ -1,0 +1,11 @@
+<html>
+<body>
+    <form method="POST" action="{% url 'estante:desativar' %}" class='ui form'>
+
+        {% csrf_token %}
+        <center><button type="submit" class="ui verde button">Desativar</button></center>
+
+    </form>
+
+</body>
+</html>

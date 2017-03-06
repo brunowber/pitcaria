@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.shortcuts import render
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 
 class CadastraPessoa(View):
@@ -24,7 +25,7 @@ class CadastraPessoa(View):
             # MODO CADASTRO
         usuario = request.POST['username']
         if Pessoa.objects.filter(username=usuario).exists():
-            return render(request, self.template, {'msg': 'Erro login ja existente'})
+            return render(request, self.template, {'msg': 'Erro login ja existe'})
 
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -69,14 +70,14 @@ class Login(View):
 
 
 class Desativar(View):
-    template = 'index.html'
+    template = 'perfil.html'
 
     def get(self, request):
         return render(request, self.template)
 
     def post(self, request):
-        id = request.POST['id']
+        id = request.user.id
         inativo = Pessoa.objects.get(id=id)
         inativo.is_active = False
         inativo.save()
-        return render(request, self.template)
+        return render(request, 'index.html')

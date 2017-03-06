@@ -1,4 +1,4 @@
-from pessoa import CadastraPessoa, Login
+from pessoa import CadastraPessoa, Login, Desativar
 
 from livro import CadastraLivro
 
