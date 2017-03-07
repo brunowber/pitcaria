@@ -4,7 +4,11 @@
         {% if msg %}
             <p>{{ msg }}</p>
         {% endif %}
-
+        <p>nome completo: {{ first_name }} {{ last_name }}</p>
+        <p>CPF: {{ cpf }}</p>
+        <p>Email: {{ email }} </p>
+        <p>Endereço: {{ endereco }}</p>
+        <p>Telefone: {{ telefone }}</p>
         <a href="{% url 'estante:logout' %}">Sair</a>
         <a href="{% url 'estante:desativar' %}">Desativar</a>
         <a href="{% url 'estante:editar_perfil' %}">Editar</a>

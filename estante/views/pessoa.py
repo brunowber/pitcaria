@@ -6,14 +6,14 @@ from django.contrib.auth import authenticate, login, logout
 
 def logout_view(request):
     logout(request)
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'msg':'Logout efetuado com sucesso'})
 
 
 class Perfil(View):
     template = 'perfil.html'
 
     def get(self, request):
-        return render(request, self.template, {})
+        return render(request, self.template)
 
 
 class CadastraPessoa(View):
@@ -58,15 +58,23 @@ class CadastraPessoa(View):
             pessoa.endereco = endereco
             pessoa.telefone = telefone
             pessoa.email = email
-
             pessoa.save()
+            context_dict = {'msg':'Informações alteradas com sucesso!'}
+            context_dict['username'] = pessoa.username
+            context_dict['first_name'] = pessoa.first_name
+            context_dict['last_name'] = pessoa.last_name
+            context_dict['cpf'] = pessoa.cpf
+            context_dict['endereco'] = pessoa.endereco
+            context_dict['telefone'] = pessoa.telefone
+            context_dict['email'] = pessoa.email
 
-            return render(request, 'perfil.html', {'msg': 'Informações alteradas com sucesso!'})
+
+            return render(request, 'perfil.html', context_dict)
         else:
             #MODO CADASTRO
             usuario = request.POST['username']
-            if Pessoa.objects.filter(username=usuario).exists():
-                return render(request, self.template, {'msg': 'Erro, login ja existe'})
+            if Pessoa.objects.filter(username=usuario).exists() or Pessoa.objects.filter(cpf=cpf).exists():
+                return render(request, self.template, {'msg': 'Erro, Usuario ou cpf ja existente'})
             password = request.POST['password']
             pessoa = Pessoa()
 
@@ -81,7 +89,7 @@ class CadastraPessoa(View):
 
             pessoa.save()
 
-            return render(request, 'perfil.html')
+            return render(request, 'index.html')
 
 
 class Login(View):
@@ -95,35 +103,52 @@ class Login(View):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        if user is not None:
+
+        if user:
             login(request, user)
-            return redirect('perfil/')
+            pessoa = Pessoa.objects.get(username=username)
+            id = request.user.id
+            desativo = Pessoa.objects.get(pk=id)
+            if desativo.is_active is False:
+                return render(request, 'alterar_status.html',{'msg':'Este usuario está inativo, deseja ativar?'})
+
+
+            context_dict = {'msg':'Login efetuado com sucesso!'}
+            context_dict['first_name'] = pessoa.first_name
+            context_dict['last_name'] = pessoa.last_name
+            context_dict['cpf'] = pessoa.cpf
+            context_dict['endereco'] = pessoa.endereco
+            context_dict['telefone'] = pessoa.telefone
+            context_dict['email'] = pessoa.email
+            return render(request, 'perfil.html', context_dict)
         else:
-            return render(request, self.template, {'msg': 'Erro'})
+            return render(request, self.template, {'msg': 'Erro usuario ou senha incorretos'})
 
 
 class Alterar_status(View):
-# não esta funcionando a parte de reativar o usuario
     def get(self, request):
-        id = request.user.id
-        if id:
-            desativo = Pessoa.objects.get(pk=id)
-            desativo.is_active = False
-            desativo.save()
-            return redirect('/')
-        else:
-            return render (request, 'alterar_status.html')
+        user = request.user
+        print (request.user.is_authenticated())
+        if request.user.is_authenticated():
+            ativo = Pessoa.objects.get(username =user)
+            ativo.is_active = False
+            ativo.save()
+            logout(request)
+            return render(request, 'index.html')
+        return render(request, 'alterar_status.html')
 
     def post(self, request):
-        id = request.user.id
-        if id is None:
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                ativo = Pessoa.objects.get(username=username)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user:
+            ativo = Pessoa.objects.get(username=user)
+            print (ativo, ativo.is_active)
+            if ativo.is_active is False:
                 ativo.is_active = True
                 ativo.save()
-                return redirect('/')
+                return render(request,'index.html', {'msg':'usuario ativado com sucesso!'})
+            else:
+                return render(request, 'alterar_status.html', {'msg':'Este usuario já esta ativo'})
         else:
-            return redirect('/')
+            return render(request,'alterar_status.html', {'msg':'Usuario ou senha incorretos'})

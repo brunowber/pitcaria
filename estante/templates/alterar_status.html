@@ -1,14 +1,22 @@
 <html>
     <body>
          <form method="POST" action="{% url 'estante:ativar' %}" class='ui form'>
-             <label>Ativar usuário inativo</label>
+
+             {% if msg %}
+                <p>{{ msg }}</p>
+             {% endif %}
+
+
+
+             <label>Ativar usuário inativo</label><br>
              {% csrf_token %}
              <label>Login</label>
              <input type="text" name="username"> <br/>
 
              <label>Senha</label>
              <input type="password" name="password"> <br/>
-             <button type="submit" class="ui verde button">Ativar</button>
+             <button type="submit" class="ui verde button">Ativar</button><br>
+            <a href="{% url 'estante:logout' %}">Voltar ao index</a>
         </form>
     </body>
 </html>
