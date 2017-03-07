@@ -44,7 +44,6 @@ class CadastraPessoa(View):
         id = request.user.id
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-        password = request.POST['password']
         cpf = request.POST['cpf']
         endereco = request.POST['endereco']
         telefone = request.POST['telefone']
@@ -68,7 +67,7 @@ class CadastraPessoa(View):
             usuario = request.POST['username']
             if Pessoa.objects.filter(username=usuario).exists():
                 return render(request, self.template, {'msg': 'Erro, login ja existe'})
-
+            password = request.POST['password']
             pessoa = Pessoa()
 
             pessoa.first_name = first_name
@@ -82,7 +81,7 @@ class CadastraPessoa(View):
 
             pessoa.save()
 
-            return redirect('perfil/')
+            return render(request, 'perfil.html')
 
 
 class Login(View):

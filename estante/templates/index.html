@@ -1,6 +1,6 @@
 <html>
 <body>
-    <br method="POST" action="{% url 'estante:login' %}" class='ui form'>
+    <form method="POST" action="{% url 'estante:login' %}" class='ui form'>
         {% csrf_token %}
         {% if msg %}
             <div>{{ msg }}</div>
