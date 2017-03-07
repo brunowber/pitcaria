@@ -1,4 +1,4 @@
 from pessoa import *
 
-from livro import CadastraLivro
+from livro import *
 

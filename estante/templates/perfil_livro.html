@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista</title>
+</head>
+<body>
+<label> {{ livro.titulo }} </label>
+
+<h5> Editora: {{ livro.editora }}</h5>
+<h5> Autor: {{ livro.autor }}</h5>
+<h5> Ano: {{ livro.ano }}</h5>
+<h5> Dono do livro: {{ livro.dono }}</h5>
+
+{#<a href="{% url 'estante:cadastro-livro' livro.id %}">Editar</a>#}
+
+{#{% if dono == usuario %}#}
+{#    <a href="{% url 'estante:cadastro-livro' id %}">Editar</a>#}
+{#    <a href="{% url 'estante:cadastro-livro' id %}">Delvolver</a>#}
+{#    <a href="{% url 'estante:cadastro-livro' id %}">Esconder</a>#}
+{#{% endif %}#}
+{#{% if dono != usuario %}#}
+{#    <a href="{% url 'estante:cadastro-livro' id %}">Emprestar</a>#}
+{#{% endif %}#}
+
+
+
+
+</body>
+</html>
