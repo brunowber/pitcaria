@@ -56,7 +56,7 @@ class CadastraLivro(View, Pessoa):
         editora = request.POST['editora']
         ano = request.POST['ano']
         if id:
-            # MODO EDIÇÃO
+            # MODO EDIÇÃ
             print('entrou')
             livro = Livro.objects.get(pk=id)
 
