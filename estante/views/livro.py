@@ -48,13 +48,16 @@ class CadastraLivro(View, Pessoa):
             return render(request, self.template)
 
     def post(self, request, id=None):
+        print(request.POST['id_livro'])
         id_livro = request.POST['id_livro']
+        print('Entrou 2')
         titulo = request.POST['titulo']
         autor = request.POST['autor']
         editora = request.POST['editora']
         ano = request.POST['ano']
         if id:
             # MODO EDIÇÃO
+            print('entrou')
             livro = Livro.objects.get(pk=id)
 
             livro.id_livro = id_livro

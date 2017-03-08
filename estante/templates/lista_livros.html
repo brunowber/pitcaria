@@ -5,7 +5,9 @@
     <title>Lista</title>
 </head>
 <body>
+
     {% for livro in livros %}
+
         <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
     {%endfor %}
 </body>
