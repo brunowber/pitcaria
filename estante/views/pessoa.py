@@ -58,7 +58,9 @@ class CadastraPessoa(View):
             pessoa.endereco = endereco
             pessoa.telefone = telefone
             pessoa.email = email
+
             pessoa.save()
+
             context_dict = {'msg':'Informações alteradas com sucesso!'}
             context_dict['username'] = pessoa.username
             context_dict['first_name'] = pessoa.first_name

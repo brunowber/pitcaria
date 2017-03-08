@@ -12,14 +12,14 @@
 <h5> Ano: {{ livro.ano }}</h5>
 <h5> Dono do livro: {{ livro.dono }}</h5>
 
-{#<a href="{% url 'estante:cadastro-livro' livro.id %}">Editar</a>#}
+<a href="{% url 'estante: edita-livro' id %}">Editar</a>
 
-{#{% if dono == usuario %}#}
-{#    <a href="{% url 'estante:cadastro-livro' id %}">Editar</a>#}
+{#{% if livro.dono == usuario %}#}
+{#    <a href="{% url 'estante:edita-livro' id %}">Editar</a>#}
 {#    <a href="{% url 'estante:cadastro-livro' id %}">Delvolver</a>#}
-{#    <a href="{% url 'estante:cadastro-livro' id %}">Esconder</a>#}
+{#    <a href="{% url 'estante:esconder-livro' id %}">Esconder</a>#}
 {#{% endif %}#}
-{#{% if dono != usuario %}#}
+{#{% if livro.dono != usuario %}#}
 {#    <a href="{% url 'estante:cadastro-livro' id %}">Emprestar</a>#}
 {#{% endif %}#}
 

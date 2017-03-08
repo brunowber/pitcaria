@@ -21,7 +21,6 @@ class PerfilLivro(View):
     template = 'perfil_livro.html'
 
     def get(self, request, id=None):
-        print(id)
         livro = Livro.objects.get(pk=id)
 
         context_dict = {}
@@ -33,21 +32,48 @@ class PerfilLivro(View):
 class CadastraLivro(View, Pessoa):
     template = 'cad_livro.html'
 
-    def get(self, request):
-        return render(request, self.template)
+    def get(self, request, id=None):
+        if id:
+            livro = Livro.objects.get(pk=id)
+            context_dict = {}
+            context_dict['msg'] = 'Atualizar Cadastro'
+            context_dict['id'] = id
+            context_dict['id_livro'] = livro.id_livro
+            context_dict['titulo'] = livro.titulo
+            context_dict['autor'] = livro.autor
+            context_dict['editora'] = livro.editora
+            context_dict['ano'] = livro.ano
+            return render(request, 'edita_livro.html', context_dict)
+        else:
+            return render(request, self.template)
 
-    def post(self, request):
+    def post(self, request, id=None):
+        id_livro = request.POST['id_livro']
+        titulo = request.POST['titulo']
+        autor = request.POST['autor']
+        editora = request.POST['editora']
+        ano = request.POST['ano']
+        if id:
+            # MODO EDIÇÃO
+            livro = Livro.objects.get(pk=id)
+
+            livro.id_livro = id_livro
+            livro.titulo = titulo
+            livro.autor = autor
+            livro.editora = editora
+            livro.ano = ano
+
+            livro.save()
+
+            return render(request, 'lista_livros.html')
+
+        else:
             # MODO CADASTRO
-            id = request.POST['id']
-            titulo = request.POST['titulo']
-            autor = request.POST['autor']
-            editora = request.POST['editora']
-            ano = request.POST['ano']
             dono = request.user.id
 
             livro = Livro()
 
-            livro.id_livro = id
+            livro.id_livro = id_livro
             livro.titulo = titulo
             livro.autor = autor
             livro.editora = editora
@@ -57,3 +83,27 @@ class CadastraLivro(View, Pessoa):
             livro.save()
 
             return render(request, self.template, {'msg': 'Sucesso no cadastro'})
+
+class Alterar_status_livro(View):
+    def get(self, request, id=None):
+        user = request.user
+        if request.user.is_authenticated():
+            livro = Livro.objects.get(pk=id)
+            if livro.dono == user.username:
+                livro.status = False
+                livro.save()
+            else:
+                return render(request, 'lista_livros.html', {'msg':'Você não é dono deste livro'})
+            return render(request, 'index.html')
+        return render(request, 'perfil_livro.html')
+
+    def post(self, request, id=None):
+        user = request.user
+        if request.user.is_authenticated():
+            livro = Livro.objects.get(pk=id)
+            if livro.dono == user.username:
+                livro.status = True
+                livro.save()
+            else:
+                return render(request, 'lista_livros.html', {'msg': 'Você não é dono deste livro'})
+            return render(request, 'index.html')
