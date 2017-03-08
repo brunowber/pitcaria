@@ -11,9 +11,11 @@ urlpatterns = [
     url(r'^desativar/$', Alterar_status.as_view(), name='desativar'),
     url(r'^esconder/$', Alterar_status_livro.as_view(), name='esconder_livro'),
     url(r'^ativar/$', Alterar_status.as_view(), name='ativar'),
+    # url(r'^$', Permissao.as_view(), name='ativar'),
     url(r'^perfil/$', Perfil.as_view(), name='perfil'),
     url(r'^editar_perfil/$', CadastraPessoa.as_view(), name='editar_perfil'),
     url(r'^lista_livros/$', DicLivro.as_view(), name='lista_livros'),
     url(r'^livro/(?P<id>\w+)/$', PerfilLivro.as_view(), name='perfil_livro'),
+
 
 ]

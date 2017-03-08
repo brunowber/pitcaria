@@ -1,9 +1,21 @@
 <html>
+    <head>
+        {% if user.is_anonymous %}
+            <script>
+                alert("Você não está logado!")
+                {location.href='/estante/'}
+            </script>
+        {% endif %}
+
+    </head>
     <body>
         <h2>Perfil do Usuário</h2>
         {% if msg %}
             <p>{{ msg }}</p>
         {% endif %}
+        <div>
+
+        </div>
         <p>nome completo: {{ first_name }} {{ last_name }}</p>
         <p>CPF: {{ cpf }}</p>
         <p>Email: {{ email }} </p>

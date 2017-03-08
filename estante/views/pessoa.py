@@ -1,12 +1,13 @@
-#coding=utf-8
+# coding=utf-8
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
 
+
 def logout_view(request):
     logout(request)
-    return render(request, 'index.html', {'msg':'Logout efetuado com sucesso'})
+    return render(request, 'index.html', {'msg': 'Logout efetuado com sucesso'})
 
 
 class Perfil(View):
@@ -17,7 +18,6 @@ class Perfil(View):
 
 
 class CadastraPessoa(View):
-
     template = 'cad_pessoa.html'
 
     def get(self, request):
@@ -38,7 +38,6 @@ class CadastraPessoa(View):
         else:
             return render(request, self.template, {'msg': 'Novo Cadastro'})
 
-
     def post(self, request):
 
         id = request.user.id
@@ -49,7 +48,7 @@ class CadastraPessoa(View):
         telefone = request.POST['telefone']
         email = request.POST['email']
         if id:
-            #MODO EDIÇÃO
+            # MODO EDIÇÃO
             pessoa = Pessoa.objects.get(pk=id)
 
             pessoa.first_name = first_name
@@ -61,7 +60,7 @@ class CadastraPessoa(View):
 
             pessoa.save()
 
-            context_dict = {'msg':'Informações alteradas com sucesso!'}
+            context_dict = {'msg': 'Informações alteradas com sucesso!'}
             context_dict['username'] = pessoa.username
             context_dict['first_name'] = pessoa.first_name
             context_dict['last_name'] = pessoa.last_name
@@ -70,10 +69,9 @@ class CadastraPessoa(View):
             context_dict['telefone'] = pessoa.telefone
             context_dict['email'] = pessoa.email
 
-
             return render(request, 'perfil.html', context_dict)
         else:
-            #MODO CADASTRO
+            # MODO CADASTRO
             usuario = request.POST['username']
             if Pessoa.objects.filter(username=usuario).exists() or Pessoa.objects.filter(cpf=cpf).exists():
                 return render(request, self.template, {'msg': 'Erro, Usuario ou cpf ja existente'})
@@ -95,11 +93,10 @@ class CadastraPessoa(View):
 
 
 class Login(View):
-
     template = 'index.html'
 
     def get(self, request):
-        return render(request, self.template )
+        return render(request, self.template)
 
     def post(self, request):
         username = request.POST['username']
@@ -112,10 +109,9 @@ class Login(View):
             id = request.user.id
             desativo = Pessoa.objects.get(pk=id)
             if desativo.is_active is False:
-                return render(request, 'alterar_status.html',{'msg':'Este usuario está inativo, deseja ativar?'})
+                return render(request, 'alterar_status.html', {'msg': 'Este usuario está inativo, deseja ativar?'})
 
-
-            context_dict = {'msg':'Login efetuado com sucesso!'}
+            context_dict = {'msg': 'Login efetuado com sucesso!'}
             context_dict['first_name'] = pessoa.first_name
             context_dict['last_name'] = pessoa.last_name
             context_dict['cpf'] = pessoa.cpf
@@ -132,7 +128,7 @@ class Alterar_status(View):
         user = request.user
         print (request.user.is_authenticated())
         if request.user.is_authenticated():
-            ativo = Pessoa.objects.get(username =user)
+            ativo = Pessoa.objects.get(username=user)
             ativo.is_active = False
             ativo.save()
             logout(request)
@@ -149,8 +145,13 @@ class Alterar_status(View):
             if ativo.is_active is False:
                 ativo.is_active = True
                 ativo.save()
-                return render(request,'index.html', {'msg':'usuario ativado com sucesso!'})
+                return render(request, 'index.html', {'msg': 'usuario ativado com sucesso!'})
             else:
-                return render(request, 'alterar_status.html', {'msg':'Este usuario já esta ativo'})
+                return render(request, 'alterar_status.html', {'msg': 'Este usuario já esta ativo'})
         else:
-            return render(request,'alterar_status.html', {'msg':'Usuario ou senha incorretos'})
+            return render(request, 'alterar_status.html', {'msg': 'Usuario ou senha incorretos'})
+
+
+class Permissao(View):
+    def get(self, request):
+        return render(request, 'index.html', {'msg': 'Você não está logado ainda!'})
