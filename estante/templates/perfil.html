@@ -2,10 +2,11 @@
     <head>
         {% if user.is_anonymous %}
             <script>
-                alert("Você não está logado!")
+                alert("Faça o login antes!" )
                 {location.href='/estante/'}
             </script>
         {% endif %}
+
 
     </head>
     <body>
@@ -15,16 +16,16 @@
         {% endif %}
         <div>
 
-        </div>
-        <p>nome completo: {{ first_name }} {{ last_name }}</p>
-        <p>CPF: {{ cpf }}</p>
-        <p>Email: {{ email }} </p>
-        <p>Endereço: {{ endereco }}</p>
-        <p>Telefone: {{ telefone }}</p>
+        <p>nome completo: {{ request.session.first_name }} {{ request.session.last_name }}</p>
+        <p>CPF: {{ request.session.cpf }}</p>
+        <p>Email: {{ request.session.email }} </p>
+        <p>Endereço: {{ request.session.endereco }}</p>
+        <p>Telefone: {{ request.session.telefone }}</p>
         <a href="{% url 'estante:logout' %}">Sair</a>
         <a href="{% url 'estante:desativar' %}">Desativar</a>
         <a href="{% url 'estante:editar_perfil' %}">Editar Perfil</a>
         <a href="{% url 'estante:cadastro-livro' %}">Cadastrar Livro</a>
         <a href="{% url 'estante:lista_livros' %}">Livros</a>
+        </div>
     </body>
 </html>

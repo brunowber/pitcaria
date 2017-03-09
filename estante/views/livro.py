@@ -9,12 +9,9 @@ class DicLivro(View):
     template = 'lista_livros.html'
 
     def get(self, request):
-
-        livros = Livro.objects.all()
-
         context_dict = {}
+        livros = Livro.objects.all()
         context_dict['livros'] = livros
-
         return render(request, self.template, context_dict)
 
 class PerfilLivro(View):
@@ -22,16 +19,13 @@ class PerfilLivro(View):
 
     def get(self, request, id=None):
         livro = Livro.objects.get(pk=id)
-
         context_dict = {}
         context_dict['livro'] = livro
-        context_dict['usuario'] = request.user.id
-
+        print (context_dict)
         return render(request, self.template, context_dict)
 
 class CadastraLivro(View, Pessoa):
     template = 'cad_livro.html'
-
     def get(self, request, id=None):
         if id:
             livro = Livro.objects.get(pk=id)
@@ -48,8 +42,10 @@ class CadastraLivro(View, Pessoa):
             return render(request, self.template)
 
     def post(self, request, id=None):
-        print('Entrou 2')
+
         titulo = request.POST['titulo']
+        print('Entrou 2')
+
         autor = request.POST['autor']
         editora = request.POST['editora']
         ano = request.POST['ano']
@@ -66,7 +62,7 @@ class CadastraLivro(View, Pessoa):
         else:
             # MODO CADASTRO
             dono = request.user.id
-
+            id_livro = request.POST['id_livro']
             livro = Livro()
 
             livro.id_livro = id_livro
@@ -78,7 +74,7 @@ class CadastraLivro(View, Pessoa):
 
             livro.save()
 
-            return render(request, self.template, {'msg': 'Sucesso no cadastro'})
+            return render(request, 'perfil.html', {'msg': 'Livro cadastrado com sucesso!'})
 
 class Alterar_status_livro(View):
     def get(self, request, id=None):

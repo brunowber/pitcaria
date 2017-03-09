@@ -3,6 +3,10 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.shortcuts import render
+
 
 
 def logout_view(request):
@@ -57,19 +61,16 @@ class CadastraPessoa(View):
             pessoa.endereco = endereco
             pessoa.telefone = telefone
             pessoa.email = email
-
             pessoa.save()
 
-            context_dict = {'msg': 'Informações alteradas com sucesso!'}
-            context_dict['username'] = pessoa.username
-            context_dict['first_name'] = pessoa.first_name
-            context_dict['last_name'] = pessoa.last_name
-            context_dict['cpf'] = pessoa.cpf
-            context_dict['endereco'] = pessoa.endereco
-            context_dict['telefone'] = pessoa.telefone
-            context_dict['email'] = pessoa.email
-
-            return render(request, 'perfil.html', context_dict)
+            request.session['first_name'] = pessoa.first_name
+            request.session['last_name'] = pessoa.last_name
+            request.session['cpf'] = pessoa.cpf
+            request.session['endereco'] = pessoa.endereco
+            request.session['telefone'] = pessoa.telefone
+            request.session['email'] = pessoa.email
+            request.session['first_name'] = pessoa.first_name
+            return render(request,'perfil.html', {'msg': 'Informações alteradas com sucesso!'})
         else:
             # MODO CADASTRO
             usuario = request.POST['username']
@@ -110,15 +111,14 @@ class Login(View):
             desativo = Pessoa.objects.get(pk=id)
             if desativo.is_active is False:
                 return render(request, 'alterar_status.html', {'msg': 'Este usuario está inativo, deseja ativar?'})
-
-            context_dict = {'msg': 'Login efetuado com sucesso!'}
-            context_dict['first_name'] = pessoa.first_name
-            context_dict['last_name'] = pessoa.last_name
-            context_dict['cpf'] = pessoa.cpf
-            context_dict['endereco'] = pessoa.endereco
-            context_dict['telefone'] = pessoa.telefone
-            context_dict['email'] = pessoa.email
-            return render(request, 'perfil.html', context_dict)
+            request.session['first_name'] = pessoa.first_name
+            request.session['last_name'] = pessoa.last_name
+            request.session['cpf'] = pessoa.cpf
+            request.session['endereco'] = pessoa.endereco
+            request.session['telefone'] = pessoa.telefone
+            request.session['email'] = pessoa.email
+            request.session['first_name'] = pessoa.first_name
+            return render(request, 'perfil.html', {'msg':'Login efetuado com sucesso!'})
         else:
             return render(request, self.template, {'msg': 'Erro usuario ou senha incorretos'})
 
@@ -126,13 +126,12 @@ class Login(View):
 class Alterar_status(View):
     def get(self, request):
         user = request.user
-        print (request.user.is_authenticated())
         if request.user.is_authenticated():
             ativo = Pessoa.objects.get(username=user)
             ativo.is_active = False
             ativo.save()
             logout(request)
-            return render(request, 'index.html')
+            return redirect('/estante/')
         return render(request, 'alterar_status.html')
 
     def post(self, request):
@@ -141,7 +140,6 @@ class Alterar_status(View):
         user = authenticate(username=username, password=password)
         if user:
             ativo = Pessoa.objects.get(username=user)
-            print (ativo, ativo.is_active)
             if ativo.is_active is False:
                 ativo.is_active = True
                 ativo.save()
@@ -152,6 +150,6 @@ class Alterar_status(View):
             return render(request, 'alterar_status.html', {'msg': 'Usuario ou senha incorretos'})
 
 
-class Permissao(View):
-    def get(self, request):
-        return render(request, 'index.html', {'msg': 'Você não está logado ainda!'})
+# class Permissao(View):
+#     def get(self, request):
+#         return render(request, 'index.html', {'msg': 'Você não está logado ainda!'})

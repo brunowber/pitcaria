@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% if user.is_anonymous %}
+        <script>
+            alert("Faça o login antes!")
+            {location.href='/estante/'}
+        </script>
+    {% endif %}
     <meta charset="UTF-8">
     <title>Lista</title>
 </head>
 <body>
 
     {% for livro in livros %}
-
-        <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
+        {% ifequal user.id livro.dono.id %}
+            <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
+        {% endifequal %}
     {%endfor %}
+
 </body>
 </html>
