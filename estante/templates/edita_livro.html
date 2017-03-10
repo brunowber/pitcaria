@@ -1,5 +1,6 @@
 <html>
     <head>
+        <title>Editar livro</title>
         {% if user.is_anonymous %}
             <script>
                 alert("Faça o login antes!" )
@@ -7,27 +8,27 @@
             </script>
         {% endif %}
     </head>
-<body>
-    <form method="POST" action="{% url 'estante:edita-livro' id  %}" class='ui form'>
-        {% csrf_token %}
+    <body>
+        <form method="POST" action="{% url 'estante:edita-livro' id  %}" class='ui form'>
+            {% csrf_token %}
 
-        <label>Identifcador</label>
-        <input type="text" name="id_livro" value="{{ id_livro }}" disabled="disabled"> <br/>
+            <label>Identifcador</label>
+            <input type="text" name="id_livro" value="{{ id_livro }}" disabled="disabled"> <br/>
 
-        <label>Titulo</label>
-        <input type="text" name="titulo" value="{{ titulo }}"> <br/>
+            <label>Titulo</label>
+            <input type="text" name="titulo" value="{{ titulo }}"> <br/>
 
-        <label>Autor</label>
-        <input type="text" name="autor" value="{{ autor }}"> <br/>
+            <label>Autor</label>
+            <input type="text" name="autor" value="{{ autor }}"> <br/>
 
-        <label>Editora</label>
-        <input type="text" name="editora" value="{{ editora }}"> <br/>
+            <label>Editora</label>
+            <input type="text" name="editora" value="{{ editora }}"> <br/>
 
-        <label>Ano</label>
-        <input type="text" name="ano" value="{{ ano }}"> <br/>
+            <label>Ano</label>
+            <input type="text" name="ano" value="{{ ano }}"> <br/>
 
-        <button type="submit" class="ui verde button">Salvar</button><br>
-        <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
-    </form>
-</body>
+            <button type="submit" class="ui verde button">Salvar</button><br>
+            <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
+        </form>
+    </body>
 </html>

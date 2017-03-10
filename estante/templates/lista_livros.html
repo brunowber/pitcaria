@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% if user.is_anonymous %}
-        <script>
-            alert("Faça o login antes!")
-            {location.href='/estante/'}
-        </script>
-    {% endif %}
-    <meta charset="UTF-8">
-    <title>Lista</title>
-</head>
-
-<body>
-
-    {% for livro in livros %}
-        {% ifequal user.id livro.dono.id %}
-            <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
-        {% endifequal %}
-    {%endfor %}
-    <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
-
-</body>
+    <head>
+        <title>Biblioteca</title>
+        <meta charset="UTF-8">
+        {% if user.is_anonymous %}
+            <script>
+                alert("Faça o login antes!")
+                {location.href='/estante/'}
+            </script>
+        {% endif %}
+    </head>
+    <body>
+        {% for livro in livros %}
+            {% ifequal user.id livro.dono.id %}
+                <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
+            {% endifequal %}
+        {%endfor %}
+        <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
+    </body>
 </html>

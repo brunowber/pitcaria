@@ -1,33 +1,35 @@
 <html>
-<head>
-    {% if user.is_authenticated %}
-        <script>
-            {location.href='/estante/perfil'}
-        </script>
-    {% endif %}
-
-</head>
-<body>
-    <form method="POST" action="{% url 'estante:login' %}" class='ui form'>
-        {% csrf_token %}
-
-        {% if msg %}
-            <div>{{ msg }}</div>
+    <head>
+        <title>Login</title>
+        {% if user.is_authenticated %}
+            <script>
+                {location.href='/estante/perfil'}
+            </script>
         {% endif %}
 
-{#        {% if request.session.get_expiry_age == 0 %}#}
-{#            <p>sessão expirada</p>#}
-{#        {% endif %}#}
 
-        <label>Login</label>
-        <input type="text" name="username"> <br/>
+    </head>
+    <body>
+        <form method="POST" action="{% url 'estante:login' %}" class='ui form'>
+            {% csrf_token %}
 
-        <label>Senha</label>
-        <input type="password" name="password"> <br/>
+            {% if msg %}
+                <div>{{ msg }}</div>
+            {% endif %}
 
-        <button type="submit" class="ui verde button">Entrar</button></br>
-    </form>
-    <a href="{% url 'estante:cadastro-pessoa' %}" >criar</a></br>
-    <a href="{% url 'estante:ativar' %}" >Ativar usuário inativo</a></br>
-</body>
+    {#        {% if request.session.get_expiry_age == 0 %}#}
+    {#            <p>sessão expirada</p>#}
+    {#        {% endif %}#}
+
+            <label>Login</label>
+            <input type="text" name="username"> <br/>
+
+            <label>Senha</label>
+            <input type="password" name="password"> <br/>
+
+            <button type="submit" class="ui verde button">Entrar</button></br>
+        </form>
+        <a href="{% url 'estante:cadastro-pessoa' %}" >criar</a></br>
+        <a href="{% url 'estante:ativar' %}" >Ativar usuário inativo</a></br>
+    </body>
 </html>

@@ -1,13 +1,6 @@
 <html>
-<head>
-{#        {% if request.session.user %}#}
-{#        <script>#}
-{#            alert("Sessão expirada!")#}
-{#            {location.href='/estante/'}#}
-{#        </script>#}
-{#    {% endif %}#}
-</head>
     <head>
+        <title>Editar cadastro</title>
         {% if user.is_anonymous %}
             <script>
                 alert("Faça o login antes!" )

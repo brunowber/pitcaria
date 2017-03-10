@@ -1,38 +1,41 @@
 <html>
-<body>
-    <form method="POST" action="{% url 'estante:cadastro-pessoa' %}" class='ui form'>
+    <head>
+        <title>Cadastro</title>
+    </head>
+    <body>
+        <form method="POST" action="{% url 'estante:cadastro-pessoa' %}" class='ui form'>
 
-        {% csrf_token %}
+            {% csrf_token %}
 
-        {% if msg %}
-            <div>{{ msg }}</div>
-        {% endif %}
+            {% if msg %}
+                <div>{{ msg }}</div>
+            {% endif %}
 
-        <label>Login</label>
-        <input type="text" name="username">  <br/>
+            <label>Login</label>
+            <input type="text" name="username">  <br/>
 
-        <label>Senha</label>
-        <input type="password" name="password"> <br/>
+            <label>Senha</label>
+            <input type="password" name="password"> <br/>
 
-        <label>Nome</label>
-        <input type="text" name="first_name"> <br/>
+            <label>Nome</label>
+            <input type="text" name="first_name"> <br/>
 
-        <label>Sobrenome</label>
-        <input type="text" name="last_name"> <br/>
+            <label>Sobrenome</label>
+            <input type="text" name="last_name"> <br/>
 
-        <label>CPF</label>
-        <input type="text" name="cpf"> <br/>
+            <label>CPF</label>
+            <input type="text" name="cpf"> <br/>
 
-        <label>Telefone</label>
-        <input type="text" name="telefone"> <br/>
+            <label>Telefone</label>
+            <input type="text" name="telefone"> <br/>
 
-        <label>Email</label>
-        <input type="text" name="email"> <br/>
+            <label>Email</label>
+            <input type="text" name="email"> <br/>
 
-        <label>Endereço</label>
-        <input type="text" name="endereco"> <br/>
+            <label>Endereço</label>
+            <input type="text" name="endereco"> <br/>
 
-        <button type="submit" class="ui verde button">Salvar</button>
-    </form>
-</body>
+            <button type="submit" class="ui verde button">Salvar</button>
+        </form>
+    </body>
 </html>
