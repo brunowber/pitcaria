@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <title>Lista</title>
 </head>
+
 <body>
 
     {% for livro in livros %}
@@ -17,6 +18,7 @@
             <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
         {% endifequal %}
     {%endfor %}
+    <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
 
 </body>
 </html>

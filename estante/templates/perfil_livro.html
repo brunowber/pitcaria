@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     {% if user.is_anonymous %}
         <script>
             alert("Faça o login antes!")
@@ -9,32 +8,33 @@
         </script>
     {% endif %}
 
-{#    {% if user.id != livro.dono.id %}#}
-{#        <script>#}
-{#            alert("Você não tem posse desse livro!")#}
-{#            {location.href='/estante/perfil/'}#}
-{#        </script>#}
-{#    {% endif %}#}
+    {% if user.id != livro.dono.id %}
+        <script>
+            alert("Você não tem posse desse livro!")
+            {location.href='/estante/perfil/'}
+        </script>
+    {% endif %}
 
     <meta charset="UTF-8">
     <title>{{ livro.titulo }}</title>
 </head>
 
 <body>
-<h2> {{ livro.titulo }} </h2>
-<h5> Editora: {{ livro.editora }}</h5>
-<h5> Autor: {{ livro.autor }}</h5>
-<h5> Ano: {{ livro.ano }}</h5>
-<h5> Dono do livro: {{ livro.dono }}</h5>
+    <h2> {{ livro.titulo }} </h2>
+    <h5> Editora: {{ livro.editora }}</h5>
+    <h5> Autor: {{ livro.autor }}</h5>
+    <h5> Ano: {{ livro.ano }}</h5>
+    <h5> Dono do livro: {{ livro.dono }}</h5>
 
-{% if livro.dono.id == user.id %}
-    <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a>
-    <a href="{% url 'estante:edita-livro' livro.id %}">Esconder</a>
-{% endif %}
+    {% if livro.dono.id == user.id %}
+        <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a>
+        <a href="{% url 'estante:edita-livro' livro.id %}">Esconder</a>
+    {% endif %}
 
-{% if livro.dono.id != user.id %}
-    <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a>
-{% endif %}
+    {% if livro.dono.id != user.id %}
+        <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a>
+    {% endif %}
+    <a href="{% url 'estante:lista_livros' %}">Voltar aos livros</a>
 
 </body>
 </html>

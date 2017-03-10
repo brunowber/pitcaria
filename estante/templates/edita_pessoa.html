@@ -1,4 +1,20 @@
 <html>
+<head>
+{#        {% if request.session.user %}#}
+{#        <script>#}
+{#            alert("Sessão expirada!")#}
+{#            {location.href='/estante/'}#}
+{#        </script>#}
+{#    {% endif %}#}
+</head>
+    <head>
+        {% if user.is_anonymous %}
+            <script>
+                alert("Faça o login antes!" )
+                {location.href='/estante/'}
+            </script>
+        {% endif %}
+    </head>
     <body>
         <h2>Edição de perfil</h2>
         <form method="POST" action="{% url 'estante:editar_perfil' %}" class='ui form'>
@@ -29,7 +45,8 @@
             <label>Endereço</label>
             <input type="text" name="endereco" value="{{ endereco }}"> <br/>
 
-            <button type="submit" class="ui verde button">Salvar</button>
+            <button type="submit" class="ui verde button">Salvar</button><br/>
+            <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
         </form>
     </body>
 </html>

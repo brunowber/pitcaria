@@ -10,9 +10,14 @@
 <body>
     <form method="POST" action="{% url 'estante:login' %}" class='ui form'>
         {% csrf_token %}
+
         {% if msg %}
             <div>{{ msg }}</div>
         {% endif %}
+
+{#        {% if request.session.get_expiry_age == 0 %}#}
+{#            <p>sessão expirada</p>#}
+{#        {% endif %}#}
 
         <label>Login</label>
         <input type="text" name="username"> <br/>

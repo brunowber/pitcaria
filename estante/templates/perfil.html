@@ -6,26 +6,24 @@
                 {location.href='/estante/'}
             </script>
         {% endif %}
-
-
     </head>
+
     <body>
         <h2>Perfil do Usuário</h2>
         {% if msg %}
             <p>{{ msg }}</p>
         {% endif %}
         <div>
-
         <p>nome completo: {{ request.session.first_name }} {{ request.session.last_name }}</p>
         <p>CPF: {{ request.session.cpf }}</p>
         <p>Email: {{ request.session.email }} </p>
         <p>Endereço: {{ request.session.endereco }}</p>
         <p>Telefone: {{ request.session.telefone }}</p>
-        <a href="{% url 'estante:logout' %}">Sair</a>
-        <a href="{% url 'estante:desativar' %}">Desativar</a>
-        <a href="{% url 'estante:editar_perfil' %}">Editar Perfil</a>
-        <a href="{% url 'estante:cadastro-livro' %}">Cadastrar Livro</a>
-        <a href="{% url 'estante:lista_livros' %}">Livros</a>
+        <a href="{% url 'estante:logout' %}">Sair</a><br/>
+        <a href="{% url 'estante:desativar' %}">Desativar</a><br/>
+        <a href="{% url 'estante:editar_perfil' %}">Editar Perfil</a><br/>
+        <a href="{% url 'estante:cadastro-livro' %}">Cadastrar Livro</a><br/>
+        <a href="{% url 'estante:lista_livros' %}">Livros</a><br/>
         </div>
     </body>
 </html>

@@ -1,4 +1,12 @@
 <html>
+    <head>
+        {% if user.is_anonymous %}
+            <script>
+                alert("Faça o login antes!" )
+                {location.href='/estante/'}
+            </script>
+        {% endif %}
+    </head>
 <body>
     <form method="POST" action="{% url 'estante:cadastro-livro' %}" class='ui form'>
         {% csrf_token %}
@@ -18,7 +26,8 @@
         <label>Ano</label>
         <input type="text" name="ano"> <br/>
 
-        <button type="submit" class="ui verde button">Salvar</button>
+        <button type="submit" class="ui verde button">Salvar</button><br>
+        <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
     </form>
 </body>
 </html>

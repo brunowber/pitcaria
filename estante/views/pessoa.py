@@ -10,6 +10,7 @@ from django.shortcuts import render
 
 
 def logout_view(request):
+    request.session.clear_expired()
     logout(request)
     return render(request, 'index.html', {'msg': 'Logout efetuado com sucesso'})
 
@@ -118,6 +119,9 @@ class Login(View):
             request.session['telefone'] = pessoa.telefone
             request.session['email'] = pessoa.email
             request.session['first_name'] = pessoa.first_name
+            request.session.set_expiry(600)
+            request.session.get_expire_at_browser_close()
+
             return render(request, 'perfil.html', {'msg':'Login efetuado com sucesso!'})
         else:
             return render(request, self.template, {'msg': 'Erro usuario ou senha incorretos'})
