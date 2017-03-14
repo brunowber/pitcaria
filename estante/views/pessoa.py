@@ -71,7 +71,7 @@ class CadastraPessoa(View):
             request.session['telefone'] = pessoa.telefone
             request.session['email'] = pessoa.email
             request.session['first_name'] = pessoa.first_name
-            return render(request,'perfil.html', {'msg': 'Informações alteradas com sucesso!'})
+            return render(request, 'perfil.html', {'msg': 'Informações alteradas com sucesso!'})
         else:
             # MODO CADASTRO
             usuario = request.POST['username']
@@ -111,6 +111,7 @@ class Login(View):
             id = request.user.id
             desativo = Pessoa.objects.get(pk=id)
             if desativo.is_active is False:
+                logout(request)
                 return render(request, 'alterar_status.html', {'msg': 'Este usuario está inativo, deseja ativar?'})
             request.session['first_name'] = pessoa.first_name
             request.session['last_name'] = pessoa.last_name
