@@ -97,3 +97,26 @@ class Alterar_status_livro(View):
             else:
                 return render(request, 'lista_livros.html', {'msg': 'Você não é dono deste livro'})
             return render(request, 'index.html')
+
+
+class Procurar(View):
+    template = 'procurar_livro.html'
+    def post(self, request):
+        titulo = request.POST['titulo']
+        autor = request.POST['autor']
+        dono = request.POST['dono']
+        dono = Pessoa.objects.filter(username = dono)
+        context_dict = {}
+        # titulo = Livro.objects.filter(titulo = titulo)
+        # autor = Livro.objects.filter(autor = autor)
+        # dono = Livro.objects.filter(dono = dono)
+        livro = Livro.objects
+        if titulo != "":
+            livro = livro.filter(titulo=titulo)
+            print ("entrou")
+        if dono != "":
+            livro = livro.filter(dono=dono)
+        if autor != "":
+            livro = Livro.objects.filter(autor=autor)
+        context_dict['livro'] = livro
+        return render(request, self.template, context_dict)

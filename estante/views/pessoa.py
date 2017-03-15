@@ -154,8 +154,3 @@ class Alterar_status(View):
                 return render(request, 'alterar_status.html', {'msg': 'Este usuario já esta ativo'})
         else:
             return render(request, 'alterar_status.html', {'msg': 'Usuario ou senha incorretos'})
-
-
-# class Permissao(View):
-#     def get(self, request):
-#         return render(request, 'index.html', {'msg': 'Você não está logado ainda!'})

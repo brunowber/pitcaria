@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Procurar livro</title>
+</head>
+<body>
+    <h3>Livros encontrados</h3>
+
+    {% for livro in livro %}
+        {% if livro.status == True %}
+            <a href="{% url 'estante:perfil_livro' livro.id %}">titulo: {{ livro.titulo }}</a><br> Autor: {{ livro.autor }}<br> Dono: {{ livro.dono }}<br/><br/>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

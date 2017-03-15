@@ -31,12 +31,12 @@
         {% endif %}
 
         {% if livro.dono.id == user.id %}
-            <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a>
-            <a href="{% url 'estante:esconder_livro' livro.id %}">{% if livro.status == True %}Desativar {% endif %} {% if livro.status == False %}Ativar {% endif %}</a>
+            <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a><br/>
+            <a href="{% url 'estante:esconder_livro' livro.id %}">{% if livro.status == True %}Desativar {% endif %} {% if livro.status == False %}Ativar {% endif %}</a><br/>
         {% endif %}
 
         {% if livro.dono.id != user.id %}
-            <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a>
+            <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a><br/>
         {% endif %}
 
         <a href="{% url 'estante:lista_livros' %}">Voltar aos livros</a>
