@@ -11,10 +11,15 @@
         {% endif %}
     </head>
     <body>
+    <h4>Meus livros</h4>
         {% for livro in livros %}
+
             {% ifequal user.id livro.dono.id %}
                 <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
             {% endifequal %}
+            {% if user.id != livro.dono.id %}
+                <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
+            {% endif %}
         {%endfor %}
         <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
     </body>

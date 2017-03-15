@@ -120,8 +120,8 @@ class Login(View):
             request.session['telefone'] = pessoa.telefone
             request.session['email'] = pessoa.email
             request.session['first_name'] = pessoa.first_name
-            request.session.set_expiry(600)
-            request.session.get_expire_at_browser_close()
+            # request.session.set_expiry(600)
+            # request.session.get_expire_at_browser_close()
 
             return render(request, 'perfil.html', {'msg':'Login efetuado com sucesso!'})
         else:
@@ -143,6 +143,7 @@ class Alterar_status(View):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
+        print (user)
         if user:
             ativo = Pessoa.objects.get(username=user)
             if ativo.is_active is False:

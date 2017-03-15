@@ -21,7 +21,6 @@ class PerfilLivro(View):
         livro = Livro.objects.get(pk=id)
         context_dict = {}
         context_dict['livro'] = livro
-        print (context_dict)
         return render(request, self.template, context_dict)
 
 class CadastraLivro(View, Pessoa):
@@ -44,8 +43,6 @@ class CadastraLivro(View, Pessoa):
     def post(self, request, id=None):
 
         titulo = request.POST['titulo']
-        print('Entrou 2')
-
         autor = request.POST['autor']
         editora = request.POST['editora']
         ano = request.POST['ano']
@@ -77,17 +74,18 @@ class CadastraLivro(View, Pessoa):
             return render(request, 'perfil.html', {'msg': 'Livro cadastrado com sucesso!'})
 
 class Alterar_status_livro(View):
+    template = 'perfil_livro.html'
     def get(self, request, id=None):
-        user = request.user
-        if request.user.is_authenticated():
+        if id:
             livro = Livro.objects.get(pk=id)
-            if livro.dono == user.username:
+            if livro.status == True:
                 livro.status = False
                 livro.save()
+                return redirect('/estante/livro/'+ str(livro.id))
             else:
-                return render(request, 'lista_livros.html', {'msg':'Você não é dono deste livro'})
-            return render(request, 'index.html')
-        return render(request, 'perfil_livro.html')
+                livro.status = True
+                livro.save()
+                return redirect('/estante/livro/'+ str (livro.id))
 
     def post(self, request, id=None):
         user = request.user

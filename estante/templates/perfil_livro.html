@@ -7,10 +7,10 @@
                 {location.href='/estante/'}
             </script>
         {% endif %}
-        {% if user.id != livro.dono.id %}
+        {% if user.id != livro.dono.id and livro.status == False %}
             <script>
-                alert("Você não tem posse desse livro!")
-                {location.href='/estante/perfil/'}
+                alert("Livro desativado!")
+                {location.href='/estante/'}
             </script>
         {% endif %}
         <meta charset="UTF-8">
@@ -22,13 +22,23 @@
         <h5> Autor: {{ livro.autor }}</h5>
         <h5> Ano: {{ livro.ano }}</h5>
         <h5> Dono do livro: {{ livro.dono }}</h5>
+
+        {% if livro.status == True %}
+            <h5>Status: Ativo</h5>
+        {% endif %}
+        {% if livro.status == False %}
+            <h5>Status: Desativado</h5>
+        {% endif %}
+
         {% if livro.dono.id == user.id %}
             <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a>
-            <a href="{% url 'estante:edita-livro' livro.id %}">Esconder</a>
+            <a href="{% url 'estante:esconder_livro' livro.id %}">{% if livro.status == True %}Desativar {% endif %} {% if livro.status == False %}Ativar {% endif %}</a>
         {% endif %}
+
         {% if livro.dono.id != user.id %}
             <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a>
         {% endif %}
+
         <a href="{% url 'estante:lista_livros' %}">Voltar aos livros</a>
     </body>
 </html>
