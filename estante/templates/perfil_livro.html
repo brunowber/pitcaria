@@ -37,6 +37,10 @@
 
         {% if livro.dono.id != user.id %}
             <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a><br/>
+            {% if livro.status == True %}
+               <a href="{% url 'estante:emprestimo' livro.id %}">Emprestar</a>
+            {% endif %}
+            <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a>
         {% endif %}
 
         <a href="{% url 'estante:lista_livros' %}">Voltar aos livros</a>

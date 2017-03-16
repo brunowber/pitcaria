@@ -9,4 +9,5 @@ class Emprestimo(models.Model):
     livro_emprestado = models.ForeignKey(Livro)
     pegou_emprestado = models.ForeignKey(Pessoa)
 
-
+    def __str__(self):
+        return self.livro_emprestado.titulo

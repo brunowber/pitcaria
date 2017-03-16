@@ -3,8 +3,6 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.shortcuts import render
 
 
