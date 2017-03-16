@@ -6,11 +6,14 @@
 </head>
 <body>
     <h3>Livros encontrados</h3>
-
+    {% if not livro %}
+            <h5>Nenhum livro encontrado</h5>
+        {% endif %}
     {% for livro in livro %}
-        {% if livro.status == True %}
+        {% if livro.status == True and livro.dono.is_active == True %}
             <a href="{% url 'estante:perfil_livro' livro.id %}">titulo: {{ livro.titulo }}</a><br> Autor: {{ livro.autor }}<br> Dono: {{ livro.dono }}<br/><br/>
         {% endif %}
     {% endfor %}
+    <a href="{% url 'estante:lista_livros' %}">Voltar a sua biblioteca</a><br/>
 </body>
 </html>
