@@ -3,6 +3,7 @@ from estante.models import Pessoa
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from estante.models.livro import Livro
+from estante.models.emprestimo import Emprestimo
 
 
 class DicLivro(View):
@@ -20,6 +21,12 @@ class PerfilLivro(View):
     def get(self, request, id=None):
         livro = Livro.objects.get(pk=id)
         context_dict = {}
+        emprestimo = Emprestimo.objects.filter(livro_emprestado_id=livro.id)
+        print (emprestimo)
+        if emprestimo:
+            print ('aqui')
+            context_dict['emprestimo'] = emprestimo[0]
+        print(emprestimo)
         context_dict['livro'] = livro
         return render(request, self.template, context_dict)
 

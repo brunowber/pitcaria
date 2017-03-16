@@ -17,6 +17,10 @@
                 <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
             {% endifequal %}
         {%endfor %}
+     <h4>Todos os livros</h4>
+        {% for livro in livros %}
+            <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
+        {%endfor %}
 
     <br/>
     <div>

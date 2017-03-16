@@ -7,12 +7,6 @@
                 {location.href='/estante/'}
             </script>
         {% endif %}
-        {% if user.id != livro.dono.id and livro.status == False %}
-            <script>
-                alert("Livro desativado!")
-                {location.href='/estante/'}
-            </script>
-        {% endif %}
         <meta charset="UTF-8">
         <title>{{ livro.titulo }}</title>
     </head>
@@ -23,24 +17,25 @@
         <h5> Autor: {{ livro.autor }}</h5>
         <h5> Ano: {{ livro.ano }}</h5>
         <h5> Dono do livro: {{ livro.dono }}</h5>
-        {% if livro.status == True %}
-            <h5>Status: Ativo</h5>
-        {% endif %}
-        {% if livro.status == False %}
-            <h5>Status: Desativado</h5>
-        {% endif %}
 
-        {% if livro.dono.id == user.id %}
+
+        {% if livro.dono.id == user.id and not emprestimo%}
+            {% if livro.status == True %}
+                <h5>Status: Ativo</h5>
+            {% endif %}
+            {% if livro.status == False %}
+                <h5>Status: Desativado</h5>
+            {% endif %}
             <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a><br/>
             <a href="{% url 'estante:esconder_livro' livro.id %}">{% if livro.status == True %}Desativar {% endif %} {% if livro.status == False %}Ativar {% endif %}</a><br/>
         {% endif %}
-
         {% if livro.dono.id != user.id %}
-            <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a><br/>
-            {% if livro.status == True %}
-               <a href="{% url 'estante:emprestimo' livro.id %}">Emprestar</a>
+            {% if emprestimo.pegou_emprestado_id == user.id %}
+               <a href="{% url 'estante:devolver_livro' emprestimo.id %}">Devolver</a>
             {% endif %}
-            <a href="{% url 'estante:edita-livro' livro.id %}">Devolver</a>
+            {% if not emprestimo and livro.status == True %}
+                <a href="{% url 'estante:emprestimo' livro.id %}">Emprestar</a>
+            {% endif %}
         {% endif %}
 
         <a href="{% url 'estante:lista_livros' %}">Voltar aos livros</a>

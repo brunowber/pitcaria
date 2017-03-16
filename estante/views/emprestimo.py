@@ -23,3 +23,15 @@ class Cad_emprestimo(View):
         livro.save()
 
         return render(request, 'perfil.html')
+
+class Devolver(View):
+    def get(self, request, id=None):
+        emprestimo = Emprestimo.objects.get(pk=id)
+        livro = Livro.objects.get(pk=emprestimo.livro_emprestado_id)
+
+        livro.status = True
+        livro.save()
+
+        emprestimo.delete()
+
+        return render(request, 'perfil.html')
