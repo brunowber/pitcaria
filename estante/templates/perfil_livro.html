@@ -27,7 +27,13 @@
                 <h5>Status: Desativado</h5>
             {% endif %}
             <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a><br/>
-            <a href="{% url 'estante:esconder_livro' livro.id %}">{% if livro.status == True %}Desativar {% endif %} {% if livro.status == False %}Ativar {% endif %}</a><br/>
+
+            <form method="POST" action="{% url 'estante:esconder_livro' livro.id %}" class='ui form'>
+                <button type="submit" class="ui verde button">Mudar Status</button>
+                {% csrf_token %}
+            </form>
+
+{#            <a href="{% url 'estante:esconder_livro' livro.id %}">{% if livro.status == True %}Desativar {% endif %} {% if livro.status == False %}Ativar {% endif %}</a><br/>#}
         {% endif %}
         {% if livro.dono.id != user.id %}
             {% if emprestimo.pegou_emprestado_id == user.id %}

@@ -83,27 +83,30 @@ class CadastraLivro(View, Pessoa):
 
 class Alterar_status_livro(View):
     template = 'perfil_livro.html'
-    def get(self, request, id=None):
-        if id:
-            livro = Livro.objects.get(pk=id)
-            if livro.status == True:
-                livro.status = False
-                livro.save()
-                return redirect('/estante/livro/'+ str(livro.id))
-            else:
-                livro.status = True
-                livro.save()
-                return redirect('/estante/livro/'+ str (livro.id))
+    # def get(self, request, id=None):
+    #     if id:
+    #         livro = Livro.objects.get(pk=id)
+    #         if livro.status == True:
+    #             livro.status = False
+    #             livro.save()
+    #             return redirect('/estante/livro/'+ str(livro.id))
+    #         else:
+    #             livro.status = True
+    #             livro.save()
+    #             return redirect('/estante/livro/'+ str (livro.id))
 
     def post(self, request, id=None):
         user = request.user
         if request.user.is_authenticated():
             livro = Livro.objects.get(pk=id)
-            if livro.dono == user.username:
+            if livro.status == False:
                 livro.status = True
                 livro.save()
+                return redirect('/estante/livro/' + str(livro.id))
             else:
-                return render(request, 'lista_livros.html', {'msg': 'Você não é dono deste livro'})
+                livro.status = False
+                livro.save()
+                return redirect('/estante/livro/' + str(livro.id))
             return render(request, 'index.html')
 
 
