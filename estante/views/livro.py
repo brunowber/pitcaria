@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from estante.models.livro import Livro
 from estante.models.emprestimo import Emprestimo
 
-
 class DicLivro(View):
     template = 'lista_livros.html'
 
