@@ -17,9 +17,18 @@
                 <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
             {% endifequal %}
         {%endfor %}
-     <h4>Todos os livros</h4>
+    <h3>Livros Emprestados</h3>
+        {% for emprestimo in lista %}
+            {{  }}
+            {% if emprestimo.pegou_emprestado_id == user.id %}
+                <a href="{% url 'estante:perfil_livro' emprestimo.livro_emprestado_id %}">{{ emprestimo.livro_emprestado.titulo }}</a><br/>
+            {% endif %}
+        {%endfor %}
+    <h3>Todos os livros</h3>
         {% for livro in livros %}
-            <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
+             {% if user.id != livro.dono.id %}
+                <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
+            {% endif %}
         {%endfor %}
 
     <br/>
