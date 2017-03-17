@@ -108,12 +108,13 @@ class Procurar(View):
         dono = request.POST['dono']
         dono = Pessoa.objects.filter(username = dono)
         livros ={}
+        pesquisa = []
         livro = Livro.objects
         if titulo != '':
-            livros['livro'] = livro.filter(titulo=titulo)
+            pesquisa = livro.filter(titulo__icontains=titulo)
         if dono:
-            livros['livro'] = livro.filter(dono=dono)
+            pesquisa = livro.filter(dono=dono)
         if autor != '':
-            livros['livro'] = Livro.objects.filter(autor=autor)
-
+            pesquisa = livro.filter(autor__icontains=autor)
+        livros ['livro'] = pesquisa
         return render(request, self.template, livros)
