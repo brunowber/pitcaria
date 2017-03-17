@@ -7,6 +7,5 @@ class Pessoa(User):
     endereco = models.CharField(max_length=30)
     telefone = models.IntegerField()
 
-
     def __str__(self):
         return self.username

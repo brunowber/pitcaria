@@ -83,21 +83,10 @@ class CadastraLivro(View, Pessoa):
 
 class Alterar_status_livro(View):
     template = 'perfil_livro.html'
-    # def get(self, request, id=None):
-    #     if id:
-    #         livro = Livro.objects.get(pk=id)
-    #         if livro.status == True:
-    #             livro.status = False
-    #             livro.save()
-    #             return redirect('/estante/livro/'+ str(livro.id))
-    #         else:
-    #             livro.status = True
-    #             livro.save()
-    #             return redirect('/estante/livro/'+ str (livro.id))
 
     def post(self, request, id=None):
         user = request.user
-        if request.user.is_authenticated():
+        if user.is_authenticated():
             livro = Livro.objects.get(pk=id)
             if livro.status == False:
                 livro.status = True
@@ -107,11 +96,12 @@ class Alterar_status_livro(View):
                 livro.status = False
                 livro.save()
                 return redirect('/estante/livro/' + str(livro.id))
-            return render(request, 'index.html')
+        return render(request, 'index.html')
 
 
 class Procurar(View):
     template = 'procurar_livro.html'
+
     def post(self, request):
         titulo = request.POST['titulo']
         autor = request.POST['autor']
