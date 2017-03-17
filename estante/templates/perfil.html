@@ -20,10 +20,13 @@
         <p>Endereço: {{ request.session.endereco }}</p>
         <p>Telefone: {{ request.session.telefone }}</p>
         <a href="{% url 'estante:logout' %}">Sair</a><br/>
-        <a href="{% url 'estante:desativar' %}">Desativar</a><br/>
         <a href="{% url 'estante:editar_perfil' %}">Editar Perfil</a><br/>
         <a href="{% url 'estante:cadastro-livro' %}">Cadastrar Livro</a><br/>
         <a href="{% url 'estante:lista_livros' %}">Livros</a><br/>
+        <form method="POST" action="{% url 'estante:desativar' %}" class='ui form'>
+            <button type="submit" class="ui verde button">Desativar</button>
+            {% csrf_token %}
+        </form>
         </div>
     </body>
 </html>

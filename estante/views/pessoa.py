@@ -128,27 +128,26 @@ class Login(View):
 
 class Alterar_status(View):
     def get(self, request):
-        user = request.user
-        if request.user.is_authenticated():
-            ativo = Pessoa.objects.get(username=user)
+        return render(request, 'alterar_status.html')
+
+    def post(self, request):
+        if request.user.id:
+            ativo = Pessoa.objects.get(username=request.user)
             ativo.is_active = False
             ativo.save()
             logout(request)
             return redirect('/estante/')
-        return render(request, 'alterar_status.html')
-
-    def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        print (user)
-        if user:
-            ativo = Pessoa.objects.get(username=user)
-            if ativo.is_active is False:
-                ativo.is_active = True
-                ativo.save()
-                return render(request, 'index.html', {'msg': 'usuario ativado com sucesso!'})
-            else:
-                return render(request, 'alterar_status.html', {'msg': 'Este usuario já esta ativo'})
         else:
-            return render(request, 'alterar_status.html', {'msg': 'Usuario ou senha incorretos'})
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user:
+                ativo = Pessoa.objects.get(username=user)
+                if ativo.is_active is False:
+                    ativo.is_active = True
+                    ativo.save()
+                    return render(request, 'index.html', {'msg': 'usuario ativado com sucesso!'})
+                else:
+                    return render(request, 'alterar_status.html', {'msg': 'Este usuario já esta ativo'})
+            else:
+                return render(request, 'alterar_status.html', {'msg': 'Usuario ou senha incorretos'})

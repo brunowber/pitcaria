@@ -1,6 +1,12 @@
 <html>
     <head>
         <title>Ativação de conta</title>
+                {% if user.id %}
+            <script>
+                alert("Página inacessivel!" )
+                {location.href='/estante/'}
+            </script>
+        {% endif %}
     </head>
     <body>
          <form method="POST" action="{% url 'estante:ativar' %}" class='ui form'>
@@ -8,9 +14,6 @@
              {% if msg %}
                 <p>{{ msg }}</p>
              {% endif %}
-
-
-
              <label>Ativar usuário inativo</label><br>
              {% csrf_token %}
              <label>Login</label>

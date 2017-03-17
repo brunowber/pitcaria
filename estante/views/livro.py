@@ -13,15 +13,12 @@ class DicLivro(View):
         context_dict = {}
         livros = Livro.objects.all()
         context_dict['livros'] = livros
-        i=0
+        emprestimos = []
         for livro in livros:
             emprestimo = Emprestimo.objects.filter(livro_emprestado_id=livro.id).all()
             if emprestimo:
-                context_dict[i] = emprestimo
-                i += 1
-                print (emprestimo,i)
-
-        print (context_dict[0])
+                emprestimos += emprestimo
+        context_dict['emprestimos'] = emprestimos
         return render(request, self.template, context_dict)
 
 class PerfilLivro(View):
