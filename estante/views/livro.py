@@ -47,7 +47,6 @@ class CadastraLivro(View, Pessoa):
             context_dict['ano'] = livro.ano
             return render(request, 'edita_livro.html', context_dict)
         else:
-
             return render(request, self.template)
 
     def post(self, request, id=None):

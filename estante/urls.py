@@ -1,13 +1,13 @@
 from django.conf.urls import url
+from estante import views
 from estante.views import *
 from django.views.generic.base import TemplateView
-from django.contrib.auth import logout
+
 
 urlpatterns = [
     url(r'^$', Login.as_view(), name='login'),
     url(r'^cad_pessoa/$', CadastraPessoa.as_view(), name='cadastro-pessoa'),
-    # url(r'^logout/$', views.logout_view, name='logout'),
-    url(r'^logout/$', django.contrib.auth.views.logout, {'next_page':'/estante/login'}, name='logout'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/estante'}, name='logout'),
     url(r'^cad_livro/$', CadastraLivro.as_view(), name='cadastro-livro'),
     url(r'^cad_livro/(?P<id>\d+)/$', CadastraLivro.as_view(), name='edita-livro'),
     url(r'^desativar/$', Alterar_status.as_view(), name='desativar'),
