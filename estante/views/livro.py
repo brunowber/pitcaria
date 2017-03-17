@@ -13,12 +13,15 @@ class DicLivro(View):
         context_dict = {}
         livros = Livro.objects.all()
         context_dict['livros'] = livros
-        emprestimos = []
+        i=0
         for livro in livros:
             emprestimo = Emprestimo.objects.filter(livro_emprestado_id=livro.id).all()
             if emprestimo:
-                emprestimos += emprestimo
-        context_dict['emprestimos'] = emprestimos
+                context_dict[i] = emprestimo
+                i += 1
+                print (emprestimo,i)
+
+        print (context_dict[0])
         return render(request, self.template, context_dict)
 
 class PerfilLivro(View):
@@ -58,7 +61,6 @@ class CadastraLivro(View, Pessoa):
         ano = request.POST['ano']
         if id:
             # MODO EDIÇÃO
-            print('entrou')
             livro = Livro.objects.get(pk=id)
             livro.titulo = titulo
             livro.autor = autor
