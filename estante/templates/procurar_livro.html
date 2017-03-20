@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Procurar livro</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_anonymous %}
+        <script>
+            alert("Faça o login antes!" )
+            {location.href='/estante/'}
+        </script>
+    {% endif %}
     <h3>Livros encontrados</h3>
     {% if not livro %}
             <h5>Nenhum livro encontrado</h5>
@@ -15,5 +16,4 @@
         {% endif %}
     {% endfor %}
     <a href="{% url 'estante:lista_livros' %}">Voltar a sua biblioteca</a><br/>
-</body>
-</html>
+{% endblock content %}

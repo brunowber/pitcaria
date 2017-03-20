@@ -1,19 +1,16 @@
-<html>
-    <head>
-        <title>{{ user }}</title>
-        {% if user.is_anonymous %}
-            <script>
-                alert("Faça o login antes!" )
-                {location.href='/estante/'}
-            </script>
-        {% endif %}
-    </head>
-    <body>
-        <h2>Perfil do Usuário</h2>
-        {% if msg %}
-            <p>{{ msg }}</p>
-        {% endif %}
-        <div>
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_anonymous %}
+        <script>
+            alert("Faça o login antes!" )
+            {location.href='/estante/'}
+        </script>
+    {% endif %}
+    <h2>Perfil do Usuário</h2>
+    {% if msg %}
+        <p>{{ msg }}</p>
+    {% endif %}
+    <div>
         <p>nome completo: {{ request.session.first_name }} {{ request.session.last_name }}</p>
         <p>CPF: {{ request.session.cpf }}</p>
         <p>Email: {{ request.session.email }} </p>
@@ -27,6 +24,5 @@
             <button type="submit" class="ui verde button">Desativar</button>
             {% csrf_token %}
         </form>
-        </div>
-    </body>
-</html>
+    </div>
+{% endblock content %}

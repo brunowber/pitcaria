@@ -114,6 +114,6 @@ class Procurar(View):
         if dono:
             livros['livro'] = livro.filter(dono=dono)
         if autor != '':
-            livros['livro'] = Livro.objects.filter(autor=autor)
+            livros['livro'] = Livro.filter(autor=autor)
 
         return render(request, self.template, livros)

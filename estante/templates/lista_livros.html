@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Biblioteca</title>
-        <meta charset="UTF-8">
-        {% if user.is_anonymous %}
-            <script>
-                alert("Faça o login antes!")
-                {location.href='/estante/'}
-            </script>
-        {% endif %}
-    </head>
-    <body>
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_anonymous %}
+        <script>
+            alert("Faça o login antes!" )
+            {location.href='/estante/'}
+        </script>
+    {% endif %}
     <h3>Meus livros</h3>
         {% for livro in livros %}
             {% ifequal user.id livro.dono.id %}
@@ -46,5 +41,4 @@
         </form>
     </div>
         <a href="{% url 'estante:perfil' %}">Voltar ao perfil</a>
-    </body>
-</html>
+{% endblock content %}
