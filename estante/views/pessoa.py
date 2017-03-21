@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
+from estante.forms.pessoa import PessoaForm
 
 class CadastraPessoa(View):
     template = 'cad_pessoa.html'
@@ -24,7 +25,8 @@ class CadastraPessoa(View):
             context_dict['email'] = pessoa.email
             return render(request, 'edita_pessoa.html', context_dict)
         else:
-            return render(request, self.template, {'msg': 'Novo Cadastro'})
+            form = PessoaForm()
+            return render(request, self.template, {'form': form})
 
     def post(self, request):
 
@@ -57,24 +59,30 @@ class CadastraPessoa(View):
             return render(request, 'perfil.html', {'msg': 'Informações alteradas com sucesso!'})
         else:
             # MODO CADASTRO
-            usuario = request.POST['username']
-            if Pessoa.objects.filter(username=usuario).exists() or Pessoa.objects.filter(cpf=cpf).exists():
-                return render(request, self.template, {'msg': 'Erro, Usuario ou cpf ja existente'})
-            password = request.POST['password']
-            pessoa = Pessoa()
-
-            pessoa.first_name = first_name
-            pessoa.last_name = last_name
-            pessoa.cpf = cpf
-            pessoa.endereco = endereco
-            pessoa.telefone = telefone
-            pessoa.email = email
-            pessoa.username = usuario
-            pessoa.set_password(password)
-
-            pessoa.save()
-
-            return render(request, 'index.html')
+            # usuario = request.POST['username']
+            # if Pessoa.objects.filter(username=usuario).exists() or Pessoa.objects.filter(cpf=cpf).exists():
+            #     return render(request, self.template, {'msg': 'Erro, Usuario ou cpf ja existente'})
+            # password = request.POST['password']
+            # pessoa = Pessoa()
+            #
+            # pessoa.first_name = first_name
+            # pessoa.last_name = last_name
+            # pessoa.cpf = cpf
+            # pessoa.endereco = endereco
+            # pessoa.telefone = telefone
+            # pessoa.email = email
+            # pessoa.username = usuario
+            # pessoa.set_password(password)
+            #
+            # pessoa.save()
+            #
+            form = PessoaForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return render(request, 'index.html')
+            else:
+                print form.errors
+        return render(request, 'cad_pessoa.html', {'form': form})
 
 
 class Login(View):

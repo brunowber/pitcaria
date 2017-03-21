@@ -8,8 +8,11 @@
             <div>{{ msg }}</div>
         {% endif %}
 
-        <label>Login</label>
-        <input type="text" name="username">  <br/>
+        {% if form.username.errors %}
+            {{ form.username.errors }}
+        {% endif %}
+        <label>{{ form.username.label }}</label>
+        {{ form.username }}
 
         <label>Senha</label>
         <input type="password" name="password"> <br/>
@@ -20,8 +23,12 @@
         <label>Sobrenome</label>
         <input type="text" name="last_name"> <br/>
 
-        <label>CPF</label>
-        <input type="text" name="cpf"> <br/>
+        {% if form.cpf.errors %}
+            {{ form.cpf.errors }}
+        {% endif %}
+        <label>{{ form.cpf.label }}</label>
+        {{ form.cpf }}
+
 
         <label>Telefone</label>
         <input type="text" name="telefone"> <br/>
