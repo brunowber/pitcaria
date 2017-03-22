@@ -21,6 +21,13 @@ class PessoaForm(forms.ModelForm):
         else:
             raise forms.ValidationError("CPF deve conter 11 dígitos!")
 
+    def clean_username(self):
+        username =  self.cleaned_data['username']
+        if Pessoa.objects.filter(username=username).exists():
+            raise forms.ValidationError("Usuário já existe")
+        else:
+            return username
+
 class PessoaEditForm(forms.ModelForm):
     cpf = forms.IntegerField(label='CPF')
     endereco = forms.CharField(max_length=30, label='Endereço')
@@ -37,3 +44,10 @@ class PessoaEditForm(forms.ModelForm):
             return cpf
         else:
             raise forms.ValidationError("CPF deve conter 11 dígitos!")
+
+    def clean_username(self):
+        username =  self.cleaned_data['username']
+        if Pessoa.objects.filter(username=username).exists():
+            raise forms.ValidationError("Usuário já existe")
+        else:
+            return username
