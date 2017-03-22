@@ -4,6 +4,7 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 from estante.models.livro import Livro
 from estante.models.emprestimo import Emprestimo
+from estante.forms.livro import LivroForm, LivroEditaForm
 
 class DicLivro(View):
     template = 'lista_livros.html'
@@ -34,52 +35,37 @@ class PerfilLivro(View):
 
 class CadastraLivro(View, Pessoa):
     template = 'cad_livro.html'
+    template2= 'edita_livro.html'
     def get(self, request, id=None):
         if id:
-            livro = Livro.objects.get(pk=id)
-            context_dict = {}
-            context_dict['msg'] = 'Atualizar Cadastro'
-            context_dict['id'] = id
-            context_dict['id_livro'] = livro.id_livro
-            context_dict['titulo'] = livro.titulo
-            context_dict['autor'] = livro.autor
-            context_dict['editora'] = livro.editora
-            context_dict['ano'] = livro.ano
-            return render(request, 'edita_livro.html', context_dict)
+            livro = Livro.objects.get(id=id)
+            form = LivroEditaForm(instance=livro)
+            return render(request, self.template2, {'form':form, 'id':id})
         else:
-            return render(request, self.template)
+            form = LivroForm()
+            return render(request, self.template, {'form': form})
 
     def post(self, request, id=None):
-
-        titulo = request.POST['titulo']
-        autor = request.POST['autor']
-        editora = request.POST['editora']
-        ano = request.POST['ano']
         if id:
-            # MODO EDIÇÃO
-            livro = Livro.objects.get(pk=id)
-            livro.titulo = titulo
-            livro.autor = autor
-            livro.editora = editora
-            livro.ano = ano
-            livro.save()
-            return redirect('/estante/lista_livros')
+            form = LivroEditaForm(request.POST, instance=Livro.objects.get(id=id))
+            if form.is_valid():
+                form.save()
+                return redirect('/estante/lista_livros')
+            else:
+                print form.errors
+                return render(request, self.template2, {'form': form, 'id': id})
+
         else:
-            # MODO CADASTRO
-            dono = request.user.id
-            id_livro = request.POST['id_livro']
-            livro = Livro()
-
-            livro.id_livro = id_livro
-            livro.titulo = titulo
-            livro.autor = autor
-            livro.editora = editora
-            livro.ano = ano
-            livro.dono = Pessoa.objects.get(pk=dono)
-
-            livro.save()
-
-            return render(request, 'perfil.html', {'msg': 'Livro cadastrado com sucesso!'})
+            form = LivroForm(request.POST)
+            if form.is_valid():
+                livro = form.save(commit=False)
+                livro.dono = Pessoa.objects.get(pk=request.user.id)
+                livro.status = True
+                livro.save()
+                return render(request, 'perfil.html', {'msg': "Livro Cadastrado com sucesso!"})
+            else:
+                print form.errors
+        return render(request, 'cad_livro.html', {'form': form})
 
 class Alterar_status_livro(View):
     template = 'perfil_livro.html'
@@ -111,9 +97,9 @@ class Procurar(View):
         pesquisa = []
         livro = Livro.objects
         if titulo != '':
-            pesquisa = livro.filter(titulo__icontains=titulo)
+            pesquisa = livro.filter(titulo__iexact=titulo)
         if dono:
-            pesquisa = livro.filter(dono=dono)
+            pesquisa = livro.filter(dono__icontains=dono)
         if autor != '':
             pesquisa = livro.filter(autor__icontains=autor)
         livros['livro'] = pesquisa

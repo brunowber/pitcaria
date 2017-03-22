@@ -20,8 +20,8 @@
         {% if livro.status == False %}
             <h5>Status: Desativado</h5>
         {% endif %}
-        <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a><br/>
 
+        <a href="{% url 'estante:edita-livro' livro.id %}">Editar</a><br/>
         <form method="POST" action="{% url 'estante:esconder_livro' livro.id %}" class='ui form'>
             <button type="submit" class="ui verde button">Mudar Status</button>
             {% csrf_token %}
