@@ -59,24 +59,16 @@ class SenhaEditForm(forms.ModelForm):
 
     class Meta:
         model = Pessoa
-        fields = 'password'
+        fields = ('password',)
 
 
 class LoginForm(forms.ModelForm):
+
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = Pessoa
-        fields = 'password', 'username'
-
-    def clean_password(self):
-        username = self.cleaned_data['username']
-        password = self.cleaned_data['password']
-        pessoa = Pessoa.objects.get(username=username)
-        if pessoa.password != password:
-            raise forms.ValidationError('Usuário e senha não combinam')
-        else:
-            return password
+        fields = ('password', 'username',)
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -85,3 +77,11 @@ class LoginForm(forms.ModelForm):
             return username
         else:
             raise forms.ValidationError('Usuário não existe')
+    #
+    # def clean_password(self):
+    #     password = self.cleaned_data['password']
+    #     # pessoa = Pessoa.objects.get(username=username)
+    #     if pessoa.password != password:
+    #         raise forms.ValidationError('Usuário e senha não combinam')
+    #     else:
+    #         return password

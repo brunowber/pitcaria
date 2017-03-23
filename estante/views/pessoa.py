@@ -46,7 +46,7 @@ class CadastraPessoa(View):
                 pessoa.set_password(request.POST['password'])
                 pessoa.is_active = True
                 pessoa.save()
-                return render(request, self.template3)
+                return render(request, self.template3, {'form': LoginForm})
             else:
                 print form.errors
         return render(request, self.template, {'form': form})
@@ -63,30 +63,43 @@ class Login(View):
 
     def post(self, request):
         form = LoginForm(data=request.POST)
-        username = form.username
-        password = form.password
+        print (form)
+        if form.is_valid():
+            print ('parabens é valido')
+        else:
+            print form.errors
+        username = form.save(commit = False).username
+        password = form.save(commit = False).password
+        # username = request.POST['username']
+        # password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user:
+            print ("entrou")
             login(request, user)
-            pessoa = Pessoa.objects.get(username=username)
+            pessoa = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
             id = request.user.id
             desativo = Pessoa.objects.get(pk=id)
             if desativo.is_active is False:
                 logout(request)
-                return render(request, self.template3, {'msg': 'Este usuario está inativo, deseja ativar?', 'form':form})
-            request.session['first_name'] = pessoa.first_name
-            request.session['last_name'] = pessoa.last_name
-            request.session['cpf'] = pessoa.cpf
-            request.session['endereco'] = pessoa.endereco
-            request.session['telefone'] = pessoa.telefone
-            request.session['email'] = pessoa.email
-            request.session['first_name'] = pessoa.first_name
-            request.session.set_expiry(600)
-            request.session.get_expire_at_browser_close()
-
-            return render(request, self.template2, {'msg':'Login efetuado com sucesso!'})
+                return render(request, self.template3, {'msg': 'Este usuario está inativo, deseja ativar?', 'form': LoginForm})
+            if pessoa.is_valid():
+                print ("entrou :D")
+                pessoa = pessoa.save(commit=False)
+                request.session['first_name'] = pessoa.first_name
+                request.session['last_name'] = pessoa.last_name
+                request.session['cpf'] = pessoa.cpf
+                request.session['endereco'] = pessoa.endereco
+                request.session['telefone'] = pessoa.telefone
+                request.session['email'] = pessoa.email
+                request.session['first_name'] = pessoa.first_name
+                request.session.set_expiry(6000)
+                request.session.get_expire_at_browser_close()
+                return render(request, self.template2, {'msg': 'Login efetuado com sucesso!'})
+            else:
+                print ('não entrou :c')
+                print pessoa.errors
         else:
-            return render(request, self.template, {'form':form})
+            return render(request, self.template, {'form': LoginForm})
 
 
 
