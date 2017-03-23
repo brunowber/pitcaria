@@ -4,10 +4,12 @@ from django.shortcuts import redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
-from estante.forms.pessoa import PessoaForm, PessoaEditForm
+from estante.forms.pessoa import PessoaForm, PessoaEditForm, SenhaEditForm, LoginForm
 
 class CadastraPessoa(View):
     template = 'cad_pessoa.html'
+    template2 = 'perfil.html'
+    template3 = 'index.html'
 
     def get(self, request):
         id = request.user.id
@@ -32,10 +34,10 @@ class CadastraPessoa(View):
                 request.session['telefone'] = pessoa.telefone
                 request.session['email'] = pessoa.email
                 request.session['first_name'] = pessoa.first_name
-                return render(request, 'perfil.html', {'msg': 'Informações alteradas com sucesso!'})
+                return render(request, self.template2, {'msg': 'Informações alteradas com sucesso!'})
             else:
                 print(form.errors)
-            return render(request, 'cad_pessoa.html', {'form': form})
+            return render(request, self.template, {'form': form})
         else:
             form = PessoaForm(data=request.POST)
             if form.is_valid():
@@ -44,10 +46,10 @@ class CadastraPessoa(View):
                 pessoa.set_password(request.POST['password'])
                 pessoa.is_active = True
                 pessoa.save()
-                return render(request, 'index.html')
+                return render(request, self.template3)
             else:
                 print form.errors
-        return render(request, 'cad_pessoa.html', {'form': form})
+        return render(request, self.template, {'form': form})
 
 
 class Login(View):
@@ -56,13 +58,14 @@ class Login(View):
     template3 = 'alterar_status.html'
 
     def get(self, request):
-        return render(request, self.template)
+        form = LoginForm()
+        return render(request, self.template, {'form': form})
 
     def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
+        form = LoginForm(data=request.POST)
+        username = form.username
+        password = form.password
         user = authenticate(username=username, password=password)
-
         if user:
             login(request, user)
             pessoa = Pessoa.objects.get(username=username)
@@ -70,7 +73,7 @@ class Login(View):
             desativo = Pessoa.objects.get(pk=id)
             if desativo.is_active is False:
                 logout(request)
-                return render(request, self.template3, {'msg': 'Este usuario está inativo, deseja ativar?'})
+                return render(request, self.template3, {'msg': 'Este usuario está inativo, deseja ativar?', 'form':form})
             request.session['first_name'] = pessoa.first_name
             request.session['last_name'] = pessoa.last_name
             request.session['cpf'] = pessoa.cpf
@@ -83,7 +86,8 @@ class Login(View):
 
             return render(request, self.template2, {'msg':'Login efetuado com sucesso!'})
         else:
-            return render(request, self.template, {'msg': 'Erro usuario ou senha incorretos'})
+            return render(request, self.template, {'form':form})
+
 
 
 class Alterar_status(View):
@@ -114,3 +118,23 @@ class Alterar_status(View):
                     return render(request, self.template, {'msg': 'Este usuario já esta ativo'})
             else:
                 return render(request, self.template, {'msg': 'Usuario ou senha incorretos'})
+
+class AlterarSenha(View):
+    template = 'alterar_senha.html'
+    template2 = 'perfil.html'
+
+    def get(self, request):
+        form = SenhaEditForm()
+        return render(request, self.template, {'form': form})
+
+    def post(self, request):
+        id = request.user.id
+        form = SenhaEditForm(data=request.POST)
+        if form.is_valid():
+            pessoa = Pessoa.objects.get(pk=id)
+            pessoa.set_password(form.password)
+            pessoa.save()
+            return render(request, self.template2)
+        else:
+            print form.errors
+        return render(request, self.template, {'form': form})

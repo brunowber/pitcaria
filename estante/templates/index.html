@@ -11,11 +11,18 @@
         {% if msg %}
             <div>{{ msg }}</div>
         {% endif %}
-        <label>Login</label>
-        <input type="text" name="username"> <br/>
 
-        <label>Senha</label>
-        <input type="password" name="password"> <br/>
+        {% if form.username.errors %}
+            {{ form.username.errors }}
+        {% endif %}
+        <label>{{ form.username.label }}</label>
+        {{ form.username }} </br>
+
+        {% if form.password.errors %}
+            {{ form.password.errors }}
+        {% endif %}
+        <label>{{ form.password.label }}</label>
+        {{ form.password }} </br>
 
         <button type="submit" class="ui verde button">Entrar</button></br>
     </form>

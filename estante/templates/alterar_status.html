@@ -6,15 +6,21 @@
             <p>{{ msg }}</p>
          {% endif %}
 
-         <label>Ativar usuário inativo</label><br>
+         <h4>Ativar usuário inativo</h4>
 
          {% csrf_token %}
 
-         <label>Login</label>
-         <input type="text" name="username"> <br/>
+         {% if form.username.errors %}
+            {{ form.username.errors }}
+         {% endif %}
+         <label>{{ form.username.label }}</label>
+         {{ form.username }} </br>
 
-         <label>Senha</label>
-         <input type="password" name="password"> <br/>
+         {% if form.password.errors %}
+             {{ form.password.errors }}
+         {% endif %}
+         <label>{{ form.password.label }}</label>
+         {{ form.password }} </br>
 
          <button type="submit" class="ui verde button">Ativar</button><br>
          <a href="{% url 'estante:login' %}">Voltar ao index</a>
