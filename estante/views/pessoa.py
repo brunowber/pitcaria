@@ -132,6 +132,7 @@ class Alterar_status(View):
             else:
                 return render(request, self.template, {'msg': 'Usuario ou senha incorretos'})
 
+
 class AlterarSenha(View):
     template = 'alterar_senha.html'
     template2 = 'perfil.html'
