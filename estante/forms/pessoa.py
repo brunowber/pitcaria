@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 
 
 class PessoaForm(forms.ModelForm):
-    cpf = forms.IntegerField(label='CPF')
+    cpf = forms.CharField(label='CPF')
     endereco = forms.CharField(max_length=30, label='Endereço')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
@@ -17,10 +17,11 @@ class PessoaForm(forms.ModelForm):
 
     def clean_cpf(self):
         cpf = self.cleaned_data['cpf']
-        if len(str(cpf)) == 11:
-            return cpf
-        else:
+        if len(cpf) != 11:
             raise forms.ValidationError("CPF deve conter 11 dígitos!")
+        if cpf.isdigit()== False:
+            raise forms.ValidationError('CPF só pode conter números')
+        return cpf
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -34,11 +35,13 @@ class PessoaEditForm(forms.ModelForm):
     cpf = forms.IntegerField(label='CPF')
     endereco = forms.CharField(max_length=30, label='Endereço')
     telefone = forms.IntegerField(label='Telefone')
+    password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = Pessoa
         fields = "__all__"
-        exclude = ['date_joined', 'password', 'username']
+        exclude = ['date_joined', 'username', 'is_active']
+
 
     def clean_cpf(self):
         cpf = self.cleaned_data['cpf']
@@ -53,15 +56,6 @@ class PessoaEditForm(forms.ModelForm):
             raise forms.ValidationError("Usuário já existe")
         else:
             return username
-
-
-class SenhaEditForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-
-    class Meta:
-        model = Pessoa
-        fields = ('password',)
-
 
 class LoginForm(forms.ModelForm):
 
@@ -88,7 +82,3 @@ class LoginForm(forms.ModelForm):
             return username
         else:
             raise forms.ValidationError('Usuário não existe')
-
-    # def clean_password(self):
-    #     password = self.cleaned_data['password']
-

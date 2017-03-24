@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404
-from estante.forms.pessoa import PessoaForm, PessoaEditForm, SenhaEditForm, LoginForm
+from estante.forms.pessoa import PessoaForm, PessoaEditForm, LoginForm
 from django.core.exceptions import ObjectDoesNotExist
 
 class CadastraPessoa(View):
@@ -15,6 +15,7 @@ class CadastraPessoa(View):
     def get(self, request):
         id = request.user.id
         if id:
+            print id
             pessoa = Pessoa.objects.get(pk=id)
             form = PessoaEditForm(instance=pessoa)
         else:
@@ -27,7 +28,13 @@ class CadastraPessoa(View):
             pessoa = Pessoa.objects.get(pk=id)
             form = PessoaEditForm(instance=pessoa, data=request.POST)
             if form.is_valid():
+                form = form.save(commit=False)
+                form.set_password(request.POST['password'])
+                form.is_active = True
                 form.save()
+                user = authenticate(username=pessoa.username, password=request.POST['password'])
+                login(request, user)
+
                 request.session['first_name'] = pessoa.first_name
                 request.session['last_name'] = pessoa.last_name
                 request.session['cpf'] = pessoa.cpf
@@ -35,6 +42,9 @@ class CadastraPessoa(View):
                 request.session['telefone'] = pessoa.telefone
                 request.session['email'] = pessoa.email
                 request.session['first_name'] = pessoa.first_name
+                request.session.set_expiry(6000)
+                request.session.get_expire_at_browser_close()
+
                 return render(request, self.template2, {'msg': 'Informações alteradas com sucesso!'})
             else:
                 print(form.errors)
@@ -46,7 +56,8 @@ class CadastraPessoa(View):
                 pessoa = Pessoa.objects.get(username=request.POST['username'])
                 pessoa.set_password(request.POST['password'])
                 pessoa.is_active = True
-                pessoa.save()
+
+
                 return render(request, self.template3, {'form': LoginForm})
             else:
                 print form.errors
@@ -65,12 +76,10 @@ class Login(View):
 
     def post(self, request):
         username = request.POST['username']
-        password = request.POST['password']
         try:
             form = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
         except ObjectDoesNotExist:
             form = LoginForm(data=request.POST)
-        print ('cansei')
         if form.is_valid() == False:
             print form.errors
             return render(request, self.template, {'form': form})
@@ -108,7 +117,7 @@ class Alterar_status(View):
     template2 = 'index.html'
 
     def get(self, request):
-        return render(request, self.template)
+        return render(request, self.template, {'form':LoginForm})
 
     def post(self, request):
         if request.user.id:
@@ -126,28 +135,8 @@ class Alterar_status(View):
                 if ativo.is_active is False:
                     ativo.is_active = True
                     ativo.save()
-                    return render(request, self.template2, {'msg': 'usuario ativado com sucesso!'})
+                    return render(request, self.template2, {'msg': 'usuario ativado com sucesso!','form':LoginForm})
                 else:
-                    return render(request, self.template, {'msg': 'Este usuario já esta ativo'})
+                    return render(request, self.template, {'msg': 'Este usuario já esta ativo','form':LoginForm})
             else:
-                return render(request, self.template, {'msg': 'Usuario ou senha incorretos'})
-
-class AlterarSenha(View):
-    template = 'alterar_senha.html'
-    template2 = 'perfil.html'
-
-    def get(self, request):
-        form = SenhaEditForm()
-        return render(request, self.template, {'form': form})
-
-    def post(self, request):
-        id = request.user.id
-        form = SenhaEditForm(data=request.POST)
-        if form.is_valid():
-            pessoa = Pessoa.objects.get(pk=id)
-            pessoa.set_password(form.password)
-            pessoa.save()
-            return render(request, self.template2)
-        else:
-            print form.errors
-        return render(request, self.template, {'form': form})
+                return render(request, self.template, {'msg': 'Usuario ou senha incorretos','form':LoginForm})

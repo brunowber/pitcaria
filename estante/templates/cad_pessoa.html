@@ -7,12 +7,13 @@
         {% if msg %}
             <div>{{ msg }}</div>
         {% endif %}
-
-        {% if form.username.errors %}
-            {{ form.username.errors }}
+        {% if form.username %}
+            {% if form.username.errors %}
+                {{ form.username.errors }}
+            {% endif %}
+            <label>{{ form.username.label }}</label>
+            {{ form.username }} </br>
         {% endif %}
-        <label>{{ form.username.label }}</label>
-        {{ form.username }} </br>
 
         {% if form.password.errors %}
             {{ form.password.errors }}
