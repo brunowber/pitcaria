@@ -12,17 +12,21 @@
             <div>{{ msg }}</div>
         {% endif %}
 
+
+        <label>{{ form.username.label }}</label>
+        {{ form.username }}
         {% if form.username.errors %}
             {{ form.username.errors }}
         {% endif %}
-        <label>{{ form.username.label }}</label>
-        {{ form.username }} </br>
+        </br>
 
-        {% if form.password.errors %}
-            {{ form.password.errors }}
-        {% endif %}
+
         <label>{{ form.password.label }}</label>
-        {{ form.password }} </br>
+        {{ form.password }}
+        {% if form.errors %}
+            {{ form.non_field_errors }}
+        {% endif %}
+        </br>
 
         <button type="submit" class="ui verde button">Entrar</button></br>
     </form>

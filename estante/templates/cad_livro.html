@@ -6,7 +6,11 @@
             {location.href='/estante/'}
         </script>
     {% endif %}
-    <form method="POST" action="{% url 'estante:cadastro-livro'  %}" class='ui form'>
+    {% if id == None %}
+        <form method="POST" action="{% url 'estante:cadastro-livro' %}" class='ui form'>
+    {% else %}
+        <form method="POST" action="{% url 'estante:edita-livro' id %}" class='ui form'>
+    {% endif %}
         {% csrf_token %}
 
         <label>{{ form.id_livro.label }}</label>
@@ -15,13 +19,11 @@
             {{ form.id_livro.errors }}
         {% endif %}<br/>
 
-
         <label>{{ form.titulo.label }}</label>
         {{ form.titulo }}
         {% if form.titulo.errors %}
             {{ form.titulo.errors }}
         {% endif %}<br/>
-
 
         <label>{{ form.autor.label }}</label>
         {{ form.autor }}
@@ -29,13 +31,11 @@
             {{ form.autor.errors }}
         {% endif %}<br/>
 
-
         <label>{{ form.editora.label }}</label>
         {{ form.editora }}
         {% if form.editora.errors %}
             {{ form.editora.errors }}
         {% endif %}<br/>
-
 
         <label>{{ form.ano.label }}</label>
         {{ form.ano }}

@@ -1,6 +1,7 @@
 # coding=utf-8
 from django import forms
 from estante.models import Pessoa
+from django.contrib.auth import authenticate
 
 
 class PessoaForm(forms.ModelForm):
@@ -64,24 +65,30 @@ class SenhaEditForm(forms.ModelForm):
 
 class LoginForm(forms.ModelForm):
 
+    username = forms.CharField(max_length=254)
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = Pessoa
         fields = ('password', 'username',)
 
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        if Pessoa.objects.filter(username = username).exists():
+            username = Pessoa.objects.get(username=username)
+            if authenticate(username=username, password=password) == None:
+                raise forms.ValidationError(("Usuario ou senha incorretos"))
+        return self.cleaned_data
+
     def clean_username(self):
         username = self.cleaned_data['username']
-        pessoa = Pessoa.objects.get(username=username)
+        pessoa = Pessoa.objects.filter(username=username).exists()
         if pessoa:
             return username
         else:
             raise forms.ValidationError('Usuário não existe')
-    #
+
     # def clean_password(self):
     #     password = self.cleaned_data['password']
-    #     # pessoa = Pessoa.objects.get(username=username)
-    #     if pessoa.password != password:
-    #         raise forms.ValidationError('Usuário e senha não combinam')
-    #     else:
-    #         return password
+

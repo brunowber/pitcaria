@@ -3,8 +3,9 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from estante.forms.pessoa import PessoaForm, PessoaEditForm, SenhaEditForm, LoginForm
+from django.core.exceptions import ObjectDoesNotExist
 
 class CadastraPessoa(View):
     template = 'cad_pessoa.html'
@@ -59,22 +60,25 @@ class Login(View):
 
     def get(self, request):
         form = LoginForm()
+
         return render(request, self.template, {'form': form})
 
     def post(self, request):
-        form = LoginForm(data=request.POST)
-        print (form)
-        if form.is_valid():
-            print ('parabens é valido')
-        else:
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            form = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
+        except ObjectDoesNotExist:
+            form = LoginForm(data=request.POST)
+        print ('cansei')
+        if form.is_valid() == False:
             print form.errors
+            return render(request, self.template, {'form': form})
         username = form.save(commit = False).username
         password = form.save(commit = False).password
-        # username = request.POST['username']
-        # password = request.POST['password']
+
         user = authenticate(username=username, password=password)
         if user:
-            print ("entrou")
             login(request, user)
             pessoa = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
             id = request.user.id
@@ -83,7 +87,6 @@ class Login(View):
                 logout(request)
                 return render(request, self.template3, {'msg': 'Este usuario está inativo, deseja ativar?', 'form': LoginForm})
             if pessoa.is_valid():
-                print ("entrou :D")
                 pessoa = pessoa.save(commit=False)
                 request.session['first_name'] = pessoa.first_name
                 request.session['last_name'] = pessoa.last_name
@@ -96,12 +99,9 @@ class Login(View):
                 request.session.get_expire_at_browser_close()
                 return render(request, self.template2, {'msg': 'Login efetuado com sucesso!'})
             else:
-                print ('não entrou :c')
                 print pessoa.errors
         else:
             return render(request, self.template, {'form': LoginForm})
-
-
 
 class Alterar_status(View):
     template = 'alterar_status.html'

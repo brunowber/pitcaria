@@ -35,17 +35,17 @@ class PerfilLivro(View):
 
 class CadastraLivro(View, Pessoa):
     template = 'cad_livro.html'
-    template2= 'edita_livro.html'
     def get(self, request, id=None):
+        print (id)
         if id:
             livro = Livro.objects.get(id=id)
             form = LivroEditaForm(instance=livro)
-            return render(request, self.template2, {'form':form, 'id':id})
         else:
             form = LivroForm()
-            return render(request, self.template, {'form': form})
+        return render(request, self.template, {'form': form, 'id': id})
 
     def post(self, request, id=None):
+        print (id)
         if id:
             form = LivroEditaForm(request.POST, instance=Livro.objects.get(id=id))
             if form.is_valid():
@@ -53,7 +53,7 @@ class CadastraLivro(View, Pessoa):
                 return redirect('/estante/lista_livros')
             else:
                 print form.errors
-                return render(request, self.template2, {'form': form, 'id': id})
+                return render(request, self.template, {'form': form, 'id': id})
 
         else:
             form = LivroForm(request.POST)
