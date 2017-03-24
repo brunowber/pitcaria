@@ -52,11 +52,11 @@ class CadastraPessoa(View):
         else:
             form = PessoaForm(data=request.POST)
             if form.is_valid():
-                form.save()
-                pessoa = Pessoa.objects.get(username=request.POST['username'])
+                pessoa = form.save(commit=False)
                 pessoa.set_password(request.POST['password'])
                 pessoa.is_active = True
-
+                print (pessoa.username, pessoa.password)
+                pessoa.save()
 
                 return render(request, self.template3, {'form': LoginForm})
             else:
