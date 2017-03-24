@@ -6,13 +6,13 @@
             {location.href='/estante/'}
         </script>
     {% endif %}
-    <h3>Meus livros</h3>
+    <h4>Meus livros</h4>
         {% for livro in livros %}
             {% ifequal user.id livro.dono.id %}
                 <a href="{% url 'estante:perfil_livro' livro.id %}">{{ livro.titulo }}</a><br/>
             {% endifequal %}
         {%endfor %}
-    <h3>Livros Emprestados</h3>
+    <h4>Livros Emprestados</h4>
         {% for emprestimo in emprestimos %}
             {% if emprestimo.pegou_emprestado_id == user.id %}
                 <a href="{% url 'estante:perfil_livro' emprestimo.livro_emprestado_id %}">{{ emprestimo.livro_emprestado.titulo }}</a><br/>
@@ -20,7 +20,7 @@
         {%endfor %}
     <br/>
     <div>
-        <h3>Procurar livro</h3>
+        <h4>Procurar livro</h4>
             <form method="POST" action="{% url 'estante:procurar_livro' %}" class='ui form'>
             {% csrf_token %}
 
