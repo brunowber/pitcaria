@@ -5,9 +5,13 @@ from estante.models.livro import Livro
 from estante.models.pessoa import Pessoa
 from django.shortcuts import render
 from datetime import date
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 class Cad_emprestimo(View):
+
+    @method_decorator(login_required(login_url='/estante/'))
     def get(self, request, id=None):
         livro = Livro.objects.get(pk=id)
         pessoa = Pessoa.objects.get(pk=request.user.id)
@@ -25,6 +29,8 @@ class Cad_emprestimo(View):
         return render(request, 'perfil.html')
 
 class Devolver(View):
+
+    @method_decorator(login_required(login_url='/estante/'))
     def get(self, request, id=None):
         emprestimo = Emprestimo.objects.get(pk=id)
         livro = Livro.objects.get(pk=emprestimo.livro_emprestado_id)

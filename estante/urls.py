@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from estante import views
 from estante.views import *
 from django.views.generic.base import TemplateView
 

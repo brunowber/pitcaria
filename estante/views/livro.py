@@ -5,10 +5,14 @@ from django.shortcuts import render, redirect
 from estante.models.livro import Livro
 from estante.models.emprestimo import Emprestimo
 from estante.forms.livro import LivroForm, LivroEditaForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 class DicLivro(View):
     template = 'lista_livros.html'
 
+    @method_decorator(login_required(login_url='/estante/'))
     def get(self, request):
         context_dict = {}
         livros = Livro.objects.all()
@@ -22,8 +26,10 @@ class DicLivro(View):
         return render(request, self.template, context_dict)
 
 class PerfilLivro(View):
+
     template = 'perfil_livro.html'
 
+    @method_decorator(login_required(login_url='/estante/'))
     def get(self, request, id=None):
         livro = Livro.objects.get(pk=id)
         context_dict = {}
@@ -33,10 +39,14 @@ class PerfilLivro(View):
         context_dict['livro'] = livro
         return render(request, self.template, context_dict)
 
+
 class CadastraLivro(View, Pessoa):
+
     template = 'cad_livro.html'
+
+    @method_decorator(login_required(login_url='/estante/'))
     def get(self, request, id=None):
-        print (id)
+
         if id:
             livro = Livro.objects.get(id=id)
             form = LivroEditaForm(instance=livro)
@@ -45,7 +55,6 @@ class CadastraLivro(View, Pessoa):
         return render(request, self.template, {'form': form, 'id': id})
 
     def post(self, request, id=None):
-        print (id)
         if id:
             form = LivroEditaForm(request.POST, instance=Livro.objects.get(id=id))
             if form.is_valid():
@@ -68,8 +77,10 @@ class CadastraLivro(View, Pessoa):
         return render(request, 'cad_livro.html', {'form': form})
 
 class Alterar_status_livro(View):
+
     template = 'perfil_livro.html'
 
+    @method_decorator(login_required(login_url='/estante/'))
     def post(self, request, id=None):
         user = request.user
         if user.is_authenticated():
@@ -84,10 +95,11 @@ class Alterar_status_livro(View):
                 return redirect('/estante/livro/' + str(livro.id))
         return render(request, 'index.html')
 
-
 class Procurar(View):
+
     template = 'procurar_livro.html'
 
+    @method_decorator(login_required(login_url='/estante/'))
     def post(self, request):
         titulo = request.POST['titulo']
         autor = request.POST['autor']

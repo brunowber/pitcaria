@@ -1,28 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% if user.is_anonymous %}
-        <script>
-            alert("Faça o login antes!" )
-            {location.href='/estante/'}
-        </script>
+    {% if user.is_authenticated %}
+        <h4>Perfil do Usuário</h4>
+        {% if msg %}
+            <p>{{ msg }}</p>
+        {% endif %}
+        <div>
+            <p>nome completo: {{ request.session.first_name }} {{ request.session.last_name }}</p>
+            <p>CPF: {{ request.session.cpf }}</p>
+            <p>Email: {{ request.session.email }} </p>
+            <p>Endereço: {{ request.session.endereco }}</p>
+            <p>Telefone: {{ request.session.telefone }}</p>
+            <a href="{% url 'estante:logout' %}">Sair</a><br/>
+            <a href="{% url 'estante:editar_perfil' %}">Editar Perfil</a><br/>
+            <a href="{% url 'estante:cadastro-livro' %}">Cadastrar Livro</a><br/>
+            <a href="{% url 'estante:lista_livros' %}">Livros</a><br/>
+            <form method="POST" action="{% url 'estante:desativar' %}" class='ui form'>
+                <button type="submit" class="ui verde button">Desativar</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    {% else %}
+        <h4>Você não esta logado no sistema</h4>
+        <a href="{% url 'estante:login' %}">Login</a><br/>
     {% endif %}
-    <h4>Perfil do Usuário</h4>
-    {% if msg %}
-        <p>{{ msg }}</p>
-    {% endif %}
-    <div>
-        <p>nome completo: {{ request.session.first_name }} {{ request.session.last_name }}</p>
-        <p>CPF: {{ request.session.cpf }}</p>
-        <p>Email: {{ request.session.email }} </p>
-        <p>Endereço: {{ request.session.endereco }}</p>
-        <p>Telefone: {{ request.session.telefone }}</p>
-        <a href="{% url 'estante:logout' %}">Sair</a><br/>
-        <a href="{% url 'estante:editar_perfil' %}">Editar Perfil</a><br/>
-        <a href="{% url 'estante:cadastro-livro' %}">Cadastrar Livro</a><br/>
-        <a href="{% url 'estante:lista_livros' %}">Livros</a><br/>
-        <form method="POST" action="{% url 'estante:desativar' %}" class='ui form'>
-            <button type="submit" class="ui verde button">Desativar</button>
-            {% csrf_token %}
-        </form>
-    </div>
 {% endblock content %}

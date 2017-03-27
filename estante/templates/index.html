@@ -1,10 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% if user.is_authenticated %}
-        <script>
-            {location.href='/estante/perfil'}
-        </script>
-    {% endif %}
     <form method="POST" action="{% url 'estante:login' %}" class='ui form'>
         {% csrf_token %}
 
@@ -31,5 +26,5 @@
         <button type="submit" class="ui verde button">Entrar</button></br>
     </form>
     <a href="{% url 'estante:cadastro-pessoa' %}" >criar</a></br>
-    <a href="{% url 'estante:ativar' %}" >Ativar usuário inativo</a></br>
+    <a href="{% url 'estante:ativar' %}" >Ativar usuário inativo</a>
 {% endblock content %}

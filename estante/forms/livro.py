@@ -29,13 +29,6 @@ class LivroForm(forms.ModelForm ):
         else:
             return id_livro
 
-    # def clean_autor(self):
-    #     autor = self.cleaned_data['autor']
-    #     if str.isalpha(str(autor)) == False:
-    #         raise forms.ValidationError('Autor só pode conter letras')
-    #     else:
-    #         return autor
-
     def clean_ano(self):
         ano = self.cleaned_data['ano']
         if ano >0 and ano < date.today().year:
@@ -57,13 +50,6 @@ class LivroEditaForm(forms.ModelForm ):
     def clean_status(self):
         status = True
         return status
-
-    # def clean_autor(self):
-    #     autor = self.cleaned_data['autor']
-    #     if str.isalpha(str(autor)) == False:
-    #         raise forms.ValidationError('Autor não pode conter números')
-    #     else:
-    #         return autor
 
     def clean_ano(self):
         ano = self.cleaned_data['ano']

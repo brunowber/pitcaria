@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from estante.forms.pessoa import PessoaForm, PessoaEditForm, LoginForm
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -15,7 +15,6 @@ class CadastraPessoa(View):
     def get(self, request):
         id = request.user.id
         if id:
-            print id
             pessoa = Pessoa.objects.get(pk=id)
             form = PessoaEditForm(instance=pessoa)
         else:
@@ -55,7 +54,6 @@ class CadastraPessoa(View):
                 pessoa = form.save(commit=False)
                 pessoa.set_password(request.POST['password'])
                 pessoa.is_active = True
-                print (pessoa.username, pessoa.password)
                 pessoa.save()
 
                 return render(request, self.template3, {'form': LoginForm})
