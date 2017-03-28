@@ -44,7 +44,8 @@ class PessoaEditForm(forms.ModelForm):
 
 
     def clean_cpf(self):
-        cpf = self.cleaned_data['cpf']
+        cpf = self.cleaned_data[str('cpf')]
+        print (cpf)
         if len(str(cpf)) == 11:
             return cpf
         else:

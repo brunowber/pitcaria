@@ -101,17 +101,38 @@ class Procurar(View):
 
     @method_decorator(login_required(login_url='/estante/'))
     def post(self, request):
-        titulo = request.POST['titulo']
-        autor = request.POST['autor']
-        dono = request.POST['dono']
         livros = {}
-        pesquisa = []
-        livro = Livro.objects
-        if dono !='':
-            pesquisa = livro.filter(dono__username__icontains=dono)
-        if titulo != '':
-            pesquisa = livro.filter(titulo__icontains=titulo)
-        if autor != '':
-            pesquisa = livro.filter(autor__icontains=autor)
-        livros['livro'] = pesquisa
-        return render(request, self.template, livros)
+        msg = 'Nenhum livro encontrado!'
+        tipo_lista = ''
+        valor = request.POST['tipo']
+        if valor == "titulo":
+            titulo = request.POST['procura']
+            tipo_lista = "lista"
+            livros = Livro.objects.filter(titulo__icontains=titulo)
+            if livros:
+                msg = "Livros encontrados"
+
+        elif valor == "autor":
+            autor = request.POST['procura']
+            tipo_lista = "lista"
+            livros = Livro.objects.filter(autor__icontains=autor)
+            if livros:
+                msg = 'Autor Encontrado'
+
+        elif valor == "dono":
+            dono = request.POST['procura']
+            tipo_lista = "dicionario"
+            lista_donos = Pessoa.objects.filter(first_name__icontains=dono)
+            print (lista_donos)
+            if lista_donos:  # existe donos
+                for dono in lista_donos:
+                    livros[str(dono.id)] = Livro.objects.filter(dono=dono)
+                if len(livros) == 0:
+                    msg = "Nenhum livro encontrado!"
+                else:
+                    msg ="Dono encontrado"
+            else:
+                msg = "dono não encontrado"
+
+        return render(request, self.template, {'livros': livros, 'msg': msg,
+                                               'tipo_lista': tipo_lista})
