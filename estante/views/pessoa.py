@@ -3,9 +3,10 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from estante.models.pessoa import Pessoa
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from estante.forms.pessoa import PessoaForm, PessoaEditForm, LoginForm
 from django.core.exceptions import ObjectDoesNotExist
+
 
 class CadastraPessoa(View):
     template = 'cad_pessoa.html'

@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^emprestimo/(?P<id>\w+)/$', Cad_emprestimo.as_view(), name='emprestimo'),
     url(r'^procurar/$', Procurar.as_view(), name='procurar_livro'),
     url(r'^devolver/(?P<id>\w+)/$', views.Devolver, name='devolver_livro'),
+    url(r'', TemplateView.as_view(template_name='404.html'), name='404'),
 ]

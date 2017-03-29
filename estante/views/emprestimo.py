@@ -1,5 +1,4 @@
 from django.views.generic import View
-from django.shortcuts import render, redirect
 from estante.models.emprestimo import Emprestimo
 from estante.models.livro import Livro
 from estante.models.pessoa import Pessoa
