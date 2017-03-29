@@ -25,12 +25,12 @@
                 {% if msg %}
                     <div>{{ msg }}</div>
                 {% endif %}
-                <select name = 'tipo'>
+                <select name = 'tipo' style="width: 100px">
                     <option value ='titulo'>Título</option>
                     <option value ='autor'>Autor</option>
                     <option value ='dono'>Dono</option>
                 </select>
-                <input type="text" name="procura" value="Deixe vázio para procurar todos" onfocus="this.value='';" ><br/>
+                <input type="text" name="procura" value="Deixe vázio para procurar todos os livros" onfocus="this.value='';" style="width: 400px"><br/>
                 <button type="submit" class="ui verde button">procurar</button></br>
             </form>
         </div>

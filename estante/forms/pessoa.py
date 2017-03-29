@@ -1,6 +1,9 @@
 # coding=utf-8
-from django import forms
+
+
+from estante.forms.validators.pessoa_validator import *
 from estante.models import Pessoa
+from django import forms
 from django.contrib.auth import authenticate
 
 
@@ -16,20 +19,19 @@ class PessoaForm(forms.ModelForm):
         exclude = ['date_joined']
 
     def clean_cpf(self):
-        cpf = self.cleaned_data['cpf']
-        if len(cpf) != 11:
-            raise forms.ValidationError("CPF deve conter 11 dígitos!")
-        if cpf.isdigit()== False:
-            raise forms.ValidationError('CPF só pode conter números')
-        return cpf
+        return CpfValidator(self.cleaned_data[str('cpf')])
 
     def clean_username(self):
-        username = self.cleaned_data['username']
+        username=self.cleaned_data['username']
         if Pessoa.objects.filter(username=username).exists():
-            raise forms.ValidationError("Usuário já existe")
-        else:
-            return username
+            raise forms.ValidationError('Usuário já existe')
+        return username
 
+    def clean_first_name(self):
+        return NameValidator(self.cleaned_data['first_name'])
+
+    def clean_last_name(self):
+        return NameValidator(self.cleaned_data['last_name'])
 
 class PessoaEditForm(forms.ModelForm):
     cpf = forms.IntegerField(label='CPF')
@@ -42,21 +44,14 @@ class PessoaEditForm(forms.ModelForm):
         fields = "__all__"
         exclude = ['date_joined', 'username', 'is_active']
 
-
     def clean_cpf(self):
-        cpf = self.cleaned_data[str('cpf')]
-        print (cpf)
-        if len(str(cpf)) == 11:
-            return cpf
-        else:
-            raise forms.ValidationError("CPF deve conter 11 dígitos!")
+        return CpfValidator(self.cleaned_data[str('cpf')])
 
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if Pessoa.objects.filter(username=username).exists():
-            raise forms.ValidationError("Usuário já existe")
-        else:
-            return username
+    def clean_first_name(self):
+        return NameValidator(self.cleaned_data['first_name'])
+
+    def clean_last_name(self):
+        return NameValidator(self.cleaned_data['last_name'])
 
 class LoginForm(forms.ModelForm):
 
@@ -77,9 +72,4 @@ class LoginForm(forms.ModelForm):
         return self.cleaned_data
 
     def clean_username(self):
-        username = self.cleaned_data['username']
-        pessoa = Pessoa.objects.filter(username=username).exists()
-        if pessoa:
-            return username
-        else:
-            raise forms.ValidationError('Usuário não existe')
+        return UsernameValidator(self.cleaned_data['username'])

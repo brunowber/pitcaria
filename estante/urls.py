@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from estante.views import *
+from estante import views
 from django.views.generic.base import TemplateView
 
 
@@ -18,5 +19,5 @@ urlpatterns = [
     url(r'^livro/(?P<id>\w+)/$', PerfilLivro.as_view(), name='perfil_livro'),
     url(r'^emprestimo/(?P<id>\w+)/$', Cad_emprestimo.as_view(), name='emprestimo'),
     url(r'^procurar/$', Procurar.as_view(), name='procurar_livro'),
-    url(r'^devolver/(?P<id>\w+)/$', Devolver.as_view(), name='devolver_livro'),
+    url(r'^devolver/(?P<id>\w+)/$', views.Devolver, name='devolver_livro'),
 ]

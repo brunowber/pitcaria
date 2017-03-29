@@ -99,6 +99,9 @@ class Procurar(View):
 
     template = 'procurar_livro.html'
 
+    def get(self,request):
+        return render(request, self.template, {'msg':'Nenhum livro encontrado!'})
+
     @method_decorator(login_required(login_url='/estante/'))
     def post(self, request):
         livros = {}

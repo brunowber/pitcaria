@@ -1,9 +1,12 @@
 # coding=utf-8
+
+
+from estante.forms.validators.livro_validator import *
 from django import forms
 from estante.models import Livro
-from datetime import date
 
-class LivroForm(forms.ModelForm ):
+
+class LivroForm(forms.ModelForm):
     id_livro = forms.IntegerField(label='ISBN')
     titulo = forms.CharField(max_length=50, label='Título')
     autor = forms.CharField(max_length=50, label='Autor')
@@ -30,11 +33,8 @@ class LivroForm(forms.ModelForm ):
             return id_livro
 
     def clean_ano(self):
-        ano = self.cleaned_data['ano']
-        if ano >0 and ano < date.today().year:
-            return ano
-        else:
-            raise forms.ValidationError('Data indisponivel')
+        return AnoValidator(self.cleaned_data['ano'])
+
 
 class LivroEditaForm(forms.ModelForm ):
     titulo = forms.CharField(max_length=50, label='Título')
@@ -52,8 +52,4 @@ class LivroEditaForm(forms.ModelForm ):
         return status
 
     def clean_ano(self):
-        ano = self.cleaned_data['ano']
-        if ano >0 and ano < date.today().year:
-            return ano
-        else:
-            raise forms.ValidationError('Data indisponivel')
+        return AnoValidator(self.cleaned_data['ano'])
