@@ -1,17 +1,15 @@
 # coding=utf-8
 from django.views.generic import View
 from django.shortcuts import redirect
-from pitcaria.models.pessoa import Pessoa
+from pitcaria.models.pizzaria import Pizzaria
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, render_to_response
-from pitcaria.forms.pessoa import PessoaForm, PessoaEditForm, LoginForm
+from pitcaria.forms.pizzaria import *
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class CadastraPessoa(View):
+class CadastraPizzaria(View):
     template = 'cad_pessoa.html'
-    template2 = 'perfil.html'
-    template3 = 'index.html'
 
     def get(self, request):
         id = request.user.id
@@ -43,9 +41,6 @@ class CadastraPessoa(View):
                 request.session['telefone'] = pessoa.telefone
                 request.session['email'] = pessoa.email
                 request.session['first_name'] = pessoa.first_name
-                request.session.set_expiry(6000)
-                request.session.get_expire_at_browser_close()
-
                 return render(request, self.template2, {'msg': 'Informações alteradas com sucesso!'})
             else:
                 print(form.errors)
