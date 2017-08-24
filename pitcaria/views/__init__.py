@@ -1,6 +1,3 @@
-from pessoa import *
-
-from livro import *
-
-from emprestimo import *
+from cliente import *
+from pizzaria import *
 

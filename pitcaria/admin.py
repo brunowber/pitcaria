@@ -1,11 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from models.pessoa import Pessoa
-from models.livro import Livro
-from models.emprestimo import Emprestimo
+from models.cliente import Cliente
+from models.pizzaria import Pizzaria
 
-admin.site.register(Pessoa)
-admin.site.register(Livro)
-admin.site.register(Emprestimo)
+admin.site.register(Pizzaria)
+admin.site.register(Cliente)
 

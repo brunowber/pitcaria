@@ -1,13 +1,13 @@
 from django.conf.urls import url
-from estante.views import *
-from estante import views
+from pitcaria.views import *
+from pitcaria import views
 from django.views.generic.base import TemplateView
 
 
 urlpatterns = [
     url(r'^$', Login.as_view(), name='login'),
     url(r'^cad_pessoa/$', CadastraPessoa.as_view(), name='cadastro-pessoa'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/estante'}, name='logout'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/pitcaria'}, name='logout'),
     url(r'^cad_livro/$', CadastraLivro.as_view(), name='cadastro-livro'),
     url(r'^cad_livro/(?P<id>\d+)/$', CadastraLivro.as_view(), name='edita-livro'),
     url(r'^desativar/$', Alterar_status.as_view(), name='desativar'),

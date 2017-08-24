@@ -1,3 +1,3 @@
-from pessoa import *
-from livro import *
+from cliente import *
+from pizzaria import *
 from validators import *

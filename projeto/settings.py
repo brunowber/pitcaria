@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'estante',
+    'pitcaria',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -110,5 +110,5 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
-LOGIN_URL = '/estante/login/'
-LOGIN_REDIRECT_URL = '/estante/'
+LOGIN_URL = '/pitcaria/login/'
+LOGIN_REDIRECT_URL = '/pitcaria/'

@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.forms import forms
-from estante.models import Pessoa
+from pitcaria.models import Pessoa
 
 
 def UsernameValidator(pessoa):
