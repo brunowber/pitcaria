@@ -1,30 +1,30 @@
 # coding=utf-8
 from django.views.generic import View
 from django.shortcuts import redirect
-from pitcaria.models.cliente import Cliente
+from pitcaria.models.cliente import ClienteForm
+from pitcaria.forms.cliente import Cliente
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 
 
 class CadastraCliente(View):
-    #template = 'cad_pessoa.html'
+    #template = 'cad_cliente.html'
 
     def get(self, request):
         id = request.user.id
         if id:
-            pessoa = Cliente.objects.get(pk=id)
-            form = PessoaEditForm(instance=pessoa)
+            cliente = Cliente.objects.get(pk=id)
+            form = ClienteEditForm(instance=cliente)
         else:
-            form = PessoaForm()
+            form = ClienteForm()
         return render(request, self.template, {'form': form})
 
     def post(self, request):
         id = request.user.id
         if id:
-            pessoa = Cliente.objects.get(pk=id)
+            cliente = Cliente.objects.get(pk=id)
             #form = PessoaEditForm(instance=pessoa, data=request.POST)
-            print (form)
             if form.is_valid():
                 form = form.save(commit=False)
                 form.set_password(request.POST['password'])
@@ -33,15 +33,14 @@ class CadastraCliente(View):
                 user = authenticate(username=pessoa.username, password=request.POST['password'])
                 login(request, user)
 
-                request.session['first_name'] = pessoa.first_name
-                request.session['last_name'] = pessoa.last_name
-                request.session['cpf'] = pessoa.cpf
-                request.session['endereco'] = pessoa.endereco
-                request.session['telefone'] = pessoa.telefone
-                request.session['email'] = pessoa.email
-                request.session['first_name'] = pessoa.first_name
-                request.session.set_expiry(6000)
-                request.session.get_expire_at_browser_close()
+                request.session['first_name'] = cliente.first_name
+                request.session['last_name'] = cliente.last_name
+                request.session['cpf'] = cliente.cpf
+                request.session['endereco'] = cliente.endereco
+                request.session['telefone'] = cliente.telefone
+                request.session['email'] = cliente.email
+                request.session['first_name'] = cliente.first_name
+                request.session['nota'] = 0
 
                 return render(request, self.template2, {'msg': 'Informações alteradas com sucesso!'})
             else:
@@ -68,7 +67,6 @@ class Login(View):
 
     def get(self, request):
         form = LoginForm()
-
         return render(request, self.template, {'form': form})
 
     def post(self, request):
@@ -77,11 +75,11 @@ class Login(View):
             form = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
         except ObjectDoesNotExist:
             form = LoginForm(data=request.POST)
-        if form.is_valid() == False:
+        if not form.is_valid():
             print form.errors
             return render(request, self.template, {'form': form})
-        username = form.save(commit = False).username
-        password = form.save(commit = False).password
+        username = form.save(commit=False).username
+        password = form.save(commit=False).password
 
         user = authenticate(username=username, password=password)
         if user:
@@ -101,8 +99,6 @@ class Login(View):
                 request.session['telefone'] = pessoa.telefone
                 request.session['email'] = pessoa.email
                 request.session['first_name'] = pessoa.first_name
-                request.session.set_expiry(6000)
-                request.session.get_expire_at_browser_close()
                 return render(request, self.template2, {'msg': 'Login efetuado com sucesso!'})
             else:
                 print pessoa.errors

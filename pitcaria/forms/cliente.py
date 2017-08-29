@@ -7,9 +7,9 @@ from pitcaria.models.cliente import Cliente
 
 
 class ClienteForm(forms.ModelForm):
-    username=forms.CharField(max_length=254, label='Nome de Usuário')
-    first_name=forms.CharField(max_length=40, label='Nome')
-    last_name=forms.CharField(max_length=40, label='Sobrenome')
+    username = forms.CharField(max_length=254, label='Nome de Usuário')
+    first_name = forms.CharField(max_length=40, label='Nome')
+    last_name = forms.CharField(max_length=40, label='Sobrenome')
     cpf = forms.CharField(label='CPF')
     data_nascimento = forms.CharField(max_length=10, label='Data de Nascimento')
     telefone = forms.IntegerField(label='Telefone')

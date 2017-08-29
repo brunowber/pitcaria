@@ -1,21 +1,20 @@
 # coding=utf-8
 from django.views.generic import View
 from django.shortcuts import redirect
-from pitcaria.models.pizzaria import Pizzaria
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from pitcaria.forms.pizzaria import *
 from django.core.exceptions import ObjectDoesNotExist
 
 
 class CadastraPizzaria(View):
-    template = 'cad_pessoa.html'
+    template = 'cad_cliente.html'
 
     def get(self, request):
         id = request.user.id
         if id:
-            pessoa = Pessoa.objects.get(pk=id)
-            form = PessoaEditForm(instance=pessoa)
+            pizzaria = Pizzaria.objects.get(pk=id)
+            form = PessoaEditForm(instance=pizzaria)
         else:
             form = PessoaForm()
         return render(request, self.template, {'form': form})
@@ -23,8 +22,8 @@ class CadastraPizzaria(View):
     def post(self, request):
         id = request.user.id
         if id:
-            pessoa = Pessoa.objects.get(pk=id)
-            form = PessoaEditForm(instance=pessoa, data=request.POST)
+            pessoa = Pizzaria.objects.get(pk=id)
+            form = PessoaEditForm(instance=pizzaria, data=request.POST)
             print (form)
             if form.is_valid():
                 form = form.save(commit=False)
@@ -61,8 +60,6 @@ class CadastraPizzaria(View):
 
 class Login(View):
     template = 'index.html'
-    template2 = 'perfil.html'
-    template3 = 'alterar_status.html'
 
     def get(self, request):
         form = LoginForm()
@@ -75,11 +72,11 @@ class Login(View):
             form = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
         except ObjectDoesNotExist:
             form = LoginForm(data=request.POST)
-        if form.is_valid() == False:
+        if not form.is_valid():
             print form.errors
             return render(request, self.template, {'form': form})
-        username = form.save(commit = False).username
-        password = form.save(commit = False).password
+        username = form.save(commit=False).username
+        password = form.save(commit=False).password
 
         user = authenticate(username=username, password=password)
         if user:
