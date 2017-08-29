@@ -2,47 +2,53 @@
 
 
 from pitcaria.forms.validators.pessoa_validator import *
-from pitcaria.models.pizzaria import Pizzaria
 from django import forms
 from django.contrib.auth import authenticate
+from pitcaria.models.pizzaria import Pizzaria
 
 
-class PessoaForm(forms.ModelForm):
-    cpf = forms.CharField(label='CPF')
-    endereco = forms.CharField(max_length=30, label='Endereço')
-    telefone = forms.IntegerField(label='Telefone')
+class PizzariaForm(forms.ModelForm):
+    first_name=forms.CharField(max_length=40, label='Nome da Pizzaria')
+    cidade = forms.CharField(max_length=40, label='Cidade')
+    bairro = forms.CharField(max_length=40, label='Bairro')
+    rua = forms.CharField(max_length=40, label='Rua')
+    complemento = forms.CharField(max_length=40, label='Complemento')
+    cnpj = forms.IntegerField(max_length=14, label='CNPJ')
+    telefone = forms.IntegerField(max_length=10, label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-        model = Pessoa
+        model = Pizzaria
         fields = "__all__"
-        exclude = ['date_joined']
+        exclude = ['date_joined', 'nota', 'last_name']
 
     def clean_cpf(self):
         return CpfValidator(self.cleaned_data[str('cpf')])
 
     def clean_username(self):
         username=self.cleaned_data['username']
-        if Pessoa.objects.filter(username=username).exists():
+        if Pizzaria.objects.filter(username=username).exists():
             raise forms.ValidationError('Usuário já existe')
         return username
 
     def clean_first_name(self):
         return NameValidator(self.cleaned_data['first_name'])
 
-    def clean_last_name(self):
-        return NameValidator(self.cleaned_data['last_name'])
 
 class PessoaEditForm(forms.ModelForm):
-    cpf = forms.IntegerField(label='CPF')
-    endereco = forms.CharField(max_length=30, label='Endereço')
-    telefone = forms.IntegerField(label='Telefone')
+    first_name = forms.CharField(max_length=40, label='Nome da Pizzaria')
+    cidade = forms.CharField(max_length=40, label='Cidade')
+    bairro = forms.CharField(max_length=40, label='Bairro')
+    rua = forms.CharField(max_length=40, label='Rua')
+    complemento = forms.CharField(max_length=40, label='Complemento')
+    cnpj = forms.IntegerField(max_length=14, label='CNPJ')
+    telefone = forms.IntegerField(max_length=10, label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-        model = Pessoa
+        model = Pizzaria
         fields = "__all__"
-        exclude = ['date_joined', 'username', 'is_active']
+        exclude = ['date_joined', 'username', 'is_active', 'nota']
 
     def clean_cpf(self):
         return CpfValidator(self.cleaned_data[str('cpf')])
@@ -50,8 +56,6 @@ class PessoaEditForm(forms.ModelForm):
     def clean_first_name(self):
         return NameValidator(self.cleaned_data['first_name'])
 
-    def clean_last_name(self):
-        return NameValidator(self.cleaned_data['last_name'])
 
 class LoginForm(forms.ModelForm):
 
@@ -59,14 +63,14 @@ class LoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-        model = Pessoa
+        model = Pizzaria
         fields = ('password', 'username',)
 
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
-        if Pessoa.objects.filter(username = username).exists():
-            username = Pessoa.objects.get(username=username)
+        if Pizzaria.objects.filter(username = username).exists():
+            username = Pizzaria.objects.get(username=username)
             if authenticate(username=username, password=password) == None:
                 raise forms.ValidationError(("Usuario ou senha incorretos"))
         return self.cleaned_data
