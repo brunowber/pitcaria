@@ -1,6 +1,5 @@
-{% extends 'base.html' %}
-{% block content %}
-    <form method="POST" action="{% url 'estante:cadastro-cliente' %}" class='ui form'>
+
+    <form method="POST" action="{% url 'pitcaria:cadastro-cliente' %}" class='ui form'>
 
         {% csrf_token %}
 
@@ -43,7 +42,11 @@
             {{ form.cpf.errors }}
         {% endif %}
 
-
+        <label>{{ form.data_nascimento.label }}</label>
+        {{ form.data_nascimento }} </br>
+        {% if form.data_nascimento.errors %}
+            {{ form.data_nascimento.errors }}
+        {% endif %}
 
         <label>{{ form.telefone.label }}</label>
         {{ form.telefone }} </br>
@@ -51,13 +54,11 @@
             {{ form.telefone.errors }}
         {% endif %}
 
-
         <label>{{ form.email.label }}</label>
         {{ form.email }} </br>
         {% if form.email.errors %}
             {{ form.email.errors }}
         {% endif %}
-
 
         <label>{{ form.endereco.label }}</label>
         {{ form.endereco }} </br>
@@ -67,10 +68,4 @@
 
         <button type="submit" class="ui verde button">Salvar</button>
     </form>
-    {% if user.is_authenticated %}
-        <a href="{% url 'estante:perfil' %}">Voltar</a>
-    {% else %}
-        <a href="{% url 'estante:login' %}">Voltar</a>
-    {% endif %}
-
-{% endblock content %}
+        <a href="{% url 'pitcaria:login' %}">Voltar</a>

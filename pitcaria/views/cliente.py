@@ -1,18 +1,20 @@
 # coding=utf-8
 from django.views.generic import View
 from django.shortcuts import redirect
-from pitcaria.models.cliente import ClienteForm
-from pitcaria.forms.cliente import Cliente
+from pitcaria.models.cliente import Cliente
+from pitcaria.forms.cliente import ClienteForm, ClienteEditForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 
 
 class CadastraCliente(View):
-    #template = 'cad_cliente.html'
+    template = 'cad_cliente.html'
+    template = 'index.html'
 
     def get(self, request):
         id = request.user.id
+        print (id)
         if id:
             cliente = Cliente.objects.get(pk=id)
             form = ClienteEditForm(instance=cliente)
@@ -24,13 +26,13 @@ class CadastraCliente(View):
         id = request.user.id
         if id:
             cliente = Cliente.objects.get(pk=id)
-            #form = PessoaEditForm(instance=pessoa, data=request.POST)
+            form = ClienteEditForm(instance=cliente, data=request.POST)
             if form.is_valid():
                 form = form.save(commit=False)
                 form.set_password(request.POST['password'])
                 form.is_active = True
                 form.save()
-                user = authenticate(username=pessoa.username, password=request.POST['password'])
+                user = authenticate(username=cliente.username, password=request.POST['password'])
                 login(request, user)
 
                 request.session['first_name'] = cliente.first_name
@@ -40,21 +42,22 @@ class CadastraCliente(View):
                 request.session['telefone'] = cliente.telefone
                 request.session['email'] = cliente.email
                 request.session['first_name'] = cliente.first_name
-                request.session['nota'] = 0
+                request.session['nota'] = cliente.nota
 
                 return render(request, self.template2, {'msg': 'Informações alteradas com sucesso!'})
             else:
                 print(form.errors)
             return render(request, self.template, {'form': form})
         else:
-            #form = PessoaForm(data=request.POST)
+            form = ClienteForm(data=request.POST)
             if form.is_valid():
-                pessoa = form.save(commit=False)
-                pessoa.set_password(request.POST['password'])
-                pessoa.is_active = True
-                pessoa.save()
+                cliente = form.save(commit=False)
+                cliente.set_password(request.POST['password'])
+                cliente.is_active = True
+                cliente.nota = 0
+                cliente.save()
 
-                return render(request, self.template3, {'form': LoginForm})
+                return render(request, self.template2, {'form': LoginForm})
             else:
                 print form.errors
         return render(request, self.template, {'form': form})
@@ -114,7 +117,7 @@ class Alterar_status(View):
 
     def post(self, request):
         if request.user.id:
-            ativo = Pessoa.objects.get(username=request.user)
+            ativo = Cliente.objects.get(username=request.user)
             ativo.is_active = False
             ativo.save()
             logout(request)
@@ -124,7 +127,7 @@ class Alterar_status(View):
             password = request.POST['password']
             user = authenticate(username=username, password=password)
             if user:
-                ativo = Pessoa.objects.get(username=user)
+                ativo = Cliente.objects.get(username=user)
                 if ativo.is_active is False:
                     ativo.is_active = True
                     ativo.save()

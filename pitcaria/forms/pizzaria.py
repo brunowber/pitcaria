@@ -1,7 +1,5 @@
 # coding=utf-8
 
-
-from pitcaria.forms.validators.pessoa_validator import *
 from django import forms
 from django.contrib.auth import authenticate
 from pitcaria.models.pizzaria import Pizzaria
@@ -13,8 +11,8 @@ class PizzariaForm(forms.ModelForm):
     bairro = forms.CharField(max_length=40, label='Bairro')
     rua = forms.CharField(max_length=40, label='Rua')
     complemento = forms.CharField(max_length=40, label='Complemento')
-    cnpj = forms.IntegerField(max_length=14, label='CNPJ')
-    telefone = forms.IntegerField(max_length=10, label='Telefone')
+    cnpj = forms.IntegerField(label='CNPJ')
+    telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
@@ -41,8 +39,8 @@ class PessoaEditForm(forms.ModelForm):
     bairro = forms.CharField(max_length=40, label='Bairro')
     rua = forms.CharField(max_length=40, label='Rua')
     complemento = forms.CharField(max_length=40, label='Complemento')
-    cnpj = forms.IntegerField(max_length=14, label='CNPJ')
-    telefone = forms.IntegerField(max_length=10, label='Telefone')
+    cnpj = forms.IntegerField(label='CNPJ')
+    telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:

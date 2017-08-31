@@ -1,6 +1,5 @@
 # coding=utf-8
 
-from pitcaria.forms.validators.pessoa_validator import *
 from django import forms
 from django.contrib.auth import authenticate
 from pitcaria.models.cliente import Cliente
@@ -20,20 +19,21 @@ class ClienteForm(forms.ModelForm):
         fields = "__all__"
         exclude = ['date_joined', 'nota', 'is_active']
 
-    def clean_cpf(self):
-        return CpfValidator(self.cleaned_data[str('cpf')])
+   # def clean_cpf(self):
+    #    return CpfValidator(self.cleaned_data[str('cpf')])
 
-    def clean_username(self):
-        username=self.cleaned_data['username']
-        if Cliente.objects.filter(username=username).exists():
-            raise forms.ValidationError('Usuário já existe')
-        return username
+    #def clean_username(self):
+     #   username=self.cleaned_data['username']
+      #  if Cliente.objects.filter(username=username).exists():
+       #     raise forms.ValidationError('Usuário já existe')
+        #return username
 
-    def clean_first_name(self):
-        return NameValidator(self.cleaned_data['first_name'])
+   # def clean_first_name(self):
+    #    return NameValidator(self.cleaned_data['first_name'])
 
-    def clean_last_name(self):
-        return NameValidator(self.cleaned_data['last_name'])
+    #def clean_last_name(self):
+     #   return NameValidator(self.cleaned_data['last_name'])
+
 
 class ClienteEditForm(forms.ModelForm):
     first_name=forms.CharField(max_length=40, label='Nome')
@@ -71,7 +71,7 @@ class LoginForm(forms.ModelForm):
         password = self.cleaned_data.get('password')
         if Cliente.objects.filter(username = username).exists():
             username = Cliente.objects.get(username=username)
-            if authenticate(username=username, password=password) == None:
+            if authenticate(username=username, password=password) is None:
                 raise forms.ValidationError(("Usuario ou senha incorretos"))
         return self.cleaned_data
 

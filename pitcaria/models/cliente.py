@@ -6,7 +6,7 @@ class Cliente(User):
     cpf = models.CharField(unique=True, max_length=11)
     telefone = models.IntegerField()
     data_nascimento = models.DateField()
-    nota = models.IntegerField(max_length=2)
+    nota = models.IntegerField()
     User.is_active = models.BooleanField(default=True)
 
     def __str__(self):
