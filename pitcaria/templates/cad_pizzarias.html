@@ -1,0 +1,71 @@
+
+    <form method="POST" action="{% url 'pitcaria:cadastro-cliente' %}" class='ui form'>
+
+        {% csrf_token %}
+
+        {% if msg %}
+            <div>{{ msg }}</div>
+        {% endif %}
+
+        {% if form.username %}
+            <label>{{ form.username.label }}</label>
+            {{ form.username }} </br>
+            {% if form.username.errors %}
+                {{ form.username.errors }}
+            {% endif %}
+        {% endif %}
+
+        <label>{{ form.password.label }}</label>
+        {{ form.password }} </br>
+        {% if form.password.errors %}
+            {{ form.password.errors }}
+        {% endif %}
+
+
+        <label>{{ form.first_name.label }}</label>
+        {{ form.first_name }} </br>
+        {% if form.first_name.errors %}
+            {{ form.first_name.errors }}
+        {% endif %}
+
+
+        <label>{{ form.last_name.label }}</label>
+        {{ form.last_name }} </br>
+        {% if form.last_name.errors %}
+            {{ form.last_name.errors }}
+        {% endif %}
+
+
+        <label>{{ form.cpf.label }}</label>
+        {{ form.cpf }} </br>
+        {% if form.cpf.errors %}
+            {{ form.cpf.errors }}
+        {% endif %}
+
+        <label>{{ form.data_nascimento.label }}</label>
+        {{ form.data_nascimento }} </br>
+        {% if form.data_nascimento.errors %}
+            {{ form.data_nascimento.errors }}
+        {% endif %}
+
+        <label>{{ form.telefone.label }}</label>
+        {{ form.telefone }} </br>
+        {% if form.telefone.errors %}
+            {{ form.telefone.errors }}
+        {% endif %}
+
+        <label>{{ form.email.label }}</label>
+        {{ form.email }} </br>
+        {% if form.email.errors %}
+            {{ form.email.errors }}
+        {% endif %}
+
+        <label>{{ form.endereco.label }}</label>
+        {{ form.endereco }} </br>
+        {% if form.endereco.errors %}
+            {{ form.endereco.errors }}
+        {% endif %}
+
+        <button type="submit" class="ui verde button">Salvar</button>
+    </form>
+        <a href="{% url 'pitcaria:login' %}">Voltar</a>

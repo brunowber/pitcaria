@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class CadastraPizzaria(View):
     template = 'cad_pizzaria.html'
+    template2 = 'cad_pizzaria.html'
 
     def get(self, request):
         id = request.user.id
@@ -35,9 +36,12 @@ class CadastraPizzaria(View):
                 login(request, user)
 
                 request.session['first_name'] = pizzaria.first_name
-                request.session['last_name'] = pizzaria.last_name
-                request.session['cpf'] = pizzaria.cpf
-                request.session['endereco'] = pizzaria.endereco
+                #request.session['last_name'] = pizzaria.last_name
+                request.session['cnpj'] = pizzaria.cnpj
+                request.session['cidade'] = pizzaria.cidade
+                request.session['bairro'] = pizzaria.bairro
+                request.session['rua'] = pizzaria.rua
+                request.session['complemento'] = pizzaria.complemento
                 request.session['telefone'] = pizzaria.telefone
                 request.session['email'] = pizzaria.email
                 return render(request, self.template2, {'msg': 'Informações alteradas com sucesso!'})

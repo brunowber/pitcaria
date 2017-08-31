@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateView
 urlpatterns = [
     url(r'^$', Login.as_view(), name='login'),
     url(r'^cad_cliente/$', CadastraCliente.as_view(), name='cadastro-cliente'),
+    url(r'^cad_pizzaria/$', CadastraPizzaria.as_view(), name='cadastro-pizzaria'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/pitcaria'}, name='logout'),
     #url(r'^cad_livro/$', CadastraLivro.as_view(), name='cadastro-livro'),
     #url(r'^cad_livro/(?P<id>\d+)/$', CadastraLivro.as_view(), name='edita-livro'),
