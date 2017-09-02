@@ -2,6 +2,8 @@
 
 from django import forms
 from django.contrib.auth import authenticate
+from django.forms.extras import SelectDateWidget
+
 from pitcaria.models.cliente import Cliente
 
 
@@ -10,7 +12,6 @@ class ClienteForm(forms.ModelForm):
     first_name = forms.CharField(max_length=40, label='Nome')
     last_name = forms.CharField(max_length=40, label='Sobrenome')
     cpf = forms.CharField(label='CPF')
-    data_nascimento = forms.CharField(max_length=10, label='Data de Nascimento')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -38,7 +39,6 @@ class ClienteForm(forms.ModelForm):
 class ClienteEditForm(forms.ModelForm):
     first_name=forms.CharField(max_length=40, label='Nome')
     last_name=forms.CharField(max_length=40, label='Sobrenome')
-    data_nascimento=forms.CharField(max_length=10, label='Data de Nascimento')
     cpf = forms.IntegerField(label='CPF')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
@@ -75,5 +75,3 @@ class LoginForm(forms.ModelForm):
                 raise forms.ValidationError(("Usuario ou senha incorretos"))
         return self.cleaned_data
 
-    def clean_username(self):
-        return UsernameValidator(self.cleaned_data['username'])

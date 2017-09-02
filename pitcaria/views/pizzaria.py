@@ -75,6 +75,7 @@ class Login(View):
         return render(request, self.template, {'form': form})
 
     def post(self, request):
+        print request.POST
         username = request.POST['username']
         try:
             form = LoginForm(data=request.POST, instance=Pizzaria.objects.get(username=username))

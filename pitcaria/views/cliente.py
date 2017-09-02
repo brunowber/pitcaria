@@ -41,7 +41,6 @@ class CadastraCliente(View):
                 request.session['endereco'] = cliente.endereco
                 request.session['telefone'] = cliente.telefone
                 request.session['email'] = cliente.email
-                request.session['first_name'] = cliente.first_name
                 request.session['nota'] = cliente.nota
 
                 return render(request, self.template2, {'msg': 'Informações alteradas com sucesso!'})
@@ -107,32 +106,3 @@ class Login(View):
                 print pessoa.errors
         else:
             return render(request, self.template, {'form': LoginForm})
-
-class Alterar_status(View):
-    template = 'alterar_status.html'
-    template2 = 'index.html'
-
-    def get(self, request):
-        return render(request, self.template, {'form':LoginForm})
-
-    def post(self, request):
-        if request.user.id:
-            ativo = Cliente.objects.get(username=request.user)
-            ativo.is_active = False
-            ativo.save()
-            logout(request)
-            return redirect('/pitcaria/')
-        else:
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if user:
-                ativo = Cliente.objects.get(username=user)
-                if ativo.is_active is False:
-                    ativo.is_active = True
-                    ativo.save()
-                    return render(request, self.template2, {'msg': 'usuario ativado com sucesso!','form':LoginForm})
-                else:
-                    return render(request, self.template, {'msg': 'Este usuario já esta ativo','form':LoginForm})
-            else:
-                return render(request, self.template, {'msg': 'Usuario ou senha incorretos','form':LoginForm})
