@@ -9,8 +9,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 class CadastraPizzaria(View):
-    template = 'cad_pizzaria.html'
+    template = 'cad_pizzarias.html'
     template2 = 'cad_pizzaria.html'
+    template3 = 'index.html'
 
     def get(self, request):
         id = request.user.id
@@ -39,6 +40,7 @@ class CadastraPizzaria(View):
                 #request.session['last_name'] = pizzaria.last_name
                 request.session['cnpj'] = pizzaria.cnpj
                 request.session['cidade'] = pizzaria.cidade
+                request.session['estado'] = pizzaria.cidade
                 request.session['bairro'] = pizzaria.bairro
                 request.session['rua'] = pizzaria.rua
                 request.session['complemento'] = pizzaria.complemento
@@ -51,10 +53,12 @@ class CadastraPizzaria(View):
         else:
             form = PizzariaForm(data=request.POST)
             if form.is_valid():
-                pessoa = form.save(commit=False)
-                pessoa.set_password(request.POST['password'])
-                pessoa.is_active = True
-                pessoa.save()
+                pizzaria = form.save(commit=False)
+                pizzaria.set_password(request.POST['password'])
+                pizzaria.set_password(request.POST['password'])
+                pizzaria.is_active = True
+                pizzaria.nota = 0
+                pizzaria.save()
 
                 return render(request, self.template3, {'form': LoginForm})
             else:
@@ -73,7 +77,7 @@ class Login(View):
     def post(self, request):
         username = request.POST['username']
         try:
-            form = LoginForm(data=request.POST, instance=Cliente.objects.get(username=username))
+            form = LoginForm(data=request.POST, instance=Pizzaria.objects.get(username=username))
         except ObjectDoesNotExist:
             form = LoginForm(data=request.POST)
         if not form.is_valid():

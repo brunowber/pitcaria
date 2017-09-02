@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class CadastraCliente(View):
     template = 'cad_cliente.html'
-    template = 'index.html'
+    template2 = 'index.html'
 
     def get(self, request):
         id = request.user.id

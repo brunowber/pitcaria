@@ -1,6 +1,6 @@
-
+{% extends 'base.html' %}
+{% block content %}
     <form method="POST" action="{% url 'pitcaria:cadastro-cliente' %}" class='ui form'>
-
         {% csrf_token %}
 
         {% if msg %}
@@ -69,3 +69,4 @@
         <button type="submit" class="ui verde button">Salvar</button>
     </form>
         <a href="{% url 'pitcaria:login' %}">Voltar</a>
+{% endblock content %}

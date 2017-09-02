@@ -1,5 +1,6 @@
-
-    <form method="POST" action="{% url 'pitcaria:cadastro-cliente' %}" class='ui form'>
+{% extends 'base.html' %}
+{% block content %}
+    <form method="POST" action="{% url 'pitcaria:cadastro-pizzaria' %}" class='ui form'>
 
         {% csrf_token %}
 
@@ -28,30 +29,10 @@
             {{ form.first_name.errors }}
         {% endif %}
 
-
-        <label>{{ form.last_name.label }}</label>
-        {{ form.last_name }} </br>
-        {% if form.last_name.errors %}
-            {{ form.last_name.errors }}
-        {% endif %}
-
-
-        <label>{{ form.cpf.label }}</label>
-        {{ form.cpf }} </br>
-        {% if form.cpf.errors %}
-            {{ form.cpf.errors }}
-        {% endif %}
-
-        <label>{{ form.data_nascimento.label }}</label>
-        {{ form.data_nascimento }} </br>
-        {% if form.data_nascimento.errors %}
-            {{ form.data_nascimento.errors }}
-        {% endif %}
-
-        <label>{{ form.telefone.label }}</label>
-        {{ form.telefone }} </br>
-        {% if form.telefone.errors %}
-            {{ form.telefone.errors }}
+        <label>{{ form.cnpj.label }}</label>
+        {{ form.cnpj }} </br>
+        {% if form.cnpj.errors %}
+            {{ form.cnpj.errors }}
         {% endif %}
 
         <label>{{ form.email.label }}</label>
@@ -60,12 +41,43 @@
             {{ form.email.errors }}
         {% endif %}
 
-        <label>{{ form.endereco.label }}</label>
-        {{ form.endereco }} </br>
-        {% if form.endereco.errors %}
-            {{ form.endereco.errors }}
+        <label>{{ form.telefone.label }}</label>
+        {{ form.telefone }} </br>
+        {% if form.telefone.errors %}
+            {{ form.telefone.errors }}
+        {% endif %}
+
+        <label>{{ form.estado.label }}</label>
+        {{ form.estado }} </br>
+        {% if form.estado.errors %}
+            {{ form.estado.errors }}
+        {% endif %}
+
+        <label>{{ form.cidade.label }}</label>
+        {{ form.cidade }} </br>
+        {% if form.cidade.errors %}
+            {{ form.cidade.errors }}
+        {% endif %}
+
+        <label>{{ form.bairro.label }}</label>
+        {{ form.bairro }} </br>
+        {% if form.bairro.errors %}
+            {{ form.bairro.errors }}
+        {% endif %}
+
+        <label>{{ form.rua.label }}</label>
+        {{ form.rua }} </br>
+        {% if form.rua.errors %}
+            {{ form.rua.errors }}
+        {% endif %}
+
+        <label>{{ form.complemento.label }}</label>
+        {{ form.complemento }} </br>
+        {% if form.complemento.errors %}
+            {{ form.complemento.errors }}
         {% endif %}
 
         <button type="submit" class="ui verde button">Salvar</button>
     </form>
         <a href="{% url 'pitcaria:login' %}">Voltar</a>
+{% endblock content %}

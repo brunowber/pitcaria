@@ -1,4 +1,6 @@
-    <form method="POST" action="{% url 'pitcaria:login' %}" class='ui form'>
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" action="{% url 'pitcaria:login' %}" class='ui form'>
         {% csrf_token %}
 
         {% if msg %}
@@ -21,6 +23,9 @@
         {% endif %}
         </br>
 
+
         <button type="submit" class="ui verde button">Entrar</button></br>
     </form>
-    <a href="{% url 'pitcaria:cadastro-cliente' %}" >criar</a></br>
+    <button class="ui verde button"><a href="{% url 'pitcaria:cadastro-cliente' %}">Criar Cliente</a></button>
+    <button class="ui verde button"><a href="{% url 'pitcaria:cadastro-pizzaria' %}">Criar Pizzaria</a></button></br>
+{% endblock content %}

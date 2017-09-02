@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="{% static 'semantic/semantic.css' %}"/>
+    </head>
+    <body>
+    <div style="background:red">a </div>
+        <div class="grid ui centered">
+
+            <div class="six wide column">
+
+                <h1>Pitçária</h1>
+
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        <script type="text/javascript" src="{% static 'semantic/semantic.js' %}"></script>
+    <div style="background:red">a </div>
+
+    </body>
+</html>
