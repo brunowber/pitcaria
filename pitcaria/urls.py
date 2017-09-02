@@ -2,9 +2,12 @@ from django.conf.urls import url
 from pitcaria.views import *
 from pitcaria import views
 from django.views.generic.base import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
+
     url(r'^$', Login.as_view(), name='login'),
     url(r'^cad_cliente/$', CadastraCliente.as_view(), name='cadastro-cliente'),
     url(r'^cad_pizzaria/$', CadastraPizzaria.as_view(), name='cadastro-pizzaria'),

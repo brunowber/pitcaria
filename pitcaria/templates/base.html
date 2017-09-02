@@ -1,22 +1,59 @@
 {% load static %}
 <html>
-    <head>
-        <link type="text/css" rel="stylesheet" href="{% static 'semantic/semantic.css' %}"/>
-    </head>
-    <body>
-    <div style="background:red">a </div>
-        <div class="grid ui centered">
+<head>
+    <link type="text/css" rel="stylesheet" href="{% static 'semantic/semantic.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css.css' %}"/>
+</head>
+<body class="site">
+<div style="background:#FF1818">
+    a
+</div>
+<div class="Site-content" style="background:#E5E5E5">
+    <div class="grid ui centered">
 
-            <div class="six wide column">
+    <div class="six wide column ">
 
-                <h1>Pitçária</h1>
+        <h1>Pitçária</h1>
+        {% block content %}
+        {% endblock %}
 
-                {% block content %}
-                {% endblock %}
-            </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="{% static 'semantic/semantic.js' %}"></script>
+
+<footer id="footer" class='ui stackable grid  ' style="background:red">
+    <div class="middle aligned row ">
+        <div class='three wide column'>
+            <figure class="banner">
+                <img src="{% static 'img/logo.png' %}" alt='Fotinho da logo' width='100px'>
+            </figure>
         </div>
-        <script type="text/javascript" src="{% static 'semantic/semantic.js' %}"></script>
-    <div style="background:red">a </div>
+        <div class='ten wide column'>
+            <h4 class='ui header foot'> Araquacity
+                <p class='sub header foot'>
+                    IFC-Araquari
+                </p>
+                <p class="sub header foot">
+                    Araquari | SC | 6666-6666
+                </p>
+                <p class="sub header foot">
+                    47 3431.3233
+                </p>
+            </h4>
+        </div>
+        <div class='three wide only computer column'>
+            <h5 class='ui header foot'>
+                Desenvolvido por:
+                <p>
+                    <a href='' class='sub header foot'>
+                        Retardados do BSI
+                    </a>
+                </p>
 
-    </body>
+            </h5>
+        </div>
+    </div>
+</footer>
+</body>
 </html>
