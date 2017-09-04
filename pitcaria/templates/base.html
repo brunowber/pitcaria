@@ -6,53 +6,37 @@
 </head>
 <body class="site">
 <div style="background:#FF1818">
-    a
-</div>
-<div class="Site-content" style="background:#E5E5E5">
-    <div class="grid ui centered">
-
-    <div class="six wide column ">
-
-        <h1>Pitçária</h1>
-        {% block content %}
-        {% endblock %}
-
+    <img src="{% static 'img/logo.png' %}" class="ui small circular image" alt='Fotinho da logo' width='100px'>
+    <div class="margem">
+        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Home</a></button>
+        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Cadastrar Cliente</a></button>
+        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Cadastrar Pizzaria</a></button>
+        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Login</a></button>
     </div>
 </div>
+<div class="Site-content" style="background:white">
+    <div class="grid ui centered">
+
+        <div class="six wide column ">
+
+            <h1>Pitçária</h1>
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="{% static 'semantic/semantic.js' %}"></script>
+<footer style="background:red">
+<span class="Footer-social">
 
-<footer id="footer" class='ui stackable grid  ' style="background:red">
-    <div class="middle aligned row ">
-        <div class='three wide column'>
-            <figure class="banner">
-                <img src="{% static 'img/logo.png' %}" alt='Fotinho da logo' width='100px'>
-            </figure>
-        </div>
-        <div class='ten wide column'>
-            <h4 class='ui header foot'> Araquacity
-                <p class='sub header foot'>
-                    IFC-Araquari
-                </p>
-                <p class="sub header foot">
-                    Araquari | SC | 6666-6666
-                </p>
-                <p class="sub header foot">
-                    47 3431.3233
-                </p>
-            </h4>
-        </div>
-        <div class='three wide only computer column'>
-            <h5 class='ui header foot'>
-                Desenvolvido por:
-                <p>
-                    <a href='' class='sub header foot'>
-                        Retardados do BSI
-                    </a>
-                </p>
+</span>
+    <div class="Footer-credits">
+        <span class="Footer-credit" style="margin-left:50px">Criado pelos retardados do BSI</span>
 
-            </h5>
-        </div>
+        <span class="Footer-credit" style="margin-left:300px">Pitçária</span>
+
+        <span class="Footer-credit" style="float:right"> Engenharia de Software</span>
     </div>
 </footer>
 </body>

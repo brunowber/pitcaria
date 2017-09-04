@@ -48,6 +48,13 @@
             {{ form.telefone.errors }}
         {% endif %}
 
+        <label>{{ form.data_nascimento.label }}</label>
+        {{ form.data_nascimento }} </br>
+        {% if form.data_nascimento.errors %}
+            {{ form.data_nascimento.errors }}
+        {% endif %}
+
+
         <label>{{ form.email.label }}</label>
         {{ form.email }} </br>
         {% if form.email.errors %}
@@ -68,5 +75,6 @@
 
         <button type="submit" class="ui verde button">Salvar</button>
     </form>
-        <a href="{% url 'pitcaria:login' %}">Voltar</a>
+        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Voltar</a> </button>
+
 {% endblock content %}
