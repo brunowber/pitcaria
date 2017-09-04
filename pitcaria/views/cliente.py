@@ -74,7 +74,7 @@ class Login(View):
     def post(self, request):
         username = request.POST['username']
         try:
-            form = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
+            form = LoginForm(data=request.POST, instance=Cliente.objects.get(username=username))
         except ObjectDoesNotExist:
             form = LoginForm(data=request.POST)
         if not form.is_valid():
@@ -86,9 +86,9 @@ class Login(View):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            pessoa = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
+            pessoa = LoginForm(data=request.POST, instance=Cliente.objects.get(username=username))
             id = request.user.id
-            desativo = Pessoa.objects.get(pk=id)
+            desativo = Cliente.objects.get(pk=id)
             if desativo.is_active is False:
                 logout(request)
                 return render(request, self.template3, {'msg': 'Este usuario está inativo, deseja ativar?', 'form': LoginForm})

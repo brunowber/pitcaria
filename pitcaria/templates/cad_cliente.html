@@ -60,6 +60,12 @@
             {{ form.endereco.errors }}
         {% endif %}
 
+        <label>{{ form.data_nascimento.label }}</label>
+        {{ form.data_nascimento }} </br>
+        {% if form.data_nascimento.errors %}
+            {{ form.data_nascimento.errors }}
+        {% endif %}
+
         <button type="submit" class="ui verde button">Salvar</button>
     </form>
         <a href="{% url 'pitcaria:login' %}">Voltar</a>

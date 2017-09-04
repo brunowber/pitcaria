@@ -90,9 +90,9 @@ class Login(View):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            pessoa = LoginForm(data=request.POST, instance=Pessoa.objects.get(username=username))
+            pessoa = LoginForm(data=request.POST, instance=Pizzaria.objects.get(username=username))
             id = request.user.id
-            desativo = Pessoa.objects.get(pk=id)
+            desativo = Pizzaria.objects.get(pk=id)
             if desativo.is_active is False:
                 logout(request)
                 return render(request, self.template3, {'msg': 'Este usuario está inativo, deseja ativar?', 'form': LoginForm})
@@ -122,7 +122,7 @@ class Alterar_status(View):
 
     def post(self, request):
         if request.user.id:
-            ativo = Pessoa.objects.get(username=request.user)
+            ativo = Pizzaria.objects.get(username=request.user)
             ativo.is_active = False
             ativo.save()
             logout(request)
@@ -132,7 +132,7 @@ class Alterar_status(View):
             password = request.POST['password']
             user = authenticate(username=username, password=password)
             if user:
-                ativo = Pessoa.objects.get(username=user)
+                ativo = Pizzaria.objects.get(username=user)
                 if ativo.is_active is False:
                     ativo.is_active = True
                     ativo.save()

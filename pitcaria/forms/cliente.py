@@ -14,6 +14,7 @@ class ClienteForm(forms.ModelForm):
     cpf = forms.CharField(label='CPF')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
+    data_nascimento = forms.DateField()
 
     class Meta:
         model = Cliente
@@ -42,6 +43,7 @@ class ClienteEditForm(forms.ModelForm):
     cpf = forms.IntegerField(label='CPF')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
+    data_nascimento = forms.DateField()
 
     class Meta:
         model = Cliente
