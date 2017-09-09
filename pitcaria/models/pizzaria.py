@@ -12,6 +12,7 @@ class Pizzaria(User):
     telefone = models.IntegerField()
     nota = models.IntegerField()
     User.is_active = models.BooleanField(default=True)
+    is_pizzaria = models.BooleanField(default=True)
 
     def __str__(self):
         return self.username

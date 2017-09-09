@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if msg %}
+<p>{{ msg }}</p>
+{% endif %}
+
+<table class="ui table" style="margin-top:40px">
+    <thead>
+    <tr>
+        <th class="ten wide">Perfil</th>
+        <th class="six wide">Dados</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Nome Completo</td>
+        <td>{{ request.session.first_name }} {{ request.session.last_name }}</td>
+    </tr>
+    <tr>
+        <td>CNPJ</td>
+        <td>{{ request.session.cnpj }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{ request.session.email }}</td>
+    </tr>
+    <tr>
+        <td>Telefone</td>
+        <td>{{ request.session.telefone }}</td>
+    </tr>
+    <tr>
+        <td>Nota</td>
+        <td>{{ request.session.nota }}</td>
+    </tr>
+    </tbody>
+
+</table>
+
+{% else %}
+<h4>Você não esta logado no sistema</h4>
+<a href="{% url 'estante:login' %}">Login</a><br/>
+{% endif %}
+{% endblock content %}

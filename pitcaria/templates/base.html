@@ -9,9 +9,22 @@
     <img src="{% static 'img/logo.png' %}" class="ui medium circular image" alt='Fotinho da logo' >
     <nav class="ui menu red inverted large">
         <button class="ui red inverted button"><a href="{% url 'pitcaria:index' %}" style="color:white">Home</a></button>
-        <button class="ui red inverted button"><a href="{% url 'pitcaria:cadastro-cliente' %}" style="color:white">Cadastrar Cliente</a></button>
-        <button class="ui red inverted button"><a href="{% url 'pitcaria:cadastro-pizzaria' %}" style="color:white">Cadastrar Pizzaria</a></button>
-        <button class="ui red inverted button"><a href="{% url 'pitcaria:login' %}" style="color:white">Login</a></button>
+        {% if user.is_anonymous %}
+            <button class="ui red inverted button"><a href="{% url 'pitcaria:cadastro-cliente' %}" style="color:white">Cadastrar Cliente</a></button>
+            <button class="ui red inverted button"><a href="{% url 'pitcaria:cadastro-pizzaria' %}" style="color:white">Cadastrar Pizzaria</a>
+            <button class="ui red inverted button"><a href="{% url 'pitcaria:login' %}" style="color:white">Login</a></button>
+        {% endif %}
+        {{user_is_authenticated}}
+        {% if user.is_authenticated %}
+                {% if request.session.pizzaria %}
+                <button class="ui red inverted button"><a href="{% url 'pitcaria:perfil_pizzaria' %}" style="color:white">Perfil</a></button>
+                {% else %}
+                <button class="ui red inverted button"><a href="{% url 'pitcaria:perfil_usuario' %}" style="color:white">Perfil</a></button>
+                <button class="ui red inverted button"><a href="{% url 'pitcaria:procurar_pizzaria' %}" style="color:white">Procurar</a></button>
+                {% endif %}
+                <button class="ui red inverted button"><a href="{% url 'pitcaria:logout' %}" style="color:white">logout</a></button>
+
+        {% endif %}
     </nav>
 </div>
 <div class="Site-content" style="background:#EFEAEA">
