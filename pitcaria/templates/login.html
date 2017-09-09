@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" action="{% url 'pitcaria:login' %}" class='ui form'>
+    {% csrf_token %}
+
+    {% if msg %}
+    <div>{{ msg }}</div>
+    {% endif %}
+
+
+    <label>{{ form.username.label }}</label>
+    {{ form.username }}
+    {% if form.username.errors %}
+    {{ form.username.errors }}
+    {% endif %}
+    </br>
+
+
+    <label>{{ form.password.label }}</label>
+    {{ form.password }}
+    {% if form.errors %}
+    {{ form.non_field_errors }}
+    {% endif %}
+    </br>
+
+    <div class="grouped fields">
+        <label>Qual tipo de login?</label>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="checkbox" value="cliente" checked>
+                <label>Cliente</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="checkbox" value="pizzaria">
+                <label>Pizzaria</label>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+
+    <button type="submit" class="ui verde button">Entrar</button>
+    </br>
+</form>
+{% endblock content %}

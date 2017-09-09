@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 class Login(View):
-    template = 'index.html'
+    template = 'login.html'
     template2 = 'index.html'
 
     def get(self, request):

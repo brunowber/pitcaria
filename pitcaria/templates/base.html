@@ -1,25 +1,23 @@
 {% load static %}
 <html>
 <head>
-    <link type="text/css" rel="stylesheet" href="{% static 'semantic/semantic.css' %}"/>
     <link type="text/css" rel="stylesheet" href="{% static 'css.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'semantic/semantic.css' %}"/>
 </head>
 <body class="site">
 <div style="background:#FF1818">
-    <img src="{% static 'img/logo.png' %}" class="ui small circular image" alt='Fotinho da logo' width='100px'>
-    <div class="margem">
-        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Home</a></button>
-        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Cadastrar Cliente</a></button>
-        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Cadastrar Pizzaria</a></button>
-        <button class="ui verde button"><a href="{% url 'pitcaria:login' %}">Login</a></button>
-    </div>
+    <img src="{% static 'img/logo.png' %}" class="ui medium circular image" alt='Fotinho da logo' >
+    <nav class="ui menu red inverted large">
+        <button class="ui red inverted button"><a href="{% url 'pitcaria:index' %}" style="color:white">Home</a></button>
+        <button class="ui red inverted button"><a href="{% url 'pitcaria:cadastro-cliente' %}" style="color:white">Cadastrar Cliente</a></button>
+        <button class="ui red inverted button"><a href="{% url 'pitcaria:cadastro-pizzaria' %}" style="color:white">Cadastrar Pizzaria</a></button>
+        <button class="ui red inverted button"><a href="{% url 'pitcaria:login' %}" style="color:white">Login</a></button>
+    </nav>
 </div>
-<div class="Site-content" style="background:white">
+<div class="Site-content" style="background:#EFEAEA">
     <div class="grid ui centered">
 
         <div class="six wide column ">
-
-            <h1>Pitçária</h1>
             {% block content %}
             {% endblock %}
 
