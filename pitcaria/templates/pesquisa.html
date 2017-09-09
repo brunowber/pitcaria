@@ -15,23 +15,23 @@
     <tbody>
     <tr>
         <td>Nome Completo</td>
-        <td>{{ request.session.first_name }} {{ request.session.last_name }}</td>
+        <td>{{ pizzaria.first_name }}</td>
     </tr>
     <tr>
         <td>CNPJ</td>
-        <td>{{ request.session.cnpj }}</td>
+        <td>{{ pizzaria.cnpj }}</td>
     </tr>
     <tr>
         <td>Email</td>
-        <td>{{ request.session.email }}</td>
+        <td>{{ pizzaria.email }}</td>
     </tr>
     <tr>
         <td>Telefone</td>
-        <td>{{ request.session.telefone }}</td>
+        <td>{{ pizzaria.telefone }}</td>
     </tr>
     <tr>
         <td>Nota</td>
-        <td><div class="ui star rating" data-rating={{request.session.nota}} data-max-rating="10"></div></td>
+        <td><div class="ui star rating" data-rating={{pizzaria.nota_real}} data-max-rating="10"></div></td>
     </tr>
     </tbody>
 
@@ -39,6 +39,8 @@
 
 <script type="text/javascript">
     $(document).ready(function(){$(".rating").rating('disable');});
+
+
 </script>
 {% else %}
 <h4>Você não esta logado no sistema</h4>

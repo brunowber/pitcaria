@@ -24,7 +24,7 @@
     {% for pizzarias in pizzaria %}
     <tr>
         <td>
-            {{pizzarias.first_name}}
+            <a href="{% url 'pitcaria:pesquisa' pizzarias.id %}">{{pizzarias.first_name}}</a>
         </td>
         <td class="single line">
             {{pizzarias.estado}},
@@ -37,7 +37,7 @@
             {{pizzarias.obs}}
         </td>
         <td >
-            <div class="ui star rating" data-rating={{pizzarias.nota}} data-max-rating="10"></div>
+            <div class="ui star rating" data-rating={{pizzarias.nota_real}} data-max-rating="10"></div>
         </td>
     </tr>
     {% endfor %}

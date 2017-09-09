@@ -12,6 +12,8 @@ class Pizzaria(User):
     obs = models.CharField(max_length=100)
     telefone = models.IntegerField()
     nota = models.IntegerField()
+    quant_nota = models.IntegerField()
+    nota_real = models.IntegerField()
     User.is_active = models.BooleanField(default=True)
     is_pizzaria = models.BooleanField(default=True)
 

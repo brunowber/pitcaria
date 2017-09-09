@@ -15,3 +15,16 @@ class ProcurarPizzaria(View):
         pizzaria = Pizzaria.objects.filter(first_name__icontains=nome)
         print "pesquisa:", pizzaria
         return render(request, self.template, {'pizzaria': pizzaria})
+
+class Pesquisa(View):
+    template = 'pesquisa.html'
+
+    def get(self, request, id=None):
+
+        if id:
+            print ('aqui')
+            pizzaria = Pizzaria.objects.get(id=id)
+            print (pizzaria)
+            return render(request, self.template, {'pizzaria':pizzaria})
+
+        return render(request, self.template)

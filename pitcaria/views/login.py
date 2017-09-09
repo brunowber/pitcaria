@@ -73,7 +73,8 @@ class Login(View):
                     request.session['cnpj'] = pizzaria.cnpj
                     request.session['telefone'] = pizzaria.telefone
                     request.session['email'] = pizzaria.email
-                    request.session['nota'] = pizzaria.nota
+                    request.session['nota'] = pizzaria.nota_real
+                    print request.session['nota']
                     request.session['pizzaria'] = pizzaria.is_pizzaria
                     print request.session['pizzaria']
                     return render(request, self.template3, {'msg': 'Login efetuado com sucesso!'})

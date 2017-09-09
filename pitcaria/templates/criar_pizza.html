@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="POST" action="{% url 'pitcaria:cadastro-pizzas' %}" class='ui form'>
+        {% csrf_token %}
+
+        {% if msg %}
+            <div>{{ msg }}</div>
+        {% endif %}
+
+        {% if form.nome %}
+            <label>{{ form.nome.label }}</label>
+            {{ form.nome }} </br>
+            {% if form.nome.errors %}
+                {{ form.nome.errors }}
+            {% endif %}
+        {% endif %}
+
+        <label>{{ form.sabor.label }}</label>
+        {{ form.sabor }} </br>
+        {% if form.sabor.errors %}
+            {{ form.sabor.errors }}
+        {% endif %}
+
+
+        <label>{{ form.descricao.label }}</label>
+        {{ form.descricao }} </br>
+        {% if form.descricao.errors %}
+            {{ form.descricao.errors }}
+        {% endif %}
+
+        <button type="submit" class="ui verde button">Cadastrar</button>
+    </form>
+
+{% endblock content %}
