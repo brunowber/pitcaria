@@ -1,5 +1,52 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<form method="POST" action="{% url 'pitcaria:procurar_pizzaria' %}" class='ui form'>
+    {% csrf_token %}
+    <div class="ui fluid category search" style="margin-top:50px">
+        <div class="ui icon input">
+            <input class="prompt" name="procurar" type="text" placeholder="Procurar Pizzarias...">
+            <i class="search icon"></i>
+        </div>
+        <div class="results"></div>
+    </div>
+</form>
+<table class="ui celled padded table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Endereço</th>
+        <th>Observação</th>
+        <th>Nota</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for pizzarias in pizzaria %}
+    <tr>
+        <td>
+            {{pizzarias.first_name}}
+        </td>
+        <td class="single line">
+            {{pizzarias.estado}},
+            {{pizzarias.cidade}},
+            {{pizzarias.bairro}}
+            {{pizzarias.rua}},
+            {{pizzarias.complemento}}
+        </td>
+        <td>
+            {{pizzarias.obs}}
+        </td>
+        <td >
+            <div class="ui star rating" data-rating={{pizzarias.nota}} data-max-rating="10"></div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
+<script type="text/javascript">
+    $(document).ready(function(){$(".rating").rating('disable');});
+
+
+</script>
 {% endblock content %}

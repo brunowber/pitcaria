@@ -47,6 +47,12 @@
             {{ form.telefone.errors }}
         {% endif %}
 
+        <label>{{ form.obs.label }}</label>
+        {{ form.obs }} </br>
+        {% if form.obs.errors %}
+            {{ form.obs.errors }}
+        {% endif %}
+
         <label>{{ form.estado.label }}</label>
         {{ form.estado }} </br>
         {% if form.estado.errors %}

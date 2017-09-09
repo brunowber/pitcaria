@@ -11,6 +11,7 @@ class PizzariaForm(forms.ModelForm):
     bairro = forms.CharField(max_length=40, label='Bairro')
     rua = forms.CharField(max_length=40, label='Rua')
     complemento = forms.CharField(max_length=40, label='Complemento')
+    obs = forms.CharField(max_length=40, label='Observacao')
     cnpj = forms.IntegerField(label='CNPJ')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())

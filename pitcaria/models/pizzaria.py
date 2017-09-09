@@ -9,6 +9,7 @@ class Pizzaria(User):
     bairro = models.CharField(max_length=40)
     rua = models.CharField(max_length=40)
     complemento = models.CharField(max_length=40)
+    obs = models.CharField(max_length=100)
     telefone = models.IntegerField()
     nota = models.IntegerField()
     User.is_active = models.BooleanField(default=True)

@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^login/$', Login.as_view(), name='login'),
     url(r'^cad_cliente/$', CadastraCliente.as_view(), name='cadastro-cliente'),
     url(r'^cad_pizzaria/$', CadastraPizzaria.as_view(), name='cadastro-pizzaria'),
+    url(r'^procurar_pizzaria/$', ProcurarPizzaria.as_view(), name='procurar_pizzaria'),
     #url(r'^perfil_usuario/$', PerfilUsuario.as_view(), name='cadastro-pizzaria'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
     #url(r'^cad_livro/$', CadastraLivro.as_view(), name='cadastro-livro'),
