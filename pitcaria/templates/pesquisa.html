@@ -34,8 +34,8 @@
         <td><div class="ui star rating" data-rating={{pizzaria.nota_real}} data-max-rating="10"></div></td>
     </tr>
     </tbody>
-
 </table>
+<button class="ui button"><a href="{% url 'pitcaria:cardapio-cliente' pizzaria.id %}">Ver Cardápio</a></button>
 
 <script type="text/javascript">
     $(document).ready(function(){$(".rating").rating('disable');});

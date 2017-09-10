@@ -1,33 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<table class="ui single line table">
+<table class="ui single line table" style="margin-top:50px">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Registration Date</th>
-      <th>E-mail address</th>
-      <th>Premium Plan</th>
+      <th>Nome</th>
+      <th>Sabor</th>
+      <th>Descrição</th>
     </tr>
   </thead>
+
   <tbody>
+  {% for pizza in pizzas%}
     <tr>
-      <td>John Lilki</td>
-      <td>September 14, 2013</td>
-      <td>jhlilk22@yahoo.com</td>
-      <td>No</td>
+      <td>{{pizza.nome}}</td>
+      <td>{{pizza.sabor}}</td>
+      <td>{{pizza.descricao}}</td>
     </tr>
-    <tr>
-      <td>Jamie Harington</td>
-      <td>January 11, 2014</td>
-      <td>jamieharingonton@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td>Jill Lewis</td>
-      <td>May 11, 2014</td>
-      <td>jilsewris22@yahoo.com</td>
-      <td>Yes</td>
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
+<!--{{pizzas.pizzaria.id}}-->
+{% if request.session.pizzaria == None %}
+  <button class="ui button"><a href="{% url 'pitcaria:fazer-pedido' id %}">Fazer Pedido</a></button>
+{% endif %}
 {% endblock content %}

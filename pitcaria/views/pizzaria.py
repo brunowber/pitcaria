@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
-from pitcaria.models.pizzaria import *
+from pitcaria.models.pedido import *
 from pitcaria.forms.pizzaria import *
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -36,6 +36,7 @@ class CadastraPizzaria(View):
                 user = authenticate(username=pizzaria.username, password=request.POST['password'])
                 login(request, user)
 
+                request.session['id'] = pizzaria.id
                 request.session['first_name'] = pizzaria.first_name
                 #request.session['last_name'] = pizzaria.last_name
                 request.session['cnpj'] = pizzaria.cnpj
@@ -58,9 +59,21 @@ class CadastraPizzaria(View):
                 pizzaria.set_password(request.POST['password'])
                 pizzaria.is_active = True
                 pizzaria.nota = 0
+                pizzaria.nota_real = 0
+                pizzaria.quant_nota = 0
+                pizzaria.is_pizzaria = True
                 pizzaria.save()
 
                 return render(request, self.template3, {'form': LoginForm})
             else:
                 print form.errors
         return render(request, self.template, {'form': form})
+
+
+class HistoricoPizzaria(View):
+    template = 'historico_pizzaria.html'
+
+    def get(self, request):
+        print request.user.id
+        pedidos = Pedido.objects.filter(pizzaria_id=1)
+        return render(request, self.template, {'pedidos': pedidos})

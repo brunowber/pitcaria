@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="POST" action="{% url 'pitcaria:def-pedido' %}" class='ui form' style="margin-top:50px">
+        {% csrf_token %}
+
+        {% if msg %}
+            <div>{{ msg }}</div>
+        {% endif %}
+
+        {% if form.tamanho %}
+            <label>{{ form.tamanho.label }}</label>
+            {{ form.tamanho }} </br>
+            {% if form.tamanho.errors %}
+                {{ form.tamanho.errors }}
+            {% endif %}
+        {% endif %}
+
+        <label>{{ form.preco.label }}</label>
+        {{ form.preco }} </br>
+        {% if form.preco.errors %}
+            {{ form.preco.errors }}
+        {% endif %}
+
+
+        <label>{{ form.quant.label }}</label>
+        {{ form.quant }} </br>
+        {% if form.quant.errors %}
+            {{ form.quant.errors }}
+        {% endif %}
+
+        {{}}
+        <button type="submit" class="ui verde button">Cadastrar</button>
+    </form>
+
+{% endblock content %}

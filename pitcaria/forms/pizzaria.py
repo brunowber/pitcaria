@@ -29,7 +29,7 @@ class PizzariaForm(forms.ModelForm):
 
         model = Pizzaria
         fields = "__all__"
-        exclude = ['date_joined', 'nota', 'last_name']
+        exclude = ['date_joined', 'nota', 'last_name', 'nota_real', 'quant_nota', ]
 
 
 

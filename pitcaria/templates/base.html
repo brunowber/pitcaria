@@ -23,10 +23,13 @@
                 {% if request.session.pizzaria %}
                 <button class="ui red inverted button"><a href="{% url 'pitcaria:perfil_pizzaria' %}" style="color:white">Perfil</a></button>
                 <button class="ui red inverted button"><a href="{% url 'pitcaria:cardapio' %}" style="color:white">Cárdapio</a></button>
+                <button class="ui red inverted button"><a href="{% url 'pitcaria:def-pedido' %}" style="color:white">Definir Pedido</a></button>
                 <button class="ui red inverted button"><a href="{% url 'pitcaria:cadastro-pizzas' %}" style="color:white">Cadastrar Pizzas</a></button>
+                <button class="ui red inverted button"><a href="{% url 'pitcaria:historico-pizzaria' %}" style="color:white">Histórico</a></button>
                 {% else %}
                 <button class="ui red inverted button"><a href="{% url 'pitcaria:perfil_usuario' %}" style="color:white">Perfil</a></button>
                 <button class="ui red inverted button"><a href="{% url 'pitcaria:procurar_pizzaria' %}" style="color:white">Procurar</a></button>
+                <button class="ui red inverted button"><a href="{% url 'pitcaria:historico' %}" style="color:white">Histórico</a></button>
                 {% endif %}
                 <button class="ui red inverted button"><a href="{% url 'pitcaria:logout' %}" style="color:white">logout</a></button>
 

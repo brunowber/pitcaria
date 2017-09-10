@@ -2,6 +2,7 @@
 from django.views.generic import View
 from django.shortcuts import redirect
 from pitcaria.models.cliente import Cliente
+from pitcaria.models.pedido import Pedido
 from pitcaria.forms.cliente import ClienteForm, ClienteEditForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
@@ -60,3 +61,11 @@ class CadastraCliente(View):
             else:
                 print form.errors
         return render(request, self.template, {'form': form})
+
+
+class Historico(View):
+    template = 'historico_cliente.html'
+
+    def get(self, request):
+        pedidos = Pedido.objects.filter(cliente_id=request.user.id)
+        return render(request, self.template, {'pedidos': pedidos})

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="POST" action="{% url 'pitcaria:fazer-pedido' id%}" class='ui form'>
+        {% csrf_token %}
+
+        {% if msg %}
+            <div>{{ msg }}</div>
+        {% endif %}
+
+        {% if form.entrega %}
+            <label>{{ form.entrega.label }}</label>
+            {{ form.entrega }} </br>
+            {% if form.entrega.errors %}
+                {{ form.entrega.errors }}
+            {% endif %}
+        {% endif %}
+
+        <label>{{ form.tamanho.label }}</label>
+        {{ form.tamanho }} </br>
+        {% if form.tamanho.errors %}
+            {{ form.tamanho.errors }}
+        {% endif %}
+
+
+        <label>{{ form.primeiro.label }}</label>
+        {{ form.primeiro }} </br>
+        {% if form.primeiro.errors %}
+            {{ form.primeiro.errors }}
+        {% endif %}
+
+        <label>{{ form.segundo.label }}</label>
+        {{ form.segundo }} </br>
+        {% if form.segundo.errors %}
+            {{ form.segundo.errors }}
+        {% endif %}
+
+        <label>{{ form.terceiro.label }}</label>
+        {{ form.terceiro }} </br>
+        {% if form.terceiro.errors %}
+            {{ form.terceiro.errors }}
+        {% endif %}
+        <button type="submit" class="ui verde button">Pedir</button>
+    </form>
+
+{% endblock content %}
