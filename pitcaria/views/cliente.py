@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from pitcaria.models.cliente import Cliente
 from pitcaria.models.pedido import Pedido
+from pitcaria.models.pizzaria import Pizzaria
 from pitcaria.forms.cliente import ClienteForm, ClienteEditForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
@@ -67,5 +68,23 @@ class Historico(View):
     template = 'historico_cliente.html'
 
     def get(self, request):
+        pedidos = Pedido.objects.filter(cliente_id=request.user.id)
+        return render(request, self.template, {'pedidos': pedidos})
+
+
+class Nota(View):
+    template = 'historico_cliente.html'
+
+    def post(self, request, id=None):
+        print request.POST['estrela']
+        estrela = request.POST['estrela']
+        pedido = Pedido.objects.get(id=id)
+        pedido.is_votado = True
+        pizzaria = Pizzaria.objects.get(id=pedido.pizzaria.id)
+        pizzaria.nota = pizzaria.nota+ int(estrela)
+        pizzaria.quant_nota += 1
+        pizzaria.nota_real = pizzaria.nota / pizzaria.quant_nota
+        pizzaria.save()
+        pedido.save()
         pedidos = Pedido.objects.filter(cliente_id=request.user.id)
         return render(request, self.template, {'pedidos': pedidos})

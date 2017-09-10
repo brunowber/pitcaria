@@ -14,6 +14,7 @@ class Pedido(models.Model):
     segundo = models.ForeignKey(Pizzas, related_name='segundo')
     terceiro = models.ForeignKey(Pizzas, related_name='terceiro')
     tamanho = models.ForeignKey(Tamanho)
+    is_votado = models.BooleanField()
 
     def __str__(self):
         return self.entrega

@@ -16,20 +16,18 @@ class FazerPedido(View):
     template2 = 'index.html'
 
     def get(self, request, id=None):
-
         form = PedidoForm()
         return render(request, self.template, {'form': form, 'id': id})
 
     def post(self, request, id=None):
         form = PedidoForm(data=request.POST)
         if form.is_valid():
-            print request.POST
-            print request.POST['primeiro']
             pedido = form.save(commit=False)
             print (id)
             pedido.pizzaria=Pizzaria.objects.get(id=id)
             pedido.horario=datetime.datetime.now()
             pedido.cliente=Cliente.objects.get(id=request.user.id)
+            pedido.is_votado= False
             pedido.save()
             return render(request, self.template2, {'msg': "Pedido realizado com sucesso"})
         else:

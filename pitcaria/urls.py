@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^cardapio/(?P<id>\d+)/$', Cardapio.as_view(), name='cardapio-cliente'),
     url(r'^def_pedido/$', DefPedido.as_view(), name='def-pedido'),
     url(r'^historico/$', Historico.as_view(), name='historico'),
+    url(r'^nota/(?P<id>\d+)/$', Nota.as_view(), name='nota'),
     url(r'^historico_pizzaria/$', HistoricoPizzaria.as_view(), name='historico-pizzaria'),
     #url(r'^pedido/$', Pedido.as_view(), name='pedido'),
     url(r'^procurar_pizzaria/$', ProcurarPizzaria.as_view(), name='procurar_pizzaria'),

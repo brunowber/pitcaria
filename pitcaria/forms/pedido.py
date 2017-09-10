@@ -17,4 +17,4 @@ class PedidoForm(forms.ModelForm):
 
         model = Pedido
         fields = "__all__"
-        exclude = ['pizzaria', 'cliente', 'horario', ]
+        exclude = ['pizzaria', 'cliente', 'horario', 'is_votado', ]

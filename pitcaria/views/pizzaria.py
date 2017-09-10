@@ -74,6 +74,6 @@ class HistoricoPizzaria(View):
     template = 'historico_pizzaria.html'
 
     def get(self, request):
-        print request.user.id
-        pedidos = Pedido.objects.filter(pizzaria_id=1)
+        id= Pizzaria.objects.get(id=request.user.id)
+        pedidos = Pedido.objects.filter(pizzaria_id=id)
         return render(request, self.template, {'pedidos': pedidos})

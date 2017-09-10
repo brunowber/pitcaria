@@ -5,7 +5,7 @@
 <p>{{ msg }}</p>
 {% endif %}
 
-<table class="ui celled padded table">
+<table class="ui celled padded table" style="margin-top:50px;">
     <thead>
     <tr>
         <th>Cliente</th>
@@ -17,6 +17,7 @@
         <th>Entrega</th>
         <th>Preco</th>
         <th>Data</th>
+        <th>Dar Nota</th>
     </tr>
     </thead>
     <tbody>
@@ -58,12 +59,34 @@
             {{pedido.horario}}
         </td>
 
+        <td>
+            {% if pedido.is_votado == False %}
+            <form method="POST" action="{% url 'pitcaria:nota' pedido.id %}">
+            {% csrf_token %}
+
+                <button type="submit" id="btnAddProfile" value="0" name="estrela" data-id="100" class="ui red inverted button star rating my_button" data-rating=0 data-max-rating="10"></button>
+                <span name="aqui" id="href"></span>
+                {% else %}
+                ja foi votado
+                {% endif %}
+        </form>
+        </td>
+
     </tr>
     {% endfor %}
     </tbody>
 </table>
 
+<script type="text/javascript">
+    $(document).ready(function(){$(".rating").rating('enable');})
+</script>
 
+<script type="text/javascript">
+  $('.ui.rating').rating('setting', 'onRate', function(value) {
+  var value =value;
+  $('#btnAddProfile').val(value);
+});
+</script>
 {% else %}
 <h4>Você não esta logado no sistema</h4>
 <a href="{% url 'estante:login' %}">Login</a><br/>
