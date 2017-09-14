@@ -34,8 +34,9 @@
         <td>{{ request.session.nota }}</td>
     </tr>
     </tbody>
-
 </table>
+
+    <button class="ui red inverted button"><a href="{% url 'pitcaria:editar_cliente' %}" style="color:red">Editar Perfil</a></button>
 
 {% else %}
 <h4>Você não esta logado no sistema</h4>

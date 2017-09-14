@@ -40,7 +40,7 @@ class CadastraCliente(View):
                 request.session['first_name'] = cliente.first_name
                 request.session['last_name'] = cliente.last_name
                 request.session['cpf'] = cliente.cpf
-                request.session['endereco'] = cliente.endereco
+                # request.session['endereco'] = cliente.endereco
                 request.session['telefone'] = cliente.telefone
                 request.session['email'] = cliente.email
                 request.session['nota'] = cliente.nota
