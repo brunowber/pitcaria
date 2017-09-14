@@ -19,7 +19,7 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = "__all__"
-        exclude = ['date_joined', 'nota', 'is_active']
+        exclude = ['date_joined', 'nota', 'is_active',]
 
    # def clean_cpf(self):
     #    return CpfValidator(self.cleaned_data[str('cpf')])
@@ -48,16 +48,16 @@ class ClienteEditForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = "__all__"
-        exclude = ['date_joined', 'username', 'is_active', 'nota']
+        exclude = ['date_joined', 'username', 'is_active', 'nota', 'password']
 
-    def clean_cpf(self):
-        return CpfValidator(self.cleaned_data[str('cpf')])
-
-    def clean_first_name(self):
-        return NameValidator(self.cleaned_data['first_name'])
-
-    def clean_last_name(self):
-        return NameValidator(self.cleaned_data['last_name'])
+    # def clean_cpf(self):
+    #     return CpfValidator(self.cleaned_data[str('cpf')])
+    #
+    # def clean_first_name(self):
+    #     return NameValidator(self.cleaned_data['first_name'])
+    #
+    # def clean_last_name(self):
+    #     return NameValidator(self.cleaned_data['last_name'])
 
 class LoginForm(forms.ModelForm):
 
