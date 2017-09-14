@@ -1,8 +1,10 @@
 # coding=utf-8
 
 from django import forms
+from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth import authenticate
 from django.forms.extras import SelectDateWidget
+from django.forms.fields import DateField
 
 from pitcaria.models.cliente import Cliente
 
@@ -14,27 +16,16 @@ class ClienteForm(forms.ModelForm):
     cpf = forms.CharField(label='CPF')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
-    data_nascimento = forms.DateField()
+    data_nascimento = DateField(
+    widget=SelectDateWidget(years=range(1900, 2100),
+        empty_label=("Choose Year", "Choose Month", "Choose Day"),
+    ),
+)
 
     class Meta:
         model = Cliente
         fields = "__all__"
         exclude = ['date_joined', 'nota', 'is_active']
-
-   # def clean_cpf(self):
-    #    return CpfValidator(self.cleaned_data[str('cpf')])
-
-    #def clean_username(self):
-     #   username=self.cleaned_data['username']
-      #  if Cliente.objects.filter(username=username).exists():
-       #     raise forms.ValidationError('Usuário já existe')
-        #return username
-
-   # def clean_first_name(self):
-    #    return NameValidator(self.cleaned_data['first_name'])
-
-    #def clean_last_name(self):
-     #   return NameValidator(self.cleaned_data['last_name'])
 
 
 class ClienteEditForm(forms.ModelForm):
@@ -50,14 +41,6 @@ class ClienteEditForm(forms.ModelForm):
         fields = "__all__"
         exclude = ['date_joined', 'username', 'is_active', 'nota']
 
-    def clean_cpf(self):
-        return CpfValidator(self.cleaned_data[str('cpf')])
-
-    def clean_first_name(self):
-        return NameValidator(self.cleaned_data['first_name'])
-
-    def clean_last_name(self):
-        return NameValidator(self.cleaned_data['last_name'])
 
 class LoginForm(forms.ModelForm):
 

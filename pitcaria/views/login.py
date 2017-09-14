@@ -73,6 +73,7 @@ class Login(View):
                     request.session['cnpj'] = pizzaria.cnpj
                     request.session['telefone'] = pizzaria.telefone
                     request.session['email'] = pizzaria.email
+                    print request.POST
                     request.session['nota'] = pizzaria.nota_real
                     print request.session['nota']
                     request.session['pizzaria'] = pizzaria.is_pizzaria

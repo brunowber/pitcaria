@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form method="POST" action="{% url 'pitcaria:cadastro-pizzaria' %}" class='ui form'>
+    <form method="POST" action="{% url 'pitcaria:cadastro-pizzaria' %}" class='ui form' style="margin-top:50px">
 
         {% csrf_token %}
 

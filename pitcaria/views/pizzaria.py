@@ -75,5 +75,5 @@ class HistoricoPizzaria(View):
 
     def get(self, request):
         id= Pizzaria.objects.get(id=request.user.id)
-        pedidos = Pedido.objects.filter(pizzaria_id=id)
+        pedidos = Pedido.objects.filter(pizzaria_id=id).order_by("-id")
         return render(request, self.template, {'pedidos': pedidos})
