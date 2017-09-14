@@ -6,7 +6,7 @@ from pitcaria.models.pizzas import Pizzas
 
 
 class Pedido(models.Model):
-    entrega = models.CharField(max_length=30)
+    entrega = models.CharField(max_length=100)
     horario = models.DateField()
     pizzaria = models.ForeignKey(Pizzaria)
     cliente = models.ForeignKey(Cliente)

@@ -28,35 +28,17 @@ class ClienteForm(forms.ModelForm):
         exclude = ['date_joined', 'nota', 'is_active']
 
 
-class ClienteEditForm(forms.ModelForm):
-    first_name=forms.CharField(max_length=40, label='Nome')
-    last_name=forms.CharField(max_length=40, label='Sobrenome')
-    cpf = forms.IntegerField(label='CPF')
-    telefone = forms.IntegerField(label='Telefone')
-    password = forms.CharField(widget=forms.PasswordInput())
-    data_nascimento = forms.DateField()
+#class ClienteEditForm(forms.ModelForm):
+ #   first_name=forms.CharField(max_length=40, label='Nome')
+  #  last_name=forms.CharField(max_length=40, label='Sobrenome')
+   # cpf = forms.IntegerField(label='CPF')
+   # telefone = forms.IntegerField(label='Telefone')
+   # password = forms.CharField(widget=forms.PasswordInput())
+   # data_nascimento = forms.DateField()
 
-    class Meta:
-        model = Cliente
-        fields = "__all__"
-        exclude = ['date_joined', 'username', 'is_active', 'nota']
+   # class Meta:
+    #    model = Cliente
+     #   fields = "__all__"
+      #  exclude = ['date_joined', 'username', 'is_active', 'nota']
 
-
-class LoginForm(forms.ModelForm):
-
-    username = forms.CharField(max_length=254)
-    password = forms.CharField(widget=forms.PasswordInput())
-
-    class Meta:
-        model = Cliente
-        fields = ('password', 'username',)
-
-    def clean(self):
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        if Cliente.objects.filter(username = username).exists():
-            username = Cliente.objects.get(username=username)
-            if authenticate(username=username, password=password) is None:
-                raise forms.ValidationError(("Usuario ou senha incorretos"))
-        return self.cleaned_data
 

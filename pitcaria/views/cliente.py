@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from pitcaria.models.cliente import Cliente
 from pitcaria.models.pedido import Pedido
 from pitcaria.models.pizzaria import Pizzaria
-from pitcaria.forms.cliente import ClienteForm, ClienteEditForm, LoginForm
+from pitcaria.forms.cliente import ClienteForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist

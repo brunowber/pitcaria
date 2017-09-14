@@ -9,5 +9,5 @@ class Tamanho(models.Model):
     pizzaria = models.ForeignKey(Pizzaria)
 
     def __str__(self):
-        return self.tamanho
+        return self.preco
 

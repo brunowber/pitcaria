@@ -8,8 +8,7 @@ from pitcaria.models.pedido import Pedido
 
 class PedidoForm(forms.ModelForm):
     entrega = forms.CharField(max_length=40, label='Endereco')
-    tamanho = forms.ModelChoiceField(queryset=Tamanho.objects.all(), label='Tamanho')
-    preco = forms.CharField(label='Preco')
+    tamanho = forms.ModelChoiceField(queryset=Tamanho.objects.all(), label='Preco')
     primeiro = forms.ModelChoiceField(queryset=Pizzas.objects.all(), label='Sabor 1')
     segundo = forms.ModelChoiceField(queryset=Pizzas.objects.all(), label='Sabor 2')
     terceiro = forms.ModelChoiceField(queryset=Pizzas.objects.all(), label='Sabor 3')
