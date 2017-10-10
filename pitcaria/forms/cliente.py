@@ -5,6 +5,8 @@ from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth import authenticate
 from django.forms.extras import SelectDateWidget
 from django.forms.fields import DateField
+import datetime
+
 
 from pitcaria.models.cliente import Cliente
 
@@ -16,8 +18,7 @@ class ClienteForm(forms.ModelForm):
     cpf = forms.CharField(label='CPF')
     telefone = forms.IntegerField(label='Telefone')
     password = forms.CharField(widget=forms.PasswordInput())
-    data_nascimento = DateField(
-    widget=SelectDateWidget(years=range(1900, 2100),
+    data_nascimento = DateField(widget=SelectDateWidget(years=range(1900, 2016),
         empty_label=("Choose Year", "Choose Month", "Choose Day"),
     ),
 )
