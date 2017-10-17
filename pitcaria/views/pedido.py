@@ -25,7 +25,7 @@ class FazerPedido(View):
             pedido = form.save(commit=False)
             print (id)
             pedido.pizzaria=Pizzaria.objects.get(id=id)
-            pedido.horario=datetime.datetime.now()
+            pedido.horario=datetime.datetime    .now()
             pedido.cliente=Cliente.objects.get(id=request.user.id)
             pedido.is_votado= False
             pedido.save()

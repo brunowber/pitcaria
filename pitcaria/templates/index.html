@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    {{msg}}
+
+{% if msg %}
+<p>{{ msg }} {{ request.session.first_name }}!</p>
+{% endif %}
+
 {% endblock content %}

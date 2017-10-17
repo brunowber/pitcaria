@@ -85,4 +85,18 @@
 
         <button type="submit" class="ui verde button">Salvar</button>
     </form>
+
+<script>
+    $.ajax({
+  url: 'http://correiosapi.apphb.com/cep/76873274',
+  dataType: 'jsonp',
+  crossDomain: true,
+  contentType: "application/json",
+  statusCode: {
+    200: function(data) { console.log(data); }
+    ,400: function(msg) { console.log(msg);  }
+    ,404: function(msg) { console.log("CEP não encontrado!!"); }
+  }
+});​
+</script>
 {% endblock content %}

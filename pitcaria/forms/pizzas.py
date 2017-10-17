@@ -6,8 +6,8 @@ from pitcaria.models.pizzas import Pizzas
 
 class PizzasForm(forms.ModelForm):
     nome = forms.CharField(max_length=40, label='Nome da Pizza')
-    sabor = forms.CharField(max_length=40, label='Sabor')
-    descricao = forms.CharField(max_length=40, label='Descricao')
+    sabor = forms.CharField(max_length=40, label='Ingredientes')
+    descricao = forms.CharField(max_length=255, label='Descricao')
 
     class Meta:
 

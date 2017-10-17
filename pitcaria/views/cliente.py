@@ -58,7 +58,7 @@ class CadastraCliente(View):
                 cliente.nota = 0
                 cliente.save()
 
-                return render(request, self.template2, {'form': LoginForm})
+                return render(request, self.template2, {'msg': 'Conta criada com sucesso!'})
             else:
                 print form.errors
         return render(request, self.template, {'form': form})

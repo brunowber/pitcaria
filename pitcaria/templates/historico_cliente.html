@@ -64,7 +64,7 @@
             <form method="POST" action="{% url 'pitcaria:nota' pedido.id %}">
             {% csrf_token %}
 
-                <button type="submit" id="btnAddProfile" value="0" name="estrela" data-id="100" class="ui red inverted button star rating my_button" data-rating=0 data-max-rating="10"></button>
+                <button type="submit" id="btnAddProfile" value="0" name="estrela" data-id="100" class="ui red inverted button star rating my_button" data-rating=0 data-max-rating="5"></button>
                 <span name="aqui" id="href"></span>
                 {% else %}
                 ja foi votado

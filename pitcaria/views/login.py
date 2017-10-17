@@ -11,8 +11,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class Login(View):
     template = 'login.html'
-    template2 = 'perfil_usuario.html'
-    template3 = 'perfil_pizzaria.html'
+    template2 = 'index.html'
+    template3 = 'index.html'
 
     def get(self, request):
         form = LoginForm()
@@ -45,7 +45,7 @@ class Login(View):
                     request.session['telefone'] = cliente.telefone
                     request.session['email'] = cliente.email
                     request.session['nota'] = cliente.nota
-                    return render(request, self.template2, {'msg': 'Login efetuado com sucesso!'})
+                    return render(request, self.template2,  {'msg': 'Login efetuado com sucesso! Bem vindo '})
                 else:
                     print cliente.errors
         else:
@@ -78,7 +78,7 @@ class Login(View):
                     print request.session['nota']
                     request.session['pizzaria'] = pizzaria.is_pizzaria
                     print request.session['pizzaria']
-                    return render(request, self.template3, {'msg': 'Login efetuado com sucesso!'})
+                    return render(request, self.template3, {'msg': 'Login efetuado com sucesso! Bem vindo '})
                 else:
                     print pizzaria.errors
                     raise pizzaria.errors
