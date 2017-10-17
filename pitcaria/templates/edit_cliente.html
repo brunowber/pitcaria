@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <form method="POST" action="{% url 'pitcaria:editar_cliente' %}" class='ui form'>
+        {% csrf_token %}
+
+        {% if msg %}
+            <div>{{ msg }}</div>
+        {% endif %}
+
+        <label>{{ form.first_name.label }}</label>
+        {{ form.first_name.id }} </br>
+        {% if form.first_name.errors %}
+            {{ form.first_name.errors }}
+        {% endif %}
+
+
+        <label>{{ form.last_name.label }}</label>
+        {{ form.last_name.id }} </br>
+        {% if form.last_name.errors %}
+            {{ form.last_name.errors }}
+        {% endif %}
+
+
+        <label>{{ form.cpf.label }}</label>
+        {{ form.cpf.id }} </br>
+        {% if form.cpf.errors %}
+            {{ form.cpf.errors }}
+        {% endif %}
+
+        <label>{{ form.telefone.label }}</label>
+        {{ form.telefone.id }} </br>
+        {% if form.telefone.errors %}
+            {{ form.telefone.errors }}
+        {% endif %}
+
+        <label>{{ form.data_nascimento.label }}</label>
+        {{ form.data_nascimento.id }} </br>
+        {% if form.data_nascimento.errors %}
+            {{ form.data_nascimento.errors }}
+        {% endif %}
+
+
+        <label>{{ form.email.label }}</label>
+        {{ form.email.id }} </br>
+        {% if form.email.errors %}
+            {{ form.email.errors }}
+        {% endif %}
+
+{#        <label>{{ form.endereco.label }}</label>#}
+{#        {{ form.endereco.id }} </br>#}
+{#        {% if form.endereco.errors %}#}
+{#            {{ form.endereco.errors }}#}
+{#        {% endif %}#}
+
+        <button type="submit" class="ui verde button">Confirmar</button>
+    </form>
+
+{% endblock content %}
