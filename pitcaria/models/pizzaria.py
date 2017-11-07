@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -9,7 +10,6 @@ class Pizzaria(User):
     bairro = models.CharField(max_length=100)
     rua = models.CharField(max_length=100)
     complemento = models.CharField(max_length=100)
-    cep = models.IntegerField()
     obs = models.CharField(max_length=100)
     telefone = models.IntegerField()
     nota = models.IntegerField()

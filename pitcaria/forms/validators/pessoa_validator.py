@@ -11,11 +11,13 @@ def UsernameValidator(pessoa):
         raise forms.ValidationError('Usuário não existe')
     return username
 
+
 def CpfValidator(cpf):
     if len(str(cpf)) == 11:
         return cpf
     else:
         raise forms.ValidationError("CPF deve conter 11 dígitos!")
+
 
 def NameValidator(nome):
     if nome.isalpha():

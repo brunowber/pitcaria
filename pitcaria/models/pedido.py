@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from pitcaria.models.pizzaria import Pizzaria
 from pitcaria.models.cliente import Cliente

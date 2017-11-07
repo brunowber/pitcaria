@@ -44,7 +44,6 @@ class Login(View):
                     request.session['cpf'] = cliente.cpf
                     request.session['telefone'] = cliente.telefone
                     request.session['email'] = cliente.email
-                    request.session['nota'] = cliente.nota
                     return render(request, self.template2,  {'msg': 'Login efetuado com sucesso! Bem vindo '})
                 else:
                     print cliente.errors
