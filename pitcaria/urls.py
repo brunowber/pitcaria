@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^historico/$', Historico.as_view(), name='historico'),
     url(r'^nota/(?P<id>\d+)/$', Nota.as_view(), name='nota'),
     url(r'^historico_pizzaria/$', HistoricoPizzaria.as_view(), name='historico-pizzaria'),
-    #url(r'^pedido/$', Pedido.as_view(), name='pedido'),
+
     url(r'^procurar_pizzaria/$', ProcurarPizzaria.as_view(), name='procurar_pizzaria'),
 
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
